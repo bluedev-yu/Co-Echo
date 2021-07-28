@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_sns"
+    <item
+        android:id="@+id/action_sns"
         android:title="@string/SNS"
         android:icon="@drawable/ic_launcher_background"/>
-    <item android:id="@+id/action_map"
+    <item
+        android:id="@+id/action_map"
         android:title="@string/MAP"
         android:icon="@drawable/ic_launcher_background"/>
-    <item android:id="@+id/action_myPage"
+    <item
+        android:id="@+id/action_myPage"
         android:title="@string/MY_PAGE"
         android:icon="@drawable/ic_launcher_background"/>
 </menu>
