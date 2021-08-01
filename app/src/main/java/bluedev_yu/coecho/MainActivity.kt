@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         setDefaultFragment()
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    override fun onNavigationItemSelected(item: MenuItem): Boolean { //내비게이션바 아이템 선택시 프래그먼트 교체
         when (item.itemId) {
             R.id.action_sns -> {
                 loadFragment(FragmentSNS())
@@ -39,11 +39,11 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         return false
     }
 
-    private fun setDefaultFragment(){
+    private fun setDefaultFragment(){ //앱 실행시 디폴트 프래그먼트 설정
         loadFragment(FragmentSNS())
     }
 
-    private fun loadFragment(fragment: Fragment) {
+    private fun loadFragment(fragment: Fragment) { //프래그먼트 로드
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout, fragment)
         transaction.disallowAddToBackStack()
