@@ -7,16 +7,20 @@ import androidx.fragment.app.Fragment
 import bluedev_yu.coecho.Fragment.FragmentMap
 import bluedev_yu.coecho.Fragment.FragmentMyPage
 import bluedev_yu.coecho.Fragment.FragmentSNS
+import bluedev_yu.coecho.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener{
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        val bottomNavBar = findViewById<BottomNavigationView>(R.id.bottomNavBar)
-        bottomNavBar.setOnItemSelectedListener(this)
+        binding.bottomNavBar.setOnItemSelectedListener(this)
 
         setDefaultFragment()
     }
