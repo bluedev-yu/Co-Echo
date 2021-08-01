@@ -4,11 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import bluedev_yu.coecho.Fragment.FragmentMap
-import bluedev_yu.coecho.Fragment.FragmentMyPage
-import bluedev_yu.coecho.Fragment.FragmentSNS
+import bluedev_yu.coecho.fragment.FragmentMap
+import bluedev_yu.coecho.fragment.FragmentMyPage
+import bluedev_yu.coecho.fragment.FragmentSNS
 import bluedev_yu.coecho.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener{
