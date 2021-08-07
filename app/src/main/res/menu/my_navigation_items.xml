@@ -3,13 +3,13 @@
     <item
         android:id="@+id/action_sns"
         android:title="@string/SNS"
-        android:icon="@drawable/ic_launcher_background"/>
+        android:icon="@drawable/sns_selector"/>
     <item
         android:id="@+id/action_map"
         android:title="@string/MAP"
-        android:icon="@drawable/ic_launcher_background"/>
+        android:icon="@drawable/map_selector"/>
     <item
         android:id="@+id/action_myPage"
         android:title="@string/MY_PAGE"
-        android:icon="@drawable/ic_launcher_background"/>
+        android:icon="@drawable/mypage_selector"/>
 </menu>
