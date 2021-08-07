@@ -2,95 +2,59 @@ package bluedev_yu.coecho.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
 import bluedev_yu.coecho.R
 
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+/**
+ * A simple [Fragment] subclass.
+ * Use the [FragmentSNS.newInstance] factory method to
+ * create an instance of this fragment.
+ */
 class FragmentSNS : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
 
-    var mainView: View? = null
-    var imagesSnapshot  : ListenerRegistration? = null
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mainView = inflater.inflate(R.layout.fragment_sns, container, false)
-
-        return mainView
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        mainView?.recycler_view?.adapter = GridFragmentRecyclerViewAdatper()
-        mainView?.recycler_view?.layoutManager = GridLayoutManager(activity, 3)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_sns, container, false)
     }
 
-    override fun onStop() {
-        super.onStop()
-        imagesSnapshot?.remove()
-    }
-
-
-    inner class GridFragmentRecyclerViewAdatper : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-        var contentDTOs: ArrayList<ContentDTO>
-
-        init {
-            contentDTOs = ArrayList()
-            imagesSnapshot = FirebaseFirestore
-                .getInstance().collection("images").orderBy("timestamp")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                    contentDTOs.clear()
-                    if (querySnapshot == null) return@addSnapshotListener
-                    for (snapshot in querySnapshot!!.documents) {
-                        contentDTOs.add(snapshot.toObject(ContentDTO::class.java)!!)
-                    }
-                    notifyDataSetChanged()
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment FragmentSNS.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            FragmentSNS().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
                 }
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-            //현재 사이즈 뷰 화면 크기의 가로 크기의 1/3값을 가지고 오기
-            val width = resources.displayMetrics.widthPixels / 3
-
-            val imageView = ImageView(parent.context)
-            imageView.layoutParams = LinearLayoutCompat.LayoutParams(width, width)
-
-            return CustomViewHolder(imageView)
-        }
-
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
-            var imageView = (holder as CustomViewHolder).imageView
-
-            Glide.with(holder.itemView.context)
-                .load(contentDTOs[position].imageUrl)
-                .apply(RequestOptions().centerCrop())
-                .into(imageView)
-
-            imageView.setOnClickListener {
-                val fragment = UserFragment()
-                val bundle = Bundle()
-
-                bundle.putString("destinationUid", contentDTOs[position].uid)
-                bundle.putString("userId", contentDTOs[position].userId)
-
-                fragment.arguments = bundle
-                activity!!.supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_content, fragment)
-                    .commit()
             }
-        }
-
-        override fun getItemCount(): Int {
-            return contentDTOs.size
-        }
-
-        inner class CustomViewHolder(var imageView: ImageView) : RecyclerView.ViewHolder(imageView)
     }
 }
