@@ -16,10 +16,12 @@ buildscript {
 
 allprojects {
     repositories {
+        //카카오 레파지토리 설정
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
         maven{url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
+
+        jcenter() // Warning: this repository is going to shut down soon
     }
 }
 

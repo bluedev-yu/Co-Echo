@@ -15,8 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoEcho"
         android:usesCleartextTraffic="true"
+
         >
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="54a2a13ebda1c8fe81bfefee2d7c9ccf"/>
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value=""/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
