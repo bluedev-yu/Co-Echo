@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Co-Echo.iml" filepath="$PROJECT_DIR$/.idea/modules/Co-Echo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidStudioProjects.Co-Echo.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidStudioProjects.Co-Echo.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Co-Echo.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Co-Echo.app.iml" />
     </modules>
   </component>
