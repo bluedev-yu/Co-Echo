@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
-        var a = 4
         setContentView(view)
 
         binding.bottomNavBar.setOnItemSelectedListener(this)
