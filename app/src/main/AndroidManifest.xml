@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
 
         >
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="a4b5eac905d0201f27df878de76a5f08"/>
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="78ba50816ec697fc8f5f8d4b36fa29d4"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,5 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MapActivity"></activity>
     </application>
 </manifest>
