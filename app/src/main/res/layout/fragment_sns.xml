@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:text="SNS"
             android:textColor="#00B06A"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -27,7 +28,8 @@
             android:layoutDirection="rtl"
             android:text="에코 공간"
             android:textColor="@color/black"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            android:textStyle="bold"/>
 
         <SearchView
             android:id="@+id/search"
@@ -36,6 +38,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/search_background"
             android:iconifiedByDefault="false"
+            android:queryBackground="@null"
             android:queryHint="검색어를 입력하세요" />
 
         <ScrollView
@@ -63,8 +66,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="12dp"
-                        android:text="윤혜영"/>
+                        android:layout_marginTop="10dp"
+                        android:text="윤혜영"
+                        android:textSize="15dp"/>
                 </LinearLayout>
 
                 <TextView
@@ -131,9 +135,32 @@
                             android:text="#친환경브랜드"
                             android:textColor="#00B06A" />
                     </RelativeLayout>
-
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/woman1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="30"/>
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/woman1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="8"/>
+                </LinearLayout>
             </LinearLayout>
 
         </ScrollView>
