@@ -6,29 +6,38 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.navigation.NavigationView
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.mapmain.*
 
 
-
-class MapActivity : AppCompatActivity() {
+class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     val eventListener = MarkerEventListener(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mapmain)
+
+        hambuger_navi.setOnClickListener{
+            layout_drawer.openDrawer(GravityCompat.END)
+        }
+
+        // 네비게이션 메뉴 아니템에 클릭 속성 부여
+        hambuger_navi.setNavigationItemSelectedListener(this)
 
 
         val mapView = MapView(this)
@@ -92,6 +101,29 @@ class MapActivity : AppCompatActivity() {
         mapView.setMapViewEventListener(mapltner)
         mapView.setPOIItemEventListener(eventListener)
 
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId)
+        {
+            R.id.item1 -> return true
+            R.id.item2 -> return true
+            R.id.item3 -> return true
+        }
+
+        layout_drawer.closeDrawers()
+        return false
+    }
+
+    override fun onBackPressed() {
+        if(layout_drawer.isDrawerOpen(GravityCompat.END))
+        {
+            layout_drawer.closeDrawers()
+        }
+        else
+        {
+            super.onBackPressed() // 일반 백버튼 기능실행
+        }
     }
 
     val mapltner = object : MapView.MapViewEventListener {
