@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         //--해시 키 발급--
 //        var keyHash = Utility.getKeyHash(this)
 //        Log.d("해시 키",keyHash)
-        val nextIntent = Intent(this, MapActivity::class.java)
-        startActivity(nextIntent)
+//        val nextIntent = Intent(this, MapActivity::class.java)
+//        startActivity(nextIntent)
     }
 }

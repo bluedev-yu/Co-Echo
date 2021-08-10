@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MapActivity : AppCompatActivity() {
 
-    val manager = supportFragmentManager
+    val eventListener = MarkerEventListener(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -36,8 +36,8 @@ class MapActivity : AppCompatActivity() {
         mapViewContainer.addView(mapView)
 
         //마커 추가 코드
-        mapView.addPOIItem(newCustomMapPoiItem("제로스테이",35.81943491247418,128.52228528837313))
-        mapView.addPOIItem(newCustomMapPoiItem("더 커먼",35.86863293890943, 128.61172204038763))
+        mapView.addPOIItem(newCustomMapPoiItem("제로스테이", 35.81943491247418, 128.52228528837313))
+        mapView.addPOIItem(newCustomMapPoiItem("더 커먼", 35.86863293890943, 128.61172204038763))
 
         //맵 초기 위치 설정(마커 있는 진천동 부근으로 임의설정)
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(35.81, 128.52), true);
@@ -74,12 +74,15 @@ class MapActivity : AppCompatActivity() {
 
         //맵뷰에 이벤트 리스너 적용
         mapView.setMapViewEventListener(mapltner)
+        mapView.setPOIItemEventListener(eventListener)
 
     }
+
     val mapltner = object : MapView.MapViewEventListener {
         override fun onMapViewInitialized(mapView: MapView) {
             Log.i("카카오맵 로그", "successfully initilized")
         }
+
         //아래는 모두 아직 사용하지 않는 이벤트리스너들
         override fun onMapViewCenterPointMoved(mapView: MapView, mapPoint: MapPoint) {
             Log.i("디테일로그", "onMapViewCenterPointMoved")
@@ -115,8 +118,7 @@ class MapActivity : AppCompatActivity() {
     }
 
 
-
-    fun newMapPoiItem(iName:String,lat:Double,lon:Double):MapPOIItem//지도에 마커 추가 함수
+    fun newMapPoiItem(iName: String, lat: Double, lon: Double): MapPOIItem//지도에 마커 추가 함수
     {
         val marker = MapPOIItem()
         marker.apply {
@@ -131,7 +133,7 @@ class MapActivity : AppCompatActivity() {
     }
 
 
-    fun newCustomMapPoiItem(iName:String, lat: Double, lon: Double):MapPOIItem{
+    fun newCustomMapPoiItem(iName: String, lat: Double, lon: Double): MapPOIItem {
         val marker = MapPOIItem();
         marker.apply {
             itemName = iName
@@ -139,22 +141,21 @@ class MapActivity : AppCompatActivity() {
             mapPoint = MapPoint.mapPointWithGeoCoord(lat, lon)
             markerType = MapPOIItem.MarkerType.CustomImage // 마커타입을 커스텀 마커로 지정.
             customImageResourceId = R.drawable.pin //마커 이미지 설정 -> 나뭇잎 모양
-            isCustomImageAutoscale = false
+            isCustomImageAutoscale = true
             setCustomImageAnchor(0.5f, 1.0f)
         }
         return marker
     }
 
-
-
-    val listener = object : MapView.POIItemEventListener{
+    class MarkerEventListener(val context: Context) : MapView.POIItemEventListener{
         override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
             //마커 클릭 이벤트
         }
 
         override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
             //말품선 클릭 1
-            TODO("Not yet implemented")
+            val intent = Intent(context, Place_detail::class.java)
+            context.startActivity(intent)
         }
 
         override fun onCalloutBalloonOfPOIItemTouched(
@@ -163,13 +164,13 @@ class MapActivity : AppCompatActivity() {
             p2: MapPOIItem.CalloutBalloonButtonType?
             //말풍선 클릭 2
         ) {
-
+            //혹시나 place_detail을 fragment로 변경할 경우
 //            supportFragmentManager.beginTransaction()
 //                .add(R.id.framelayout, Place_detail())
 //                .commit()
 
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(context, Place_detail::class.java)
+//            context.startActivity(intent)
 
         }
 
@@ -177,5 +178,5 @@ class MapActivity : AppCompatActivity() {
             //마커 속성이 idDraggable = true일 때 마커 이동시
         }
     }
-
 }
+
