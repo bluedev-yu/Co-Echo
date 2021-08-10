@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.navigation.NavigationView
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -20,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 
-class MapActivity : AppCompatActivity() {
+class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     val eventListener = MarkerEventListener(this)
 
@@ -75,6 +77,18 @@ class MapActivity : AppCompatActivity() {
         mapView.setMapViewEventListener(mapltner)
         mapView.setPOIItemEventListener(eventListener)
 
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId)
+        {
+            R.id.item1 -> return false
+            R.id.item2 -> return false
+            R.id.item3 -> return false
+        }
+
+
+        return false
     }
 
     val mapltner = object : MapView.MapViewEventListener {
