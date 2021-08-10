@@ -38,6 +38,22 @@ class MapActivity : AppCompatActivity() {
         //마커 추가 코드
         mapView.addPOIItem(newCustomMapPoiItem("제로스테이", 35.81943491247418, 128.52228528837313))
         mapView.addPOIItem(newCustomMapPoiItem("더 커먼", 35.86863293890943, 128.61172204038763))
+        mapView.addPOIItem(newCustomMapPoiItem("오브젝트 서교점",37.55567794970775, 126.92979269499948))
+        mapView.addPOIItem(newCustomMapPoiItem("제제상회",35.86085217817711, 128.59818896508298))
+
+
+        mapView.addPOIItem(newMapPoiItem("야미스토어",35.88787328754492, 128.70543100254224))
+        mapView.addPOIItem(newMapPoiItem("꼬두람이",35.90233355828279, 128.61052507620627))
+        mapView.addPOIItem(newMapPoiItem("그로잉",35.848023694028505, 128.5968855019969))
+        mapView.addPOIItem(newMapPoiItem("버거데이",35.84427201048634, 128.7033817611035))
+        mapView.addPOIItem(newMapPoiItem("책빵고스란히",35.866978451216234, 128.61279562909166))
+        mapView.addPOIItem(newMapPoiItem("땅과 사람이야기",35.86274508609894, 128.69574558645667))
+        mapView.addPOIItem(newMapPoiItem("아라리오",35.83619833541316, 128.58327150846532))
+        mapView.addPOIItem(newMapPoiItem("지읒상점",35.86392057725657, 128.60797885108323))
+        mapView.addPOIItem(newMapPoiItem("진책방",35.85319892703311, 128.61656219584384))
+        mapView.addPOIItem(newMapPoiItem("하고카페",35.83686062629213, 128.58207838413546))
+
+
 
         //맵 초기 위치 설정(마커 있는 진천동 부근으로 임의설정)
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(35.81, 128.52), true);

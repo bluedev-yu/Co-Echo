@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoEcho"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Place_detail"></activity>
+        <activity android:name=".Place_detail" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
 
         <activity android:name=".MainActivity"></activity>
 
