@@ -90,13 +90,24 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId)
         {
-            R.id.item1 -> return false
-            R.id.item2 -> return false
-            R.id.item3 -> return false
+            R.id.item1 -> return true
+            R.id.item2 -> return true
+            R.id.item3 -> return true
         }
 
         layout_drawer.closeDrawers()
         return false
+    }
+
+    override fun onBackPressed() {
+        if(layout_drawer.isDrawerOpen(GravityCompat.END))
+        {
+            layout_drawer.closeDrawers()
+        }
+        else
+        {
+            super.onBackPressed() // 일반 백버튼 기능실행
+        }
     }
 
     val mapltner = object : MapView.MapViewEventListener {
