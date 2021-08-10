@@ -6,7 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
+import android.view.ViewGroupz
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //--해시 키 발급--
-//        var keyHash = Utility.getKeyHash(this)
-//        Log.d("해시 키",keyHash)
+        var keyHash = Utility.getKeyHash(this)
+        Log.d("해시 키",keyHash)
 //        val nextIntent = Intent(this, MapActivity::class.java)
 //        startActivity(nextIntent)
     }
