@@ -13,13 +13,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.navigation.NavigationView
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 import kotlinx.android.synthetic.main.activity_main.*
-
+import kotlinx.android.synthetic.main.mapmain.*
 
 
 class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -30,6 +31,13 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mapmain)
+
+        hambuger_navi.setOnClickListener{
+            layout_drawer.openDrawer(GravityCompat.END)
+        }
+
+        // 네비게이션 메뉴 아니템에 클릭 속성 부여
+        hambuger_navi.setNavigationItemSelectedListener(this)
 
 
         val mapView = MapView(this)
@@ -87,7 +95,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             R.id.item3 -> return false
         }
 
-
+        layout_drawer.closeDrawers()
         return false
     }
 
