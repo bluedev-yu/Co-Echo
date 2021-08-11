@@ -88,10 +88,13 @@
                         <RelativeLayout
                             android:id="@+id/review"
                             android:layout_width="match_parent"
-                            android:layout_marginLeft="5dp"
                             android:layout_height="180dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
                             android:layout_alignParentBottom="true"
-                            android:background="@drawable/information">
+                            android:background="@color/white">
 
                                 <ImageView
                                     android:id="@+id/hashtag1"
@@ -165,8 +168,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentTop="true"
                                     android:layout_alignParentEnd="true"
-                                    android:layout_marginTop="12dp"
-                                    android:layout_marginEnd="34dp"
+                                    android:layout_marginTop="13dp"
+                                    android:layout_marginEnd="13dp"
                                     app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
 
                                 <TextView
@@ -178,7 +181,7 @@
                                     android:layout_alignParentTop="true"
                                     android:layout_marginStart="20dp"
                                     android:layout_marginTop="20dp"
-                                    android:text="# 제로웨이스트샵"
+                                    android:text="#제로웨이스트샵"
                                     android:textColor="#00B06A"
                                     android:textSize="10dp" />
 
@@ -191,7 +194,7 @@
                                     android:layout_alignParentTop="true"
                                     android:layout_marginStart="130dp"
                                     android:layout_marginTop="20dp"
-                                    android:text="# 달서구친환경"
+                                    android:text="#달서구친환경"
                                     android:textColor="#00B06A"
                                     android:textSize="10dp" />
 
@@ -205,7 +208,7 @@
                                     android:layout_marginTop="55dp"
                                     android:text="제로스테이"
                                     android:textColor="#000000"
-                                    android:textSize="16sp"
+                                    android:textSize="18sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -214,11 +217,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentTop="true"
-                                    android:layout_marginStart="121dp"
+                                    android:layout_marginStart="99dp"
                                     android:layout_marginTop="61dp"
                                     android:text="생활용품점"
                                     android:textColor="#737272"
-                                    android:textSize="10sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/textView14"
@@ -230,7 +233,7 @@
                                     android:layout_marginBottom="48dp"
                                     android:text="대구 달서구 진천로 114"
                                     android:textColor="#7E7E7E"
-                                    android:textSize="10sp" />
+                                    android:textSize="11sp" />
 
                                 <TextView
                                     android:id="@+id/textView15"
@@ -242,7 +245,7 @@
                                     android:layout_marginBottom="26dp"
                                     android:text="월요일 10:00~18:00 일요일 정기 휴무"
                                     android:textColor="#FF0000"
-                                    android:textSize="10sp" />
+                                    android:textSize="11sp" />
 
                         </RelativeLayout>
 

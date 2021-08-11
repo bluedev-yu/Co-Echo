@@ -69,22 +69,37 @@
 
         </LinearLayout>
         </LinearLayout>
-        <LinearLayout
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:layout_weight="4.5"
-            android:weightSum="10"
-            android:paddingTop="12dp">
-
-            <ImageView
-                android:id="@+id/imageView2"
+            android:layout_height="wrap_content">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="10"
-
-                app:srcCompat="@drawable/zerostay" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="10"
+                    app:srcCompat="@drawable/zerostay" />
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="10"
+                    app:srcCompat="@drawable/zerostay2" />
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="10"
+                    app:srcCompat="@drawable/zerostay3" />
+            </LinearLayout>
+        </HorizontalScrollView>
 
 <!--            <TextView-->
 <!--                android:id="@+id/categoryText"-->
@@ -94,15 +109,13 @@
 <!--                android:layout_weight="0.5"-->
 <!--                android:text="생활용품점" />-->
 
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/white"
             android:orientation="vertical">
             <LinearLayout
