@@ -103,6 +103,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     }
 
+    // 네비게이션
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId)
         {
@@ -115,6 +116,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         return false
     }
 
+    // 뒤로가기 버튼 눌렷을때
     override fun onBackPressed() {
         if(layout_drawer.isDrawerOpen(GravityCompat.END))
         {
