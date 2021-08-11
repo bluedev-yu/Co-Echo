@@ -109,7 +109,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId)
         {
-            R.id.item1 -> Toast.makeText(applicationContext,"item1",Toast.LENGTH_SHORT).show()
+            R.id.marked_place -> Toast.makeText(applicationContext,"item1",Toast.LENGTH_SHORT).show()
             R.id.item2 -> Toast.makeText(applicationContext,"item2",Toast.LENGTH_SHORT).show()
             R.id.item3 -> Toast.makeText(applicationContext,"item3",Toast.LENGTH_SHORT).show()
         }

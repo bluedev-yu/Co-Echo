@@ -96,21 +96,6 @@
                             android:layout_alignParentBottom="true"
                             android:background="@color/white">
 
-                                <ImageView
-                                    android:id="@+id/hashtag1"
-                                    android:layout_width="100dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    app:srcCompat="@drawable/hashtag" />
-
-
-                                <ImageView
-                                    android:id="@+id/hashtag2"
-                                    android:layout_width="100dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_toEndOf="@+id/hashtag1"
-                                    app:srcCompat="@drawable/hashtag" />
 
                                 <ImageView
                                     android:id="@+id/imageView7"
@@ -162,41 +147,96 @@
                                     android:layout_marginTop="91dp"
                                     app:srcCompat="@drawable/fullstar" />
 
-                                <ImageView
-                                    android:id="@+id/imageView13"
-                                    android:layout_width="wrap_content"
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentTop="true"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginTop="13dp"
-                                    android:layout_marginEnd="13dp"
-                                    app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+                                    android:layout_marginTop="10dp"
+                                    android:background="@color/white"
+                                    android:orientation="horizontal">
 
-                                <TextView
-                                    android:id="@+id/tv1"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                        <RelativeLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="10dp">
 
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentTop="true"
-                                    android:layout_marginStart="20dp"
-                                    android:layout_marginTop="20dp"
-                                    android:text="#제로웨이스트샵"
-                                    android:textColor="#00B06A"
-                                    android:textSize="10dp" />
+                                                <ImageView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_alignLeft="@+id/hashtag1_1"
+                                                    android:layout_alignTop="@+id/hashtag1_1"
+                                                    android:layout_alignRight="@+id/hashtag1_1"
+                                                    android:layout_alignBottom="@+id/hashtag1_1"
+                                                    android:scaleType="fitXY"
+                                                    android:src="@drawable/hashtag" />
 
-                                <TextView
-                                    android:id="@+id/tv2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                                <TextView
+                                                    android:id="@+id/hashtag1_1"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="20dp"
+                                                    android:text="   #제로웨이스트샵   "
+                                                    android:textColor="#00B06A" />
+                                        </RelativeLayout>
 
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentTop="true"
-                                    android:layout_marginStart="130dp"
-                                    android:layout_marginTop="20dp"
-                                    android:text="#달서구친환경"
-                                    android:textColor="#00B06A"
-                                    android:textSize="10dp" />
+                                        <RelativeLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="10dp">
+
+                                                <ImageView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_alignLeft="@+id/hashtag1_2"
+                                                    android:layout_alignTop="@+id/hashtag1_2"
+                                                    android:layout_alignRight="@+id/hashtag1_2"
+                                                    android:layout_alignBottom="@+id/hashtag1_2"
+                                                    android:scaleType="fitXY"
+                                                    android:src="@drawable/hashtag" />
+
+                                                <TextView
+                                                    android:id="@+id/hashtag1_2"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="20dp"
+                                                    android:text="   #친환경제품   "
+                                                    android:textColor="#00B06A" />
+                                        </RelativeLayout>
+
+                                        <ImageView
+                                            android:id="@+id/imageView13"
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:layout_marginLeft="80dp"
+                                            app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+                                </LinearLayout>
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tv1"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+
+<!--                                    android:layout_alignParentStart="true"-->
+<!--                                    android:layout_alignParentTop="true"-->
+<!--                                    android:layout_marginStart="20dp"-->
+<!--                                    android:layout_marginTop="20dp"-->
+<!--                                    android:text="#제로웨이스트샵"-->
+<!--                                    android:textColor="#00B06A"-->
+<!--                                    android:textSize="10dp" />-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tv2"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+
+<!--                                    android:layout_alignParentStart="true"-->
+<!--                                    android:layout_alignParentTop="true"-->
+<!--                                    android:layout_marginStart="130dp"-->
+<!--                                    android:layout_marginTop="20dp"-->
+<!--                                    android:text="#달서구친환경"-->
+<!--                                    android:textColor="#00B06A"-->
+<!--                                    android:textSize="10dp" />-->
 
                                 <TextView
                                     android:id="@+id/tv3"
@@ -205,7 +245,7 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentTop="true"
                                     android:layout_marginStart="16dp"
-                                    android:layout_marginTop="55dp"
+                                    android:layout_marginTop="50dp"
                                     android:text="제로스테이"
                                     android:textColor="#000000"
                                     android:textSize="18sp"
@@ -217,8 +257,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentTop="true"
-                                    android:layout_marginStart="99dp"
-                                    android:layout_marginTop="61dp"
+                                    android:layout_marginStart="112dp"
+                                    android:layout_marginTop="54dp"
                                     android:text="생활용품점"
                                     android:textColor="#737272"
                                     android:textSize="12sp" />
