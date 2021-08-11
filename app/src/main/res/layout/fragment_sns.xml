@@ -17,18 +17,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:text="SNS"
             android:textColor="#00B06A"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layoutDirection="rtl"
             android:text="에코 공간"
             android:textColor="@color/black"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <SearchView
@@ -72,7 +74,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
                             android:text="윤혜영"
                             android:textSize="15dp" />
@@ -158,32 +160,32 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="7dp"
                             android:src="@drawable/like" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginTop="17dp"
+                            android:layout_marginTop="7dp"
                             android:text="30"
                             android:textColor="#00B06A" />
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="7dp"
                             android:src="@drawable/comment" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginTop="17dp"
+                            android:layout_marginTop="7dp"
                             android:text="8"
                             android:textColor="#00B06A" />
                     </LinearLayout>
@@ -212,7 +214,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
                             android:text="김윤주"
                             android:textSize="15dp" />
@@ -260,7 +262,7 @@
                                 android:id="@+id/hashtag2_1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
-                                android:text="#플라스팅방앗간"
+                                android:text="#플라스틱방앗간"
                                 android:textColor="#00B06A" />
                         </RelativeLayout>
 
@@ -276,13 +278,13 @@
 
                         <ImageView
                             android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_height="80dp"
                             android:layout_marginLeft="5dp"
                             android:src="@drawable/feedimg1" />
 
                         <ImageView
                             android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_height="80dp"
                             android:layout_marginLeft="10dp"
                             android:src="@drawable/feedimg2" />
                     </LinearLayout>
@@ -296,32 +298,32 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="7dp"
                             android:src="@drawable/like" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginTop="17dp"
+                            android:layout_marginTop="7dp"
                             android:text="155"
                             android:textColor="#00B06A" />
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="7dp"
                             android:src="@drawable/comment" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginTop="17dp"
+                            android:layout_marginTop="7dp"
                             android:text="43"
                             android:textColor="#00B06A" />
                     </LinearLayout>
@@ -350,7 +352,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
                             android:text="차은우"
                             android:textSize="15dp" />
@@ -434,32 +436,32 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="7dp"
                             android:src="@drawable/like" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginTop="17dp"
+                            android:layout_marginTop="7dp"
                             android:text="9"
                             android:textColor="#00B06A" />
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="7dp"
                             android:src="@drawable/comment" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginTop="17dp"
+                            android:layout_marginTop="7dp"
                             android:text="2"
                             android:textColor="#00B06A" />
                     </LinearLayout>

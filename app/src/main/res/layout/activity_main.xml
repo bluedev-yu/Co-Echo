@@ -23,6 +23,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:background="@drawable/bottombar"
         app:menu="@menu/my_navigation_items"
+        app:itemTextColor="@color/white"
         tools:ignore="MissingConstraints" />
 
 
