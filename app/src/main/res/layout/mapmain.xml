@@ -91,8 +91,8 @@
                             android:layout_height="180dp"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="15dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="40dp"
                             android:layout_alignParentBottom="true"
                             android:background="@color/white">
 
@@ -104,7 +104,7 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentTop="true"
                                     android:layout_marginStart="71dp"
-                                    android:layout_marginTop="91dp"
+                                    android:layout_marginTop="85dp"
                                     app:srcCompat="@drawable/fullstar" />
 
                                 <ImageView
@@ -114,7 +114,7 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentTop="true"
                                     android:layout_marginStart="32dp"
-                                    android:layout_marginTop="91dp"
+                                    android:layout_marginTop="85dp"
                                     app:srcCompat="@drawable/fullstar" />
 
                                 <ImageView
@@ -124,7 +124,7 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentTop="true"
                                     android:layout_marginStart="51dp"
-                                    android:layout_marginTop="91dp"
+                                    android:layout_marginTop="85dp"
                                     app:srcCompat="@drawable/fullstar" />
 
                                 <ImageView
@@ -134,7 +134,7 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentTop="true"
                                     android:layout_marginStart="91dp"
-                                    android:layout_marginTop="91dp"
+                                    android:layout_marginTop="85dp"
                                     app:srcCompat="@drawable/fullstar" />
 
                                 <ImageView
@@ -144,7 +144,7 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentTop="true"
                                     android:layout_marginStart="13dp"
-                                    android:layout_marginTop="91dp"
+                                    android:layout_marginTop="85dp"
                                     app:srcCompat="@drawable/fullstar" />
 
 
@@ -269,8 +269,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentBottom="true"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginBottom="48dp"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_marginBottom="55dp"
                                     android:text="대구 달서구 진천로 114"
                                     android:textColor="#7E7E7E"
                                     android:textSize="11sp" />
@@ -281,8 +281,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentBottom="true"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginBottom="26dp"
+                                    android:layout_marginStart="11dp"
+                                    android:layout_marginBottom="31dp"
                                     android:text="월요일 10:00~18:00 일요일 정기 휴무"
                                     android:textColor="#FF0000"
                                     android:textSize="11sp" />

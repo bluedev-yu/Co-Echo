@@ -124,22 +124,51 @@
                 android:orientation="horizontal"
                 android:layout_marginVertical="10dp"
                 android:layout_marginHorizontal="5dp">
-                <TextView
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#00B06A"
-                    android:text="   #제로웨이스트샵   "
-                    android:background="#cbf6e3"
-                    android:layout_margin="5dp"
-                    />
-                <TextView
+                    android:layout_marginLeft="10dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignLeft="@+id/hashtag1_1"
+                        android:layout_alignTop="@+id/hashtag1_1"
+                        android:layout_alignRight="@+id/hashtag1_1"
+                        android:layout_alignBottom="@+id/hashtag1_1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/hashtag" />
+
+                    <TextView
+                        android:id="@+id/hashtag1_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="   #제로웨이스트샵   "
+                        android:textColor="#00B06A" />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#00B06A"
-                    android:text="   #친환경제품   "
-                    android:background="#cbf6e3"
-                    android:layout_margin="5dp"
-                    />
+                    android:layout_marginLeft="10dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignLeft="@+id/hashtag1_2"
+                        android:layout_alignTop="@+id/hashtag1_2"
+                        android:layout_alignRight="@+id/hashtag1_2"
+                        android:layout_alignBottom="@+id/hashtag1_2"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/hashtag" />
+
+                    <TextView
+                        android:id="@+id/hashtag1_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="   #친환경제품   "
+                        android:textColor="#00B06A" />
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
