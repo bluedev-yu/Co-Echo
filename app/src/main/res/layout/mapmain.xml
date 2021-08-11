@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="30dp">
 
 
@@ -19,29 +19,53 @@
                     android:id="@+id/hambuger_menu"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginRight="5dp"
                     android:src="@drawable/ic_baseline_menu_50"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
-                <ImageView
-                    android:id="@+id/imformation"
+                <TextView
+                    android:id="@+id/에코맵"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="@+id/map_view"
+                    android:text="에코 맵"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints" />
+
+
+                <TextView
+                    android:id="@+id/MAP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MAP"
+                    android:textColor="#00B06A"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/에코맵"
+                    tools:ignore="MissingConstraints" />
+
+
+                <SearchView
+                    android:id="@+id/search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:iconifiedByDefault="false"
+                    android:queryBackground="@null"
+                    android:queryHint="검색어를 입력하세요"
+                    android:src="@drawable/search_background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/information" />
+                    app:layout_constraintTop_toBottomOf="@+id/MAP" />
 
 
-                <ImageView
-                    android:id="@+id/choose"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_main"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/imformation"
-                    app:srcCompat="@drawable/choose"
-                    tools:ignore="MissingConstraints" />
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:layout_constraintBottom_toBottomOf="parent"></androidx.recyclerview.widget.RecyclerView>
 
 
                 <RelativeLayout
@@ -55,42 +79,6 @@
 
                 </RelativeLayout>
 
-                <SearchView
-                    android:id="@+id/search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:iconifiedByDefault="false"
-                    android:queryBackground="@null"
-                    android:queryHint="검색어를 입력하세요"
-                    android:src="@drawable/search_background"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="에코 맵"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
-                    android:textStyle="bold"
-                    tools:ignore="MissingConstraints" />
-
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MAP"
-                    android:textColor="#00B06A"
-                    android:textSize="25dp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
-                    tools:ignore="MissingConstraints" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -100,6 +88,5 @@
             android:layout_height="match_parent"
             android:layout_gravity="right"
             app:menu="@menu/map_navigation_items" />
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

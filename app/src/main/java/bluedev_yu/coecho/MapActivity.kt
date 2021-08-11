@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
@@ -32,6 +33,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mapmain)
 
+        // 네비게이션 메뉴
         hambuger_navi.setOnClickListener{
             layout_drawer.openDrawer(GravityCompat.END)
         }
@@ -39,6 +41,16 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         // 네비게이션 메뉴 아니템에 클릭 속성 부여
         hambuger_navi.setNavigationItemSelectedListener(this)
 
+        //이것은 뭐랄까
+        var recyclerView = recyclerview_main // recyclerview id
+
+        var layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+        //가로형
+        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        var adapter = MyAdapter()
+        recyclerView.adapter = adapter
+        // 요까지지
 
         val mapView = MapView(this)
         val mapViewContainer = findViewById<View>(R.id.map_view) as ViewGroup
