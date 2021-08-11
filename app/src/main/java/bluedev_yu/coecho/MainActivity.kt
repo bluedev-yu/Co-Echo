@@ -16,9 +16,6 @@ import com.google.firebase.storage.FirebaseStorage
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener{
 
-    var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
-    var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
