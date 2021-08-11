@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation'com.google.android.material:material:1.0.0'
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -50,6 +50,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     compile files('libs/libDaumMapAndroid.jar')
 
+    //네비게이션 드로워
+    implementation'com.google.android.material:material:1.0.0'
+    
     //카카오 추가(+유저도)
     implementation "com.kakao.sdk:v2-user:2.0.1"
     implementation fileTree(include: ['*.jar'], dir: 'libs')

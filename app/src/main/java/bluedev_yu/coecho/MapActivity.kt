@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -30,13 +31,12 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mapmain)
 
-        // 네비게이션 메뉴
-        hambuger_navi.setOnClickListener{
+        // 햄버거 메뉴 선택시 오른쪽으로 열린다
+        hambuger_menu.setOnClickListener{
             layout_drawer.openDrawer(GravityCompat.END)
         }
-
-        // 네비게이션 메뉴 아니템에 클릭 속성 부여
-        hambuger_navi.setNavigationItemSelectedListener(this)
+        // 네비게이션 드로워 아이템 클릭 속성 부여
+        hambuger_navigation_view.setNavigationItemSelectedListener(this)
 
         //이것은 뭐랄까
         var recyclerView = recyclerview_main // recyclerview id
@@ -111,20 +111,19 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     }
 
-    // 네비게이션
+    // 네비게이션 드로워 아이템 선택 시 수행
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId)
         {
-            R.id.item1 -> return true
-            R.id.item2 -> return true
-            R.id.item3 -> return true
+            R.id.item1 -> Toast.makeText(applicationContext,"item1",Toast.LENGTH_SHORT).show()
+            R.id.item2 -> Toast.makeText(applicationContext,"item2",Toast.LENGTH_SHORT).show()
+            R.id.item3 -> Toast.makeText(applicationContext,"item3",Toast.LENGTH_SHORT).show()
         }
-
-        layout_drawer.closeDrawers()
+        layout_drawer.closeDrawers() // 네비게이션 드로워 닫기
         return false
     }
 
-    // 뒤로가기 버튼 눌렷을때
+    // 뒤로가기 버튼 눌렷을때 네비게이션 드로워 종료
     override fun onBackPressed() {
         if(layout_drawer.isDrawerOpen(GravityCompat.END))
         {
