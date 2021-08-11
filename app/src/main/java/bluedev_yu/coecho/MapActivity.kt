@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.mapmain.*
 import net.daum.mf.map.api.MapPOIItem
@@ -37,16 +36,6 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         }
         // 네비게이션 드로워 아이템 클릭 속성 부여
         hambuger_navigation_view.setNavigationItemSelectedListener(this)
-
-        //이것은 뭐랄까
-        var recyclerView = recyclerview_main // recyclerview id
-        var layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
-        //가로형
-        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        var adapter = MyAdapter()
-        recyclerView.adapter = adapter
-        // 요까지지
 
         val mapView = MapView(this)
         val mapViewContainer = findViewById<View>(R.id.map_view) as ViewGroup
