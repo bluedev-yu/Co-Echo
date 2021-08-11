@@ -37,6 +37,11 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         // 네비게이션 드로워 아이템 클릭 속성 부여
         hambuger_navigation_view.setNavigationItemSelectedListener(this)
 
+        imageView13.setOnClickListener {
+            val intent = Intent(this, Place_detail::class.java)
+            startActivity(intent)
+        }
+
         val mapView = MapView(this)
         val mapViewContainer = findViewById<View>(R.id.map_view) as ViewGroup
         mapViewContainer.addView(mapView)

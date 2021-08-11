@@ -62,11 +62,11 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/map"
                             android:layout_marginLeft="20dp"
+                            android:background="@drawable/search_background"
                             android:iconifiedByDefault="false"
                             android:queryBackground="@null"
-                            android:background="@drawable/search_background"
-                            android:theme="@style/SearchViewStyle"
                             android:queryHint="검색어를 입력하세요"
+                            android:theme="@style/SearchViewStyle"
                             android:visibility="visible" />
 
                         <RelativeLayout
