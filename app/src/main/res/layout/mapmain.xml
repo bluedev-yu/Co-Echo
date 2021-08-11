@@ -43,18 +43,40 @@
                     android:src="@drawable/ic_baseline_menu_50" />
 
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_main"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
                 <RelativeLayout
                     android:id="@+id/map_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/MAP">
+                    android:layout_below="@+id/MAP"
+                    android:visibility="visible">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            app:srcCompat="@drawable/search_background" />
+
+                        <SearchView
+                            android:id="@+id/search_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:queryHint="검색어를 입력하세요"
+                            app:queryBackground="@drawable/search_background"></SearchView>
+
+<!--                        <androidx.recyclerview.widget.RecyclerView-->
+<!--                            android:id="@+id/recyclerview_main"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_alignParentBottom="true"-->
+<!--                            app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@drawable/information"
+                            android:layout_alignParentBottom="true"/>
+
                 </RelativeLayout>
 
         </RelativeLayout>
@@ -64,6 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="right"
+            android:layout_marginStart="15dp"
             app:menu="@menu/map_navigation_items" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

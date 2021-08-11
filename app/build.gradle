@@ -38,7 +38,7 @@ android {
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
@@ -52,7 +52,8 @@ dependencies {
 
     //네비게이션 드로워
     implementation'com.google.android.material:material:1.0.0'
-    
+    //
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
     //카카오 추가(+유저도)
     implementation "com.kakao.sdk:v2-user:2.0.1"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
