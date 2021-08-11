@@ -16,24 +16,24 @@
             android:layout_marginTop="30dp">
 
                 <TextView
-                    android:id="@+id/map"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="에코 맵"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
-                    android:textStyle="bold"
-                   />
-
-                <TextView
                     android:id="@+id/MAP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/map"
                     android:text="MAP"
                     android:textColor="#00B06A"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/MAP"
+                    android:text="에코 맵"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+
 
                 <ImageView
                     android:id="@+id/hambuger_menu"
@@ -42,26 +42,32 @@
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ic_baseline_menu_50" />
 
-                <ImageView
-                    android:id="@+id/search_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_below="@+id/MAP"
-                    app:srcCompat="@drawable/search_background" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/search_bar"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="60dp"-->
+<!--                    android:layout_below="@+id/map"-->
+<!--                    app:srcCompat="@drawable/search_background" />-->
 
-                <SearchView
-                    android:id="@+id/search_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/MAP"
-
-                    android:layout_marginLeft="20dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/search_bar"
+                    android:layout_below="@id/hambuger_menu"
                     android:orientation="vertical">
+
+                        <SearchView
+                            android:id="@+id/search_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/map"
+                            android:layout_marginLeft="20dp"
+                            android:iconifiedByDefault="false"
+                            android:queryBackground="@null"
+                            android:background="@drawable/search_background"
+                            android:theme="@style/SearchViewStyle"
+                            android:queryHint="검색어를 입력하세요"
+                            android:visibility="visible" />
 
                         <RelativeLayout
                             android:id="@+id/map_view"
@@ -82,6 +88,7 @@
                         <RelativeLayout
                             android:id="@+id/review"
                             android:layout_width="match_parent"
+                            android:layout_marginLeft="5dp"
                             android:layout_height="180dp"
                             android:layout_alignParentBottom="true"
                             android:background="@drawable/information">
@@ -172,8 +179,8 @@
                                     android:layout_marginStart="20dp"
                                     android:layout_marginTop="20dp"
                                     android:text="# 제로웨이스트샵"
-                                    android:textColor="#000000"
-                                    android:textSize="10sp" />
+                                    android:textColor="#00B06A"
+                                    android:textSize="10dp" />
 
                                 <TextView
                                     android:id="@+id/tv2"
@@ -185,8 +192,8 @@
                                     android:layout_marginStart="130dp"
                                     android:layout_marginTop="20dp"
                                     android:text="# 달서구친환경"
-                                    android:textColor="#000000"
-                                    android:textSize="10sp" />
+                                    android:textColor="#00B06A"
+                                    android:textSize="10dp" />
 
                                 <TextView
                                     android:id="@+id/tv3"
