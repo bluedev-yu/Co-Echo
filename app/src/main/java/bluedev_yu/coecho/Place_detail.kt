@@ -8,4 +8,6 @@ class Place_detail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_place_detail)
     }
+
+
 }
