@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Co-Echo</string>
+    <string name="SNS">SNS</string>
+    <string name="MAP">MAP</string>
+    <string name="MY_PAGE">MY PAGE</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
