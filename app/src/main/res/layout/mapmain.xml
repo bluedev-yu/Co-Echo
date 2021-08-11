@@ -73,9 +73,157 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:background="@drawable/information"
-                            android:layout_alignParentBottom="true"/>
+                            android:layout_height="180dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/information">
+
+                                <ImageView
+                                    android:id="@+id/hashtag1"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    app:srcCompat="@drawable/hashtag" />
+
+
+                                <ImageView
+                                    android:id="@+id/hashtag2"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_toEndOf="@+id/hashtag1"
+                                    app:srcCompat="@drawable/hashtag" />
+
+                                <ImageView
+                                    android:id="@+id/imageView7"
+                                    android:layout_width="18dp"
+                                    android:layout_height="15dp"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginStart="71dp"
+                                    android:layout_marginTop="91dp"
+                                    app:srcCompat="@drawable/fullstar" />
+
+                                <ImageView
+                                    android:id="@+id/imageView6"
+                                    android:layout_width="18dp"
+                                    android:layout_height="15dp"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginStart="32dp"
+                                    android:layout_marginTop="91dp"
+                                    app:srcCompat="@drawable/fullstar" />
+
+                                <ImageView
+                                    android:id="@+id/imageView9"
+                                    android:layout_width="18dp"
+                                    android:layout_height="15dp"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginStart="51dp"
+                                    android:layout_marginTop="91dp"
+                                    app:srcCompat="@drawable/fullstar" />
+
+                                <ImageView
+                                    android:id="@+id/imageView11"
+                                    android:layout_width="18dp"
+                                    android:layout_height="15dp"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginStart="91dp"
+                                    android:layout_marginTop="91dp"
+                                    app:srcCompat="@drawable/fullstar" />
+
+                                <ImageView
+                                    android:id="@+id/imageView8"
+                                    android:layout_width="18dp"
+                                    android:layout_height="15dp"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginStart="13dp"
+                                    android:layout_marginTop="91dp"
+                                    app:srcCompat="@drawable/fullstar" />
+
+                                <ImageView
+                                    android:id="@+id/imageView13"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_marginEnd="34dp"
+                                    app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+
+                                <TextView
+                                    android:id="@+id/tv1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginTop="20dp"
+                                    android:text="# 제로웨이스트샵"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:id="@+id/tv2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginStart="130dp"
+                                    android:layout_marginTop="20dp"
+                                    android:text="# 달서구친환경"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:id="@+id/tv3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginTop="55dp"
+                                    android:text="제로스테이"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView13"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginStart="121dp"
+                                    android:layout_marginTop="61dp"
+                                    android:text="생활용품점"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:id="@+id/textView14"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginBottom="48dp"
+                                    android:text="대구 달서구 진천로 114"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:id="@+id/textView15"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginBottom="26dp"
+                                    android:text="월요일 10:00~18:00 일요일 정기 휴무"
+                                    android:textColor="#FF0000"
+                                    android:textSize="10sp" />
+
+                        </RelativeLayout>
 
                 </RelativeLayout>
 
