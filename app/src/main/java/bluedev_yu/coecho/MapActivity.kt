@@ -12,16 +12,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.mapmain.*
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.mapmain.*
 
 
 class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -43,7 +40,6 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
         //이것은 뭐랄까
         var recyclerView = recyclerview_main // recyclerview id
-
         var layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         //가로형

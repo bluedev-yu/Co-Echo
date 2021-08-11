@@ -7,79 +7,55 @@
     android:layout_height="match_parent"
     android:background="#f8ffe0">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="30dp">
 
-
-                <ImageView
-                    android:id="@+id/hambuger_menu"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/ic_baseline_menu_50"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <TextView
-                    android:id="@+id/에코맵"
+                    android:id="@+id/map"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="에코 맵"
                     android:textColor="@color/black"
                     android:textSize="25dp"
                     android:textStyle="bold"
-                    tools:ignore="MissingConstraints" />
-
+                   />
 
                 <TextView
                     android:id="@+id/MAP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/map"
                     android:text="MAP"
                     android:textColor="#00B06A"
                     android:textSize="25dp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@+id/에코맵"
-                    tools:ignore="MissingConstraints" />
+                    android:textStyle="bold" />
 
-
-                <SearchView
-                    android:id="@+id/search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:iconifiedByDefault="false"
-                    android:queryBackground="@null"
-                    android:queryHint="검색어를 입력하세요"
-                    android:src="@drawable/search_background"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/MAP" />
-
+                <ImageView
+                    android:id="@+id/hambuger_menu"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_baseline_menu_50" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    app:layout_constraintBottom_toBottomOf="parent"></androidx.recyclerview.widget.RecyclerView>
-
+                    android:layout_alignParentBottom="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
                 <RelativeLayout
                     android:id="@+id/map_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
+                    android:layout_below="@+id/MAP">
                 </RelativeLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
 
         <com.google.android.material.navigation.NavigationView
