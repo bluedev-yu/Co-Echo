@@ -179,16 +179,22 @@
                     android:autoLink="web"
                     />
             </LinearLayout>
+            <View
+                android:background="#00ff00"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+            />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="방문자리뷰 20"/>
+                    android:text="방문자리뷰 20" />
             </LinearLayout>
 
 
