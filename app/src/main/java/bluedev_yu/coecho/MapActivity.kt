@@ -110,8 +110,6 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         when(item.itemId)
         {
             R.id.marked_place -> Toast.makeText(applicationContext,"item1",Toast.LENGTH_SHORT).show()
-            R.id.item2 -> Toast.makeText(applicationContext,"item2",Toast.LENGTH_SHORT).show()
-            R.id.item3 -> Toast.makeText(applicationContext,"item3",Toast.LENGTH_SHORT).show()
         }
         layout_drawer.closeDrawers() // 네비게이션 드로워 닫기
         return false
