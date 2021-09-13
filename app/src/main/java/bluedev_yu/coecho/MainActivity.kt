@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import bluedev_yu.coecho.fragment.FragmentMap
 import bluedev_yu.coecho.fragment.FragmentMyPage
 import bluedev_yu.coecho.fragment.FragmentSNS
 import bluedev_yu.coecho.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 
 
@@ -30,6 +33,12 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         binding.bottomNavBar.setOnItemSelectedListener(this)
 
         setDefaultFragment()
+
+        val user = Firebase.auth.currentUser
+        if(user!=null)
+            Toast.makeText(this,user.uid,Toast.LENGTH_LONG).show()
+        else
+            Toast.makeText(this,"no One",Toast.LENGTH_SHORT).show()
 
         binding.bottomNavBar.itemIconTintList = null;
     }
