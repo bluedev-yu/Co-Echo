@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="CoEcho_background">#f8ffe0</color>
+    <color name="CoEcho_mainBackground">#f9ffe1</color>
 </resources>
