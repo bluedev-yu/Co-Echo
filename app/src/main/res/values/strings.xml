@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Co-Echo</string>
+
+    <string-array name="splash">
+        <item>종이빨대가 도입되고 1년후, 카페 내 플라스틱 사용량이 약 70% 줄었다.</item>
+        <item>스위스 업사이클링 브랜드 \'프라이탁\'은 가방, 지갑 등을 판매하고 있다.</item>
+        <item>패스트패션 브랜드 H&amp;M이 폐기물로 만든 지속가능한 소재로 \'컨셔스 익스클루시브 컬렉션\'을 만들었다.</item>
+        <item>당근마켓에서 환경의 날에 환경보호를 위한 실천을 공유하는 캠페인을 진행한다.</item>
+        <item>자산운용사 블랙룩이 석탄원료를 사용하는 기업을 처분하는 중이다.</item>
+    </string-array>
 </resources>
