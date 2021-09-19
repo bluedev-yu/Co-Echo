@@ -25,7 +25,7 @@ class splash : AppCompatActivity() {
         var db = Firebase.firestore
 
         val random = Random()
-        var num = random.nextInt(6)
+        var num = random.nextInt(5)
 
         val res : Resources = resources
         var splashArray = res.getStringArray(R.array.splash)
