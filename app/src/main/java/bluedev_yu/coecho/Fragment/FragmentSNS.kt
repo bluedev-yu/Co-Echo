@@ -23,7 +23,7 @@ class FragmentSNS : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSnsBinding.inflate(inflater, container, false)
-        val view = binding.root
+        //val view = binding.root
         return inflater.inflate(R.layout.fragment_sns, container, false)
     }
 

@@ -2,15 +2,18 @@ package bluedev_yu.coecho
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.fragment.FragmentMap
 import bluedev_yu.coecho.fragment.FragmentMyPage
 import bluedev_yu.coecho.fragment.FragmentSNS
 import bluedev_yu.coecho.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -19,6 +22,7 @@ import com.google.firebase.storage.FirebaseStorage
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener{
 
+    var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
     var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
 
@@ -26,6 +30,9 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -34,13 +41,21 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         setDefaultFragment()
 
-        val user = Firebase.auth.currentUser
-        if(user!=null)
-            Toast.makeText(this,user.uid,Toast.LENGTH_LONG).show()
-        else
-            Toast.makeText(this,"no One",Toast.LENGTH_SHORT).show()
-
         binding.bottomNavBar.itemIconTintList = null;
+
+        //firebase 로그인, 권한
+
+        var userInfo = userDTO()
+
+        userInfo.uid = auth?.currentUser?.uid
+        userInfo.userid = auth?.currentUser?.email
+
+
+        firestore?.collection("User")?.document(auth?.uid.toString())?.set(userInfo)
+
+        Toast.makeText(this,"일단 넘어옴",Toast.LENGTH_SHORT).show()
+
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean { //내비게이션바 아이템 선택시 프래그먼트 교체

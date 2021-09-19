@@ -1,11 +1,15 @@
 package bluedev_yu.coecho.fragment
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import bluedev_yu.coecho.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +26,14 @@ class FragmentMyPage : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    var auth : FirebaseAuth? = null
+    var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
+    var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
+
+    private var viewProfile  : View? = null
+    var pickImageFromAlbum =0
+    var uriPhoto : Uri?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,7 +47,14 @@ class FragmentMyPage : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_page, container, false)
+        viewProfile =  inflater.inflate(R.layout.fragment_my_page, container, false)
+
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+        firestorage = FirebaseStorage.getInstance()
+
+
+        return viewProfile
     }
 
     companion object {
