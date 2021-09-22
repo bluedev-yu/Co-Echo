@@ -4,7 +4,9 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
+import android.telecom.Call
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -14,16 +16,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.mapmain.*
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
-
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Query
 
 class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     val eventListener = MarkerEventListener(this)
+    companion object {
+        const val BASE_URL = "https://dapi.kakao.com/"
+        const val API_KEY = "KakaoAK 0d22f63c01f4013bda7cba8927cd0e33"  // REST API 키
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -34,6 +48,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         hambuger_menu.setOnClickListener{
             layout_drawer.openDrawer(GravityCompat.END)
         }
+
         // 네비게이션 드로워 아이템 클릭 속성 부여
         hambuger_navigation_view.setNavigationItemSelectedListener(this)
 
@@ -45,6 +60,11 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         val mapView = MapView(this)
         val mapViewContainer = findViewById<View>(R.id.map_view) as ViewGroup
         mapViewContainer.addView(mapView)
+
+        //현재 위치를 중심으로 맵 보여주기
+        mapView.currentLocationTrackingMode=MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
+
+
 
         //마커 추가 코드
         mapView.addPOIItem(newCustomMapPoiItem("제로스테이", 35.81943491247418, 128.52228528837313))
@@ -67,7 +87,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
 
         //맵 초기 위치 설정(마커 있는 진천동 부근으로 임의설정)
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(35.81, 128.52), true);
+        //mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(35.81, 128.52), true);
 
         //권한 요청 코드(denied가 뜰 경우 앱을 다시 실행시켜 권한 요청 다시 받아서 실행)
         if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(
@@ -105,6 +125,29 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     }
 
+    //주변 검색 데이터 타입(후에 수정하여 코딩 예정1)
+//    private fun searchKeyword(keyword: String)
+//    {
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl(BASE_URL)
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//        val interFace=retrofit.create(KAKAOSearch::class.java)
+//        val call=interFace.getSearchKeyword(API_KEY,keyword)
+//        call.enqueue(object: Callback<ResultSearchKeyword> {
+//            override fun onResponse(
+//                call: retrofit2.Call<ResultSearchKeyword>,
+//                response: Response<ResultSearchKeyword>
+//            ) {
+//                Log.d("카카오 검색 성공", "Raw: ${response.raw()}")
+//                Log.d("카카오 검색 성공", "Body: ${response.body()}")
+//            }
+//
+//            override fun onFailure(call: retrofit2.Call<ResultSearchKeyword>, t: Throwable) {
+//                Log.d("카카오 검색 실패", "통신 실패: ${t.message}")
+//            }
+//        })
+//    }
     // 네비게이션 드로워 아이템 선택 시 수행
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId)
@@ -166,7 +209,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         }
     }
 
-
+    //마커 추가 함수
     fun newMapPoiItem(iName: String, lat: Double, lon: Double): MapPOIItem//지도에 마커 추가 함수
     {
         val marker = MapPOIItem()
@@ -229,3 +272,37 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     }
 }
 
+//주변 검색 데이터 타입(후에 수정하여 코딩 예정2)
+//data class ResultSearchKeyword(
+//    var meta: ResMeta,                // 장소 메타데이터
+//    var documents: List<Place>          // 검색 결과
+//)
+//
+//data class ResMeta
+//    (
+//    var total_count: Int,
+//    var pageable_count: Int,
+//    var is_end: Boolean
+//)
+//
+//data class Place // data class 괄호=> 생성자
+//    (
+//    var id: String,                     // 장소 ID
+//    var place_name: String,             // 장소명, 업체명
+//    var category_name: String,          // 카테고리 이름
+//    var category_group_code: String,    // 중요 카테고리만 그룹핑한 카테고리 그룹 코드
+//    var category_group_name: String,    // 중요 카테고리만 그룹핑한 카테고리 그룹명
+//    var phone: String,                  // 전화번호
+//    var address_name: String,           // 전체 지번 주소
+//    var road_address_name: String,      // 전체 도로명 주소
+//    var x: String,                      // X 좌표값 혹은 longitude
+//    var y: String,                      // Y 좌표값 혹은 latitude
+//    var place_url: String,              // 장소 상세페이지 URL
+//    var distanc: String                 // 중심좌표까지의 거리. 단, x,y 파라미터를 준 경우에만 존재. 단위는 meter
+//)
+//
+//interface KAKAOSearch {
+//    @GET("/v2/local/search/address.json")
+//    fun getSearchKeyword(@Header("Authorization") key: String,
+//                         @Query("query") query: String):retrofit2.Call<ResultSearchKeyword>
+//}
