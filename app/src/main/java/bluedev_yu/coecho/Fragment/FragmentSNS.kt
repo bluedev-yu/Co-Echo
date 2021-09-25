@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import bluedev_yu.coecho.FeedAdapter
+import bluedev_yu.coecho.Feeds
 import bluedev_yu.coecho.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -18,9 +22,21 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class FragmentSNS : Fragment() {
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    lateinit var rv_feed: RecyclerView
+
+    val feedList = arrayListOf(
+        Feeds(R.drawable.man1, "차은우"),
+        Feeds(R.drawable.woman1, "강미주"),
+        Feeds(R.drawable.man1, "김동률"),
+        Feeds(R.drawable.woman1, "길혜주"),
+        Feeds(R.drawable.man1, "홍길동"),
+        Feeds(R.drawable.woman1, "김예현")
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +51,15 @@ class FragmentSNS : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sns, container, false)
+        val view = inflater.inflate(R.layout.fragment_sns, container, false)
+        rv_feed = view.findViewById(R.id.rv_feed)
+
+        rv_feed.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        rv_feed.setHasFixedSize(true)
+
+        rv_feed.adapter = FeedAdapter(feedList)
+
+        return view
     }
 
     companion object {
