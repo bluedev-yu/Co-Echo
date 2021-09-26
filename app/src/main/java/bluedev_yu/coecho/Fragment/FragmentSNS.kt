@@ -53,6 +53,8 @@ class FragmentSNS : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_sns, container, false)
+
+        //리사이클러뷰 추가하기
         rv_feed = view.findViewById(R.id.rv_feed)
 
         rv_feed.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

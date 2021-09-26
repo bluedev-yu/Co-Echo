@@ -46,8 +46,24 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_feed"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/green"
+        android:contentDescription="글쓰기"
+        android:text="글쓰기"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:icon="@drawable/plus"
+        app:iconSize="18dp" />
 
 </FrameLayout>
