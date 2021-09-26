@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.fragment.FragmentMap
@@ -18,6 +19,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.util.jar.Manifest
 
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener{
@@ -49,12 +51,10 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         userInfo.uid = auth?.currentUser?.uid
         userInfo.userid = auth?.currentUser?.email
-
-
         firestore?.collection("User")?.document(auth?.uid.toString())?.set(userInfo)
 
-        Toast.makeText(this,"일단 넘어옴",Toast.LENGTH_SHORT).show()
-
+        //앨범 권한
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1)
 
     }
 

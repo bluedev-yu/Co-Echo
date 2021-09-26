@@ -54,6 +54,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/MyPageOptionButton"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:layout_marginLeft="15dp"
@@ -66,33 +67,51 @@
 
         <!-- 도장이랑 프로필수정 보이는곳 -->
 
-        <!-- 도장이랑 프로필수정 보이는곳 -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2.7"
+            android:orientation="vertical"
+            >
 
-            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:src="@drawable/mypage_filled"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/MypageProfileImage"
+                    android:src="@drawable/default_profilephoto"/>
+
+                <Button
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:layout_marginLeft="230dp"
+                    android:id="@+id/MyPageProfileOptionButton"
+                    android:background="@drawable/mypage_profileoptionbutton">
+                </Button>
+            </FrameLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"></TextView>
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:text="새싹  신혜리"></TextView>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="4.5"
-            android:background="@drawable/whitebox">
+            android:layout_height="0dp"
+            android:layout_weight="7.3"
+            android:background="@drawable/mypage_background">
+
         </LinearLayout>
 
     </LinearLayout>
