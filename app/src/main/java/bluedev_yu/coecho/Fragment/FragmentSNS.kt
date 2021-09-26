@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.FeedAdapter
 import bluedev_yu.coecho.Feeds
 import bluedev_yu.coecho.R
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +31,7 @@ class FragmentSNS : Fragment() {
     private var param2: String? = null
 
     lateinit var rv_feed: RecyclerView
+    lateinit var fab: ExtendedFloatingActionButton
 
     val feedList = arrayListOf(
         Feeds(R.drawable.man1, "차은우", "안녕하세용가리~", "#친환경 브랜드", R.drawable.feedimg2, 2, 10),
@@ -61,6 +65,11 @@ class FragmentSNS : Fragment() {
         rv_feed.setHasFixedSize(true)
 
         rv_feed.adapter = FeedAdapter(feedList)
+
+        fab = view.findViewById(R.id.btn_upload)
+        fab.setOnClickListener {
+            println("보이니~~~~~~~~~~~~~~~")
+        }
 
         return view
     }
