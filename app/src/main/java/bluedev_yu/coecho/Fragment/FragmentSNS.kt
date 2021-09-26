@@ -1,5 +1,6 @@
 package bluedev_yu.coecho.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.FeedAdapter
 import bluedev_yu.coecho.Feeds
 import bluedev_yu.coecho.R
+import bluedev_yu.coecho.UploadFeed
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -68,7 +70,8 @@ class FragmentSNS : Fragment() {
 
         fab = view.findViewById(R.id.btn_upload)
         fab.setOnClickListener {
-            println("보이니~~~~~~~~~~~~~~~")
+            val intent = Intent(requireContext(), UploadFeed::class.java)
+            requireContext().startActivity(intent)
         }
 
         return view
