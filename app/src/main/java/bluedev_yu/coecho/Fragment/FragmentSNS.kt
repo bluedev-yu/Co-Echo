@@ -34,7 +34,7 @@ class FragmentSNS : Fragment() {
         Feeds(R.drawable.woman1, "강미주", "제 말이 들리시나요?", "#러쉬", R.drawable.feedimg1, 100, 29),
         Feeds(R.drawable.man1, "김동률", "전 할말 없어여~", "#해시태그", R.drawable.feedimg2, 20, 12),
         Feeds(R.drawable.woman1, "길혜주", "코에코 화이팅~", "뭐하징", R.drawable.feedimg1, 10, 29),
-        Feeds(R.drawable.man1, "홍길동", "오랜만에 신세계 러쉬 갔다왔어요~~~여러분!! 러쉬가 친환경 브랜드인 거 알고계셨나요?? 입욕제로 유명한 건 알고있었는데 패키지까지 친환경인 건 몰랐어요!! 종이랑 안에있는 완충제까지 전부 다 물에 녹는 성분이래요!! 여러분들도 러쉬한 번 들려보세용ㅎㅎㅎ",
+        Feeds(R.drawable.man1, "홍길동", "오랜만에 신세계 러쉬 갔다왔어요~~~여러분!! 러쉬가 친환경 브랜드인거 알고계셨나요?? 입욕제로 유명한 건 알고있었는데 패키지까지 친환경인 건 몰랐어요!! 종이랑 안에있는 완충제까지 전부 다 물에 녹는 성분이래요!! 여러분들도 러쉬한 번 들려보세용ㅎㅎㅎ",
         "이렇게하는건가요", R.drawable.feedimg2, 22, 104),
         Feeds(R.drawable.woman1, "김예현", "빵꾸똥꾸", "빵꾸똥꾸", R.drawable.feedimg1, 110, 299)
     )

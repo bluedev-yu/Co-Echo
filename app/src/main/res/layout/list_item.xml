@@ -87,7 +87,9 @@
                 android:text="안녕 test"
                 android:textColor="#000000"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:maxLines="3"
+                android:ellipsize="end"/>
 
             <ImageView
                 android:id="@+id/iv_image"
