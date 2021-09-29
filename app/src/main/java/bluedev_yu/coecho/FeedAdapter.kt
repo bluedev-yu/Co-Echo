@@ -1,11 +1,13 @@
 package bluedev_yu.coecho
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+
 
 class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
@@ -15,13 +17,13 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
     }
 
     override fun onBindViewHolder(holder: FeedAdapter.CustomViewHolder, position: Int) {
-        holder.gender.setImageResource(feedList.get(position).gender)
-        holder.name.text = feedList.get(position).name
-        holder.text.text = feedList.get(position).text
+        //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
+        holder.userId.text = feedList.get(position).userId
+        holder.content.text = feedList.get(position).content
         holder.hashtag.text = feedList.get(position).hashtag
-        holder.image.setImageResource(feedList.get(position).image)
-        holder.like.text = feedList.get(position).like.toString()
-        holder.comment.text = feedList.get(position).comment.toString()
+        //holder.feedImgUrl.setImageResource(feedList.get(position).feedImgUrl)
+        holder.likeCnt.text = feedList.get(position).likeCnt.toString()
+        holder.commentCnt.text = feedList.get(position).commentCnt.toString()
     }
 
     override fun getItemCount(): Int {
@@ -29,13 +31,13 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
     }
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val gender = itemView.findViewById<ImageView>(R.id.iv_profile) //성별
-        val name = itemView.findViewById<TextView>(R.id.tv_name) //이름
-        val text = itemView.findViewById<TextView>(R.id.tv_text) //피드 글
-        val hashtag = itemView.findViewById<TextView>(R.id.tv_hashtag) //해시태그
-        val image = itemView.findViewById<ImageView>(R.id.iv_image) //피드 이미지
-        val like = itemView.findViewById<TextView>(R.id.tv_like) //좋아요 수
-        val comment = itemView.findViewById<TextView>(R.id.tv_comment) //댓글 수
+        //var profileImgUrl = itemView.findViewById<ImageView>(R.id.iv_profile) //프로필 이미지
+        var userId = itemView.findViewById<TextView>(R.id.tv_name) //이름
+        var content = itemView.findViewById<TextView>(R.id.tv_content) //피드 글
+        var hashtag = itemView.findViewById<TextView>(R.id.tv_hashtag) //해시태그
+        //var feedImgUrl = itemView.findViewById<ImageView>(R.id.iv_image) //피드 이미지
+        var likeCnt = itemView.findViewById<TextView>(R.id.tv_like) //좋아요 수
+        var commentCnt = itemView.findViewById<TextView>(R.id.tv_comment) //댓글 수
     }
 
 }
