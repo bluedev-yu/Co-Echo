@@ -2,10 +2,14 @@ package bluedev_yu.coecho.fragment
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +19,17 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import bluedev_yu.coecho.LoginActivity
+import bluedev_yu.coecho.MainActivity
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.databinding.FragmentMyPageBinding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -78,8 +87,11 @@ class FragmentMyPage : Fragment() {
                 ProfileImage.setImageResource(R.drawable.default_profilephoto)
             else
             {
-                Toast.makeText(this.context,document?.imageUrl?.toString(),Toast.LENGTH_SHORT).show()
-                ProfileImage.setImageURI(document?.imageUrl?.toUri())
+                activity?.let {
+                    Glide.with(it)
+                        .load(document?.imageUrl)
+                        .apply(RequestOptions().circleCrop()).into(viewProfile!!.findViewById(R.id.MypageProfileImage))
+                }
             }
         }
 
@@ -89,6 +101,15 @@ class FragmentMyPage : Fragment() {
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type = "image/*"
             startActivityForResult(photoPickerIntent,pickImageFromAlbum)
+        }
+
+        //로그아웃
+        val LogoutButton : Button = viewProfile!!.findViewById(R.id.LogOutButton)
+        LogoutButton.setOnClickListener{
+            auth!!.signOut()
+            Toast.makeText(this.context,"로그아웃 되었습니다.",Toast.LENGTH_LONG)
+            val intent = Intent(this.context, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         return viewProfile
