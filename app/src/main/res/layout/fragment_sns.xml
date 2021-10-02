@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f8ffe0"
+    android:background="#f9ffe1"
     tools:context=".fragment.FragmentSNS">
 
     <LinearLayout
