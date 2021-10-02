@@ -20,6 +20,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import bluedev_yu.coecho.Fragment.fragmentMyFeed
 import bluedev_yu.coecho.LoginActivity
 import bluedev_yu.coecho.MainActivity
 import bluedev_yu.coecho.R
@@ -60,6 +63,10 @@ class FragmentMyPage : Fragment() {
     var pickImageFromAlbum =0
     var uriPhoto : Uri?= null
 
+    var fragmentMyFeed : Fragment ?= null
+    var fragmentMyReview : Fragment ?= null
+    var fragmentLikeStores : Fragment ? = null
+    var fragmentSubscriber : Fragment ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,7 +107,7 @@ class FragmentMyPage : Fragment() {
             val MypageUsername : TextView = viewProfile!!.findViewById(R.id.MyPageUserName)
             MypageUsername.setText(document?.strName)
 
-
+            //프로필사진
             if(document?.imageUrl == null)
                 ProfileImage.setImageResource(R.drawable.default_profilephoto)
             else
@@ -122,13 +129,14 @@ class FragmentMyPage : Fragment() {
         }
 
         //로그아웃
+        /*
         val LogoutButton : Button = viewProfile!!.findViewById(R.id.LogOutButton)
         LogoutButton.setOnClickListener{
             auth!!.signOut()
             Toast.makeText(this.context,"로그아웃 되었습니다.",Toast.LENGTH_LONG)
             val intent = Intent(this.context, LoginActivity::class.java)
             startActivity(intent)
-        }
+        }*/
 
         return viewProfile
     }
@@ -164,6 +172,29 @@ class FragmentMyPage : Fragment() {
             }
         }
 
+    }
+
+    class FragmentAdapter (fm : FragmentManager) : FragmentPagerAdapter(fm){
+
+        override fun getItem(position: Int): Fragment {
+            val fragment = when(position)
+            {
+                0 -> fragmentMyFeed().new
+            }
+        }
+
+        //tab 개수
+        override fun getCount(): Int = 4
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            val title = when(position)
+            {
+                0 -> "내 피드"
+                1 -> "나의 리뷰"
+                2 -> "찜한 가게"
+                3 -> "구독"
+            }
+            return title    }
     }
 
     companion object {
