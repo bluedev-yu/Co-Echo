@@ -46,12 +46,18 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         binding.bottomNavBar.itemIconTintList = null;
 
         //firebase 로그인, 권한
-        if(firestore?.collection("User")?.document(auth?.uid.toString())?.get() == null) //firebase에 없음
-        {
-            var userInfo = userDTO()
-            userInfo.uid = auth?.currentUser?.uid
-            userInfo.userid = auth?.currentUser?.email
-            firestore?.collection("User")?.document(auth?.uid.toString())?.set(userInfo)
+        firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener {
+            doc ->
+            if(doc.exists()){
+
+            }
+            else
+            {
+                var userInfo = userDTO()
+                userInfo.uid = auth?.currentUser?.uid
+                userInfo.userid = auth?.currentUser?.email
+                firestore?.collection("User")?.document(auth?.uid.toString())?.set(userInfo)
+            }
         }
 
         //앨범 권한
@@ -78,7 +84,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun setDefaultFragment(){ //앱 실행시 디폴트 프래그먼트 설정
-        loadFragment(FragmentSNS())
+        loadFragment(FragmentMyPage())
     }
 
     private fun loadFragment(fragment: Fragment) { //프래그먼트 로드
