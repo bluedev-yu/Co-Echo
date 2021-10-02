@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 var userInfo = userDTO()
                 userInfo.uid = auth?.currentUser?.uid
                 userInfo.userid = auth?.currentUser?.email
+                userInfo.strName = auth?.currentUser?.displayName
                 firestore?.collection("User")?.document(auth?.uid.toString())?.set(userInfo)
             }
         }
@@ -88,7 +89,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun setDefaultFragment(){ //앱 실행시 디폴트 프래그먼트 설정
-        loadFragment(FragmentMyPage())
+        loadFragment(FragmentSNS())
     }
 
     private fun loadFragment(fragment: Fragment) { //프래그먼트 로드
