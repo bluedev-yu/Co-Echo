@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.fragment.FragmentMap
@@ -32,6 +33,9 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.green)
+
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
