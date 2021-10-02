@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
@@ -54,6 +55,16 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mapmain)
 
+        val placeList = arrayListOf(
+            Places("#친환경", "제로웨이스트샵", "생활용품", 98, "대구 달서구 98-12", "5.1km"),
+            Places("#러쉬", "러쉬", "화장품", 9, "대구 동구 98-12", "1.1km"),
+            Places("#샐러드", "식당", "생활용품", 18, "대구 수성구 98-12", "3.1km")
+        )
+
+        rv_places.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rv_places.setHasFixedSize(true)
+        rv_places.adapter = PlaceAdapter(placeList)
+
         // 햄버거 메뉴 선택시 오른쪽으로 열린다
         hambuger_menu.setOnClickListener{
             layout_drawer.openDrawer(GravityCompat.END)
@@ -62,10 +73,6 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         // 네비게이션 드로워 아이템 클릭 속성 부여
         hambuger_navigation_view.setNavigationItemSelectedListener(this)
 
-        imageView13.setOnClickListener {
-            val intent = Intent(this, Place_detail::class.java)
-            startActivity(intent)
-        }
         getContext()
         val mapView = MapView(this)
         val mapViewContainer = findViewById<View>(R.id.map_view) as ViewGroup
