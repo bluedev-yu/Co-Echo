@@ -38,6 +38,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
+            android:id="@+id/btn_upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -50,7 +51,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/et_text"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_marginStart="16dp"
@@ -68,8 +69,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="@+id/editText"
-            app:layout_constraintTop_toBottomOf="@+id/editText"
+            app:layout_constraintStart_toStartOf="@+id/et_text"
+            app:layout_constraintTop_toBottomOf="@+id/et_text"
             app:srcCompat="@drawable/iv_hashtag" />
 
         <TextView
@@ -83,7 +84,7 @@
             app:layout_constraintTop_toTopOf="@+id/iv_hashtag" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/et_hashtag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -103,39 +104,27 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_hashtag"
             app:srcCompat="@drawable/iv_privacy" />
 
-        <TextView
-            android:id="@+id/tv_privacy"
+        <RadioButton
+            android:id="@+id/rb_public"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="공개범위"
+            android:text="전체보기"
             app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
             app:layout_constraintStart_toEndOf="@+id/iv_privacy"
-            app:layout_constraintTop_toTopOf="@+id/iv_privacy" />
+            app:layout_constraintTop_toTopOf="@+id/iv_privacy"
+            android:onClick="onRadioButtonClicked"/>
 
-        <Button
-            android:id="@+id/btn_public"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/buttom_design"
-            android:text="전체공개"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
-            app:layout_constraintStart_toEndOf="@+id/tv_privacy"
-            app:layout_constraintTop_toTopOf="@+id/iv_privacy" />
-
-        <Button
-            android:id="@+id/btn_private"
+        <RadioButton
+            android:id="@+id/rb_private"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:background="@drawable/buttom_design"
             android:text="나만보기"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_public"
-            app:layout_constraintStart_toEndOf="@+id/btn_public"
-            app:layout_constraintTop_toTopOf="@+id/btn_public" />
+            app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
+            app:layout_constraintStart_toEndOf="@+id/rb_public"
+            app:layout_constraintTop_toTopOf="@+id/iv_privacy"
+            android:onClick="onRadioButtonClicked"/>
 
         <ImageView
             android:id="@+id/iv_photo"
