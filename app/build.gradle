@@ -79,6 +79,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     //페이스북로그인
-    implementation 'com.facebook.android:facebook-login:[8.1)'
+    //implementation 'com.facebook.android:facebook-login:[8.1)'
 
 }
