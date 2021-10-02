@@ -47,35 +47,106 @@
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="500dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
             android:hint="새 소식을 공유해보세요."
+            android:gravity="top"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/iv_hashtag"-->
-<!--            android:layout_width="30dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/editText"-->
-<!--            app:srcCompat="@drawable/iv_hashtag"/>-->
+        <ImageView
+            android:id="@+id/iv_hashtag"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@+id/editText"
+            app:layout_constraintTop_toBottomOf="@+id/editText"
+            app:srcCompat="@drawable/iv_hashtag" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/iv_privacy"-->
-<!--            android:layout_width="30dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            app:layout_constraintStart_toStartOf="@id/iv_hashtag"-->
-<!--            app:srcCompat="@drawable/iv_privacy" />-->
+        <TextView
+            android:id="@+id/tv_uploadHashtag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="해시태그"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_hashtag"
+            app:layout_constraintStart_toEndOf="@+id/iv_hashtag"
+            app:layout_constraintTop_toTopOf="@+id/iv_hashtag" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/iv_photo"-->
-<!--            android:layout_width="30dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            app:layout_constraintStart_toStartOf="@id/iv_hashtag"-->
-<!--            app:srcCompat="@drawable/iv_image" />-->
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:hint="#해시태그"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_hashtag"
+            app:layout_constraintStart_toEndOf="@+id/tv_uploadHashtag"
+            app:layout_constraintTop_toTopOf="@+id/iv_hashtag" />
+
+        <ImageView
+            android:id="@+id/iv_privacy"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@id/iv_hashtag"
+            app:layout_constraintTop_toBottomOf="@+id/iv_hashtag"
+            app:srcCompat="@drawable/iv_privacy" />
+
+        <TextView
+            android:id="@+id/tv_privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="공개범위"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
+            app:layout_constraintStart_toEndOf="@+id/iv_privacy"
+            app:layout_constraintTop_toTopOf="@+id/iv_privacy" />
+
+        <Button
+            android:id="@+id/btn_public"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="전체공개"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
+            app:layout_constraintStart_toEndOf="@+id/tv_privacy"
+            app:layout_constraintTop_toTopOf="@+id/iv_privacy" />
+
+        <Button
+            android:id="@+id/btn_private"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="나만보기"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_public"
+            app:layout_constraintStart_toEndOf="@+id/btn_public"
+            app:layout_constraintTop_toTopOf="@+id/btn_public" />
+
+        <ImageView
+            android:id="@+id/iv_photo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="16dp"
+
+            app:layout_constraintStart_toStartOf="@id/iv_hashtag"
+            app:layout_constraintTop_toBottomOf="@+id/iv_privacy"
+            app:srcCompat="@drawable/iv_image" />
+
+        <TextView
+            android:id="@+id/tv_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="사진"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
+            app:layout_constraintStart_toEndOf="@+id/iv_photo"
+            app:layout_constraintTop_toTopOf="@+id/iv_photo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
