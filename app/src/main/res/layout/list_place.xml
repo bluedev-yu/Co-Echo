@@ -12,7 +12,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:cardUseCompatPadding="true"
         android:background="@color/white"
+        app:cardElevation="2dp"
         app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +25,7 @@
                 android:id="@+id/placeRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="@+id/tv_placeHashtag"
                 app:layout_constraintTop_toBottomOf="@+id/tv_placeName" />
 
@@ -63,7 +65,6 @@
                 android:id="@+id/tv_placeReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="방문자리뷰"
                 app:layout_constraintStart_toStartOf="@+id/tv_placeHashtag"
                 app:layout_constraintTop_toBottomOf="@+id/placeRatingBar" />
@@ -83,7 +84,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:text="대구 달서구 진천로 114-18"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_placeHashtag"
                 app:layout_constraintTop_toBottomOf="@+id/tv_placeReview" />
 
