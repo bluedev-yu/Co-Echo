@@ -25,4 +25,8 @@
     <string name="signout_fail">로그아웃 실패</string>
     <string name="signout_fail_null">이메일과 비밀번호를 입력해주세요</string>
 
+    <!--칭호-->
+    <string name="grade1">새싹</string>
+    <string name="grade2">숲</string>
+
 </resources>

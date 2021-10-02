@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -83,6 +84,23 @@ class FragmentMyPage : Fragment() {
             documentSnapshot, firebaseFirestoreException ->
             var document = documentSnapshot?.toObject(userDTO::class.java)
             val ProfileImage : ImageView = viewProfile!!.findViewById(R.id.MypageProfileImage)
+
+            //칭호
+            val MypageTitle : TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
+            if(document?.title ==0)
+            {
+                MypageTitle.setText(R.string.grade1)
+            }
+            else
+            {
+                MypageTitle.setText(R.string.grade2)
+            }
+
+            //사람이름
+            val MypageUsername : TextView = viewProfile!!.findViewById(R.id.MyPageUserName)
+            MypageUsername.setText(document?.strName)
+
+
             if(document?.imageUrl == null)
                 ProfileImage.setImageResource(R.drawable.default_profilephoto)
             else

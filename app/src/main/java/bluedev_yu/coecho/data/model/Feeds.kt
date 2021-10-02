@@ -1,4 +1,4 @@
-package bluedev_yu.coecho
+package bluedev_yu.coecho.data.model
 
 class Feeds(var profileImgUrl: String? = null,
             var feedImgUrl: String? = null,
