@@ -87,7 +87,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
         //firebase DB 접근
         val dbinst=DB_Place()
-        //dbinst.insert_data("temp","tmp","35.81","128.52")
+        dbinst.insert_data("temp","tmp","35.81","128.52")
         dbinst.read_data()
 
 
@@ -124,7 +124,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         }
         //현재 위치를 중심으로 맵 보여주기
         mapView.currentLocationTrackingMode=MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
-        
+
         //API키 인증 성공 확인 코드(아래 로그가 뜨지 않을 경우 김예현에게 문의)
         mapView.setOpenAPIKeyAuthenticationResultListener { mapView, i, s ->
             Log.d("카카오맵 인증 로그", "성공")

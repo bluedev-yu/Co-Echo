@@ -29,11 +29,11 @@ class DB_Place {
     fun read_data()
     {
 
-        db.collection("users")
+        db.collection("Places")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    Log.d(TAG, "${document.id} => ${document.data}")
+                    Log.d(TAG, "getting documents: ${document.id} => ${document.data}")
                 }
             }
             .addOnFailureListener { exception ->
