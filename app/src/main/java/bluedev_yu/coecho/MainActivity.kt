@@ -3,6 +3,7 @@ package bluedev_yu.coecho
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.FirebaseOptions
 import com.kakao.sdk.common.util.Utility
 
 class MainActivity : AppCompatActivity() {
