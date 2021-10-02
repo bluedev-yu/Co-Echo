@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoEcho">
         <activity android:name=".UploadFeed"></activity>
-        <activity android:name=".MainActivity">
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
