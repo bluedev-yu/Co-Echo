@@ -78,8 +78,7 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         val mapViewContainer = findViewById<View>(R.id.map_view) as ViewGroup
         mapViewContainer.addView(mapView)
 
-        //현재 위치를 중심으로 맵 보여주기
-        mapView.currentLocationTrackingMode=MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
+
         //맵뷰에 이벤트 리스너 적용
         mapView.setMapViewEventListener(mapltner)
         mapView.setPOIItemEventListener(eventListener)
@@ -110,30 +109,22 @@ class MapActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         mapView.addPOIItem(newMapPoiItem("하고카페",35.83686062629213, 128.58207838413546))
 
         //권한 요청 코드(denied가 뜰 경우 앱을 다시 실행시켜 권한 요청 다시 받아서 실행)
-        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
+        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         ) {
             Log.d("권한 허용 여부", "***denied***")
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1004
-            )
-            if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            )
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1004)
+            if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 Log.d("권한 허용 여부", "***still denied***")
-        } else if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        ) Log.d("권한 허용 여부", "***granted***")
-
-
+                Toast.makeText(this,"위치 권한이 있어야 실행 가능합니다",Toast.LENGTH_LONG).show()
+            }
+        }
+        else if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        ) {
+            Log.d("권한 허용 여부", "***granted***")
+        }
+        //현재 위치를 중심으로 맵 보여주기
+        mapView.currentLocationTrackingMode=MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
+        
         //API키 인증 성공 확인 코드(아래 로그가 뜨지 않을 경우 김예현에게 문의)
         mapView.setOpenAPIKeyAuthenticationResultListener { mapView, i, s ->
             Log.d("카카오맵 인증 로그", "성공")
