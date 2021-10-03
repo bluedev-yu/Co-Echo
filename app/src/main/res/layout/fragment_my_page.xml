@@ -124,6 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="7"
+            android:orientation="vertical"
             android:background="@drawable/mypage_background">
 
             <!--
@@ -137,18 +138,20 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/MyPageTabs"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:elevation="1dp"
-                app:tabMode="fixed"
-                >
+                android:layout_height="40dp"
+                app:tabIndicatorFullWidth="false"
+                app:tabIndicatorColor="#00B06A"
+                app:tabSelectedTextColor="#00B06A"
+                android:background="#00000000"
+
+                app:tabMode="fixed">
+            </com.google.android.material.tabs.TabLayout>
 
             <androidx.viewpager.widget.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/viewPager">
             </androidx.viewpager.widget.ViewPager>
-
-            </com.google.android.material.tabs.TabLayout>
 
         </LinearLayout>
 

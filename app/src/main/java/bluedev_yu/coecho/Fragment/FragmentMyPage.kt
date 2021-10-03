@@ -20,9 +20,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
+import bluedev_yu.coecho.Fragment.fragmentLikeStores
 import bluedev_yu.coecho.Fragment.fragmentMyFeed
+import bluedev_yu.coecho.Fragment.fragmentMyReview
+import bluedev_yu.coecho.Fragment.fragmentSubscriber
+import bluedev_yu.coecho.FragmentAdapter
+
 import bluedev_yu.coecho.LoginActivity
 import bluedev_yu.coecho.MainActivity
 import bluedev_yu.coecho.R
@@ -30,6 +37,7 @@ import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.databinding.FragmentMyPageBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -74,6 +82,7 @@ class FragmentMyPage : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
@@ -138,6 +147,17 @@ class FragmentMyPage : Fragment() {
             startActivity(intent)
         }*/
 
+        //탭레이아웃
+        val fragmentManager = (activity as FragmentActivity).supportFragmentManager
+
+
+        val pagerAdapter = FragmentAdapter(fragmentManager)
+        val pager = viewProfile!!.findViewById<ViewPager>(R.id.viewPager)
+        pager.adapter = pagerAdapter
+        val tab = viewProfile!!.findViewById<TabLayout>(R.id.MyPageTabs)
+        tab.setupWithViewPager(pager)
+
+
         return viewProfile
     }
 
@@ -174,28 +194,6 @@ class FragmentMyPage : Fragment() {
 
     }
 
-    class FragmentAdapter (fm : FragmentManager) : FragmentPagerAdapter(fm){
-
-        override fun getItem(position: Int): Fragment {
-            val fragment = when(position)
-            {
-                0 -> fragmentMyFeed().new
-            }
-        }
-
-        //tab 개수
-        override fun getCount(): Int = 4
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            val title = when(position)
-            {
-                0 -> "내 피드"
-                1 -> "나의 리뷰"
-                2 -> "찜한 가게"
-                3 -> "구독"
-            }
-            return title    }
-    }
 
     companion object {
         /**

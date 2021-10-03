@@ -27,7 +27,7 @@ class fragmentLikeStores : Fragment() {
         return inflater.inflate(R.layout.fragment_like_stores, container, false)
     }
 
-    private fun newInstant() : fragmentLikeStores
+    fun newInstant() : fragmentLikeStores
     {
         val args = Bundle()
         val frag = fragmentLikeStores()

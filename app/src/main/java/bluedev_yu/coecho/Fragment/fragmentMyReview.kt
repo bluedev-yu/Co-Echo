@@ -26,7 +26,7 @@ class fragmentMyReview : Fragment() {
         return inflater.inflate(R.layout.fragment_my_review, container, false)
     }
 
-    private fun newInstant() : fragmentMyReview
+    fun newInstant() : fragmentMyReview
     {
         val args = Bundle()
         val frag = fragmentMyReview()

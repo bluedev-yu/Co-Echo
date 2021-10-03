@@ -27,7 +27,7 @@ class fragmentMyFeed : Fragment() {
         return inflater.inflate(R.layout.fragment_my_feed, container, false)
     }
 
-    private fun newInstant() : fragmentMyFeed
+    fun newInstant() : fragmentMyFeed
     {
         val args = Bundle()
         val frag = fragmentMyFeed()

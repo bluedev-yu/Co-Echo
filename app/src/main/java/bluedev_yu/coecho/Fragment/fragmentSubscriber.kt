@@ -27,7 +27,7 @@ class fragmentSubscriber : Fragment() {
         return inflater.inflate(R.layout.fragment_subscriber, container, false)
     }
 
-    private fun newInstant() : fragmentSubscriber
+    fun newInstant() : fragmentSubscriber
     {
         val args = Bundle()
         val frag = fragmentSubscriber()
