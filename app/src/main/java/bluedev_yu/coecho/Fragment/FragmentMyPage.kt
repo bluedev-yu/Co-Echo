@@ -24,15 +24,12 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import bluedev_yu.coecho.Fragment.fragmentLikeStores
-import bluedev_yu.coecho.Fragment.fragmentMyFeed
-import bluedev_yu.coecho.Fragment.fragmentMyReview
-import bluedev_yu.coecho.Fragment.fragmentSubscriber
 import bluedev_yu.coecho.FragmentAdapter
 
 import bluedev_yu.coecho.LoginActivity
 import bluedev_yu.coecho.MainActivity
 import bluedev_yu.coecho.R
+import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.databinding.FragmentMyPageBinding
 import com.bumptech.glide.Glide
@@ -41,6 +38,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import org.w3c.dom.Text
 
 import java.text.SimpleDateFormat
 import java.util.*
@@ -55,7 +53,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FragmentMyPage.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentMyPage : Fragment() {
+public class FragmentMyPage : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -70,11 +68,6 @@ class FragmentMyPage : Fragment() {
     private var viewProfile  : View? = null
     var pickImageFromAlbum =0
     var uriPhoto : Uri?= null
-
-    var fragmentMyFeed : Fragment ?= null
-    var fragmentMyReview : Fragment ?= null
-    var fragmentLikeStores : Fragment ? = null
-    var fragmentSubscriber : Fragment ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,6 +130,18 @@ class FragmentMyPage : Fragment() {
             startActivityForResult(photoPickerIntent,pickImageFromAlbum)
         }
 
+        //팔로워 팔로잉
+        firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{
+                documentSnapshot, firebaseFirestoreException ->
+            var document = documentSnapshot?.toObject(FollowDTO::class.java)
+            val MyPageFollower : TextView = viewProfile!!.findViewById(R.id.MyPageFollower)
+            val MyPageFollowing : TextView = viewProfile!!.findViewById(R.id.MyPageFollowing)
+
+            MyPageFollower.setText(document!!.followerCount.toString()+" 팔로워")
+            MyPageFollowing.setText(document!!.followingCount.toString()+" 팔로윙")
+
+        }
+
         //로그아웃
         /*
         val LogoutButton : Button = viewProfile!!.findViewById(R.id.LogOutButton)
@@ -177,7 +182,7 @@ class FragmentMyPage : Fragment() {
         }
     }
 
-    private fun funImageUpLoad(view : View){
+    fun funImageUpLoad(view : View){
         //var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var user = auth?.currentUser?.uid.toString()
         var imgFileName = "PROFILE"+user+".png"

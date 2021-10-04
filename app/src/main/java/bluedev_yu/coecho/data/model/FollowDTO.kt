@@ -3,8 +3,8 @@ package bluedev_yu.coecho.data.model
 data class FollowDTO(
 
         var followerCount: Int = 0,
-        var followers: Array<String>,
+        var followers: List<String> = listOf(),
 
         var followingCount: Int = 0,
-        var followings: Array<String>,
+        var followings: List<String> = listOf(),
 )
