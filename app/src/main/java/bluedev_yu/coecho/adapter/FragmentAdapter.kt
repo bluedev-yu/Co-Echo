@@ -1,4 +1,4 @@
-package bluedev_yu.coecho
+package bluedev_yu.coecho.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

@@ -124,8 +124,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="7"
-            android:orientation="vertical"
-            android:background="@drawable/mypage_background">
+            android:background="@drawable/mypage_background"
+            android:orientation="vertical">
 
             <!--
                         <Button
@@ -139,19 +139,17 @@
                 android:id="@+id/MyPageTabs"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                app:tabIndicatorFullWidth="false"
-                app:tabIndicatorColor="#00B06A"
-                app:tabSelectedTextColor="#00B06A"
                 android:background="#00000000"
+                app:tabIndicatorColor="#00B06A"
+                app:tabIndicatorFullWidth="false"
+                app:tabMode="fixed"
 
-                app:tabMode="fixed">
-            </com.google.android.material.tabs.TabLayout>
+                app:tabSelectedTextColor="#00B06A"></com.google.android.material.tabs.TabLayout>
 
             <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/viewPager">
-            </androidx.viewpager.widget.ViewPager>
+                android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
 
         </LinearLayout>
 

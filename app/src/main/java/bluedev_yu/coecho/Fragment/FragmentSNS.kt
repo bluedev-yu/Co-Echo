@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import bluedev_yu.coecho.FeedAdapter
+import bluedev_yu.coecho.adapter.FeedAdapter
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.UploadFeed
@@ -32,6 +34,8 @@ class FragmentSNS : Fragment() {
 
     lateinit var rv_feed: RecyclerView
     lateinit var fab: ExtendedFloatingActionButton
+    lateinit var feed_cardview: CardView
+    lateinit var iv_profile: ImageView
 
     val feedList = arrayListOf(
         Feeds(null, null, null, "윤혜영", "안녕하세용", 22, 10, "#친환경")
@@ -67,6 +71,19 @@ class FragmentSNS : Fragment() {
             requireContext().startActivity(intent)
         }
 
+//        // 프로필 선택시 그 사람 페이지
+//        iv_profile = view.findViewById(R.id.iv_profile)
+//        iv_profile.setOnClickListener {
+//            //그 사람 페이지 프래그먼트 띄우기
+//            Toast.makeText(requireContext(), "선택 제대로 됐음", Toast.LENGTH_SHORT).show()
+//        }
+//
+//        // 카드뷰 선택시 피드 상세 페이지 띄우기
+//        feed_cardview = view.findViewById(R.id.feed_cardview)
+//        feed_cardview.setOnClickListener {
+//            Toast.makeText(requireContext(), "선택 제대로 됐음", Toast.LENGTH_SHORT).show()
+//        }
+
         return view
     }
 
@@ -82,7 +99,7 @@ class FragmentSNS : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FragmentMap().apply {
+            FragmentSNS().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
