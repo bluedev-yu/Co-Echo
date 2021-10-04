@@ -20,6 +20,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
+import bluedev_yu.coecho.Fragment.fragmentLikeStores
+import bluedev_yu.coecho.Fragment.fragmentMyFeed
+import bluedev_yu.coecho.Fragment.fragmentMyReview
+import bluedev_yu.coecho.Fragment.fragmentSubscriber
+import bluedev_yu.coecho.FragmentAdapter
+
 import bluedev_yu.coecho.LoginActivity
 import bluedev_yu.coecho.MainActivity
 import bluedev_yu.coecho.R
@@ -27,6 +37,7 @@ import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.databinding.FragmentMyPageBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -60,6 +71,10 @@ class FragmentMyPage : Fragment() {
     var pickImageFromAlbum =0
     var uriPhoto : Uri?= null
 
+    var fragmentMyFeed : Fragment ?= null
+    var fragmentMyReview : Fragment ?= null
+    var fragmentLikeStores : Fragment ? = null
+    var fragmentSubscriber : Fragment ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +82,7 @@ class FragmentMyPage : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
@@ -100,7 +116,7 @@ class FragmentMyPage : Fragment() {
             val MypageUsername : TextView = viewProfile!!.findViewById(R.id.MyPageUserName)
             MypageUsername.setText(document?.strName)
 
-
+            //프로필사진
             if(document?.imageUrl == null)
                 ProfileImage.setImageResource(R.drawable.default_profilephoto)
             else
@@ -122,13 +138,25 @@ class FragmentMyPage : Fragment() {
         }
 
         //로그아웃
+        /*
         val LogoutButton : Button = viewProfile!!.findViewById(R.id.LogOutButton)
         LogoutButton.setOnClickListener{
             auth!!.signOut()
             Toast.makeText(this.context,"로그아웃 되었습니다.",Toast.LENGTH_LONG)
             val intent = Intent(this.context, LoginActivity::class.java)
             startActivity(intent)
-        }
+        }*/
+
+        //탭레이아웃
+        val fragmentManager = (activity as FragmentActivity).supportFragmentManager
+
+
+        val pagerAdapter = FragmentAdapter(fragmentManager)
+        val pager = viewProfile!!.findViewById<ViewPager>(R.id.viewPager)
+        pager.adapter = pagerAdapter
+        val tab = viewProfile!!.findViewById<TabLayout>(R.id.MyPageTabs)
+        tab.setupWithViewPager(pager)
+
 
         return viewProfile
     }
@@ -165,6 +193,7 @@ class FragmentMyPage : Fragment() {
         }
 
     }
+
 
     companion object {
         /**
