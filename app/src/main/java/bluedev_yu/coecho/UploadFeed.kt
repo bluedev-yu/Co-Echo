@@ -16,7 +16,7 @@ class UploadFeed : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.upload_feed)
+        setContentView(R.layout.activity_upload_feed)
 
         cancleWriting = findViewById(R.id.tv_cancleWriting)
         cancleWriting.setOnClickListener {

@@ -7,7 +7,6 @@
     tools:context=".UploadFeed"
     android:background="@color/CoEcho_mainBackground">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
