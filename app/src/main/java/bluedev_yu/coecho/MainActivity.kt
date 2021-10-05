@@ -11,6 +11,7 @@ import bluedev_yu.coecho.fragment.FragmentMyPage
 import bluedev_yu.coecho.fragment.FragmentSNS
 import bluedev_yu.coecho.fragment.SNSSearchResults
 import bluedev_yu.coecho.databinding.ActivityMainBinding
+import bluedev_yu.coecho.fragment.FragmentMap
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -71,7 +72,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 return true
             }
             R.id.action_map -> {
-                loadFragment(SNSSearchResults())
+                loadFragment(FragmentMap())
                 return true
             }
             R.id.action_myPage -> {
