@@ -104,27 +104,33 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_hashtag"
             app:srcCompat="@drawable/iv_privacy" />
 
-        <RadioButton
-            android:id="@+id/rb_public"
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:onClick="onRadioButtonClicked"
-            android:text="전체보기"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:checkedButton="@id/rb_public"
             app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
             app:layout_constraintStart_toEndOf="@+id/iv_privacy"
-            app:layout_constraintTop_toTopOf="@+id/iv_privacy" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_hashtag">
 
-        <RadioButton
-            android:id="@+id/rb_private"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:onClick="onRadioButtonClicked"
-            android:text="나만보기"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
-            app:layout_constraintStart_toEndOf="@+id/rb_public"
-            app:layout_constraintTop_toTopOf="@+id/iv_privacy" />
+            <RadioButton
+                android:id="@+id/rb_public"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:onClick="onRadioButtonClicked"
+                android:text="전체보기" />
+
+            <RadioButton
+                android:id="@+id/rb_private"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:onClick="onRadioButtonClicked"
+                android:text="나만보기" />
+
+        </RadioGroup>
 
         <ImageView
             android:id="@+id/iv_photo"
@@ -164,6 +170,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="@+id/iv_photo"
             app:layout_constraintTop_toBottomOf="@+id/tv_photo"
+            android:visibility="invisible"
             app:srcCompat="@drawable/man1" />
 
 
