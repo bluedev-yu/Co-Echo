@@ -32,17 +32,21 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="MY PAGE"
+                    android:layout_marginLeft="20dp"
+                    android:text="MYPAGE"
                     android:textColor="#00B06A"
-                    android:textSize="25dp" />
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:layoutDirection="rtl"
                     android:text="나의 에코"
                     android:textColor="@color/black"
-                    android:textSize="25dp" />
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -55,8 +59,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/MyPageOptionButton"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:background="@drawable/optionbutton">
