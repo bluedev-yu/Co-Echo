@@ -34,7 +34,7 @@ class FragmentSNS : Fragment() {
     lateinit var fab: ExtendedFloatingActionButton
 
     val feedList = arrayListOf(
-        Feeds(null, null, null, "윤혜영", "안녕하세용", 22, 10, "#친환경")
+        Feeds(null, null, null, 0, 0, "22", true, )
         //여기다가 데이터 배열로 넣으면 돼
     )
 
