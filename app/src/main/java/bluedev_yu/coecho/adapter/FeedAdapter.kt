@@ -22,7 +22,7 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
-        holder.userId.text = feedList.get(position).userId
+        //holder.userId.text = feedList.get(position).userId
         holder.content.text = feedList.get(position).content
         holder.hashtag.text = feedList.get(position).hashtag
         //holder.feedImgUrl.setImageResource(feedList.get(position).feedImgUrl)
@@ -41,7 +41,7 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         //var profileImgUrl = itemView.findViewById<ImageView>(R.id.iv_profile) //프로필 이미지
-        var userId = itemView.findViewById<TextView>(R.id.tv_name) //이름
+        //var userId = itemView.findViewById<TextView>(R.id.tv_name) //이름
         var content = itemView.findViewById<TextView>(R.id.tv_content) //피드 글
         var hashtag = itemView.findViewById<TextView>(R.id.tv_hashtag) //해시태그
         //var feedImgUrl = itemView.findViewById<ImageView>(R.id.iv_image) //피드 이미지
