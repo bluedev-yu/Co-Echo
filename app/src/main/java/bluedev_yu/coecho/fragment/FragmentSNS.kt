@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.adapter.FeedAdapter
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.UploadFeed
+import bluedev_yu.coecho.databinding.FragmentSnsBinding
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,6 +33,8 @@ class FragmentSNS : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var binding: FragmentSnsBinding
 
     lateinit var rv_feed: RecyclerView
     lateinit var fab: ExtendedFloatingActionButton
@@ -55,14 +59,14 @@ class FragmentSNS : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_sns, container, false)
+        binding = FragmentSnsBinding.inflate(layoutInflater)
+        val view = binding.root
 
         //리사이클러뷰 추가하기
         rv_feed = view.findViewById(R.id.rv_feed)
 
         rv_feed.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_feed.setHasFixedSize(true)
-
         rv_feed.adapter = FeedAdapter(feedList)
 
         fab = view.findViewById(R.id.btn_upload)
@@ -83,6 +87,18 @@ class FragmentSNS : Fragment() {
 //        feed_cardview.setOnClickListener {
 //            Toast.makeText(requireContext(), "선택 제대로 됐음", Toast.LENGTH_SHORT).show()
 //        }
+
+        //search Listener
+        val search = binding.search
+        search.setOnClickListener {
+            val fragmentManager = (activity as FragmentActivity).supportFragmentManager
+
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.frameLayout, SNSSearchResults())
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
 
         return view
     }

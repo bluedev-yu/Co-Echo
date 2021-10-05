@@ -2,25 +2,19 @@ package bluedev_yu.coecho
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.view.WindowManager
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.fragment.FragmentMap
 import bluedev_yu.coecho.fragment.FragmentMyPage
 import bluedev_yu.coecho.fragment.FragmentSNS
+import bluedev_yu.coecho.fragment.SNSSearchResults
 import bluedev_yu.coecho.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import java.util.jar.Manifest
 
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener{
@@ -77,7 +71,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 return true
             }
             R.id.action_map -> {
-                loadFragment(FragmentMap())
+                loadFragment(SNSSearchResults())
                 return true
             }
             R.id.action_myPage -> {
