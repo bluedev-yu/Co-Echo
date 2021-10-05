@@ -137,8 +137,8 @@ public class FragmentMyPage : Fragment() {
             val MyPageFollower : TextView = viewProfile!!.findViewById(R.id.MyPageFollower)
             val MyPageFollowing : TextView = viewProfile!!.findViewById(R.id.MyPageFollowing)
 
-            MyPageFollower.setText(document!!.followerCount.toString()+" 팔로워")
-            MyPageFollowing.setText(document!!.followingCount.toString()+" 팔로윙")
+//            MyPageFollower.setText(document!!.followerCount.toString()+" 팔로워")
+//            MyPageFollowing.setText(document!!.followingCount.toString()+" 팔로윙")
 
         }
 

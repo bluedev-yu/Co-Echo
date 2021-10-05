@@ -13,7 +13,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
-    <!--    <string name="default_web_client_id">741116606261-4ookp5a3r988dmo817qfqk9ubclt2jos.apps.googleusercontent.com</string>-->
+        <string name="default_web_client_id">741116606261-4ookp5a3r988dmo817qfqk9ubclt2jos.apps.googleusercontent.com</string>
 
     <!-- 로그인 -->
     <string name="signin_email">회원가입 및 이메일</string>
