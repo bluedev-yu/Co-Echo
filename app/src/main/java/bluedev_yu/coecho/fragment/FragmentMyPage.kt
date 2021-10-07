@@ -119,19 +119,6 @@ class FragmentMyPage : Fragment() {
             startActivityForResult(photoPickerIntent,pickImageFromAlbum)
         }
 
-
-        //팔로워 팔로잉
-        firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{
-                documentSnapshot, firebaseFirestoreException ->
-            var document = documentSnapshot?.toObject(FollowDTO::class.java)
-            val MyPageFollower : TextView = viewProfile!!.findViewById(R.id.MyPageFollower)
-            val MyPageFollowing : TextView = viewProfile!!.findViewById(R.id.MyPageFollowing)
-
-//            MyPageFollower.setText(document!!.followerCount.toString()+" 팔로워")
-//            MyPageFollowing.setText(document!!.followingCount.toString()+" 팔로윙")
-
-        }
-
         //로그아웃
         /*
         val LogoutButton : Button = viewProfile!!.findViewById(R.id.LogOutButton)
