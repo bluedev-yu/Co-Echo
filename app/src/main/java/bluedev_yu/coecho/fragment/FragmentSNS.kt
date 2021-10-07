@@ -68,7 +68,8 @@ class FragmentSNS : Fragment() {
         //리사이클러뷰 추가하기
         rv_feed = view.findViewById(R.id.rv_feed)
 
-        rv_feed.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        rv_feed.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_feed.setHasFixedSize(true)
         rv_feed.adapter = FeedAdapter(feedList)
 
@@ -108,7 +109,11 @@ class FragmentSNS : Fragment() {
         sv_sns = binding.svSns
         sv_sns.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                // SNSSearchResults 화면으로 전환해야함
+                // SNSSearchResults 화면으로 전환해야함(프래그먼트 -> 프래그먼트)
+                val transaction = fragmentManager!!.beginTransaction()
+                transaction.replace(R.id.frameLayout, SNSSearchResults())
+                transaction.addToBackStack(null)
+                transaction.commit()
                 return false
             }
 
