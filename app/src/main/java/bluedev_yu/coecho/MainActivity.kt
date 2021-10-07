@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 return true
             }
             R.id.action_map -> {
-                loadFragment(FragmentMap())
+                loadFragment(SNSSearchResults())
                 return true
             }
             R.id.action_myPage -> {

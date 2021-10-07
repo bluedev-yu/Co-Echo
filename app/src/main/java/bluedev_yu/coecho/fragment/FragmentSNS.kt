@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +42,7 @@ class FragmentSNS : Fragment() {
     lateinit var fab: ExtendedFloatingActionButton
     lateinit var feed_cardview: CardView
     lateinit var iv_profile: ImageView
+    lateinit var sv_sns: SearchView
 
     val feedList = arrayListOf(
         Feeds(null, null, null, "윤혜영", "안녕하세용", 22, 10, "#친환경")
@@ -75,6 +78,7 @@ class FragmentSNS : Fragment() {
             requireContext().startActivity(intent)
         }
 
+//        리사이클러뷰 안에 속성 가져올 때 오류뜸 -> 해결해야함
 //        // 프로필 선택시 그 사람 페이지
 //        iv_profile = view.findViewById(R.id.iv_profile)
 //        iv_profile.setOnClickListener {
@@ -88,17 +92,32 @@ class FragmentSNS : Fragment() {
 //            Toast.makeText(requireContext(), "선택 제대로 됐음", Toast.LENGTH_SHORT).show()
 //        }
 
-        //search Listener
-        val search = binding.search
-        search.setOnClickListener {
-            val fragmentManager = (activity as FragmentActivity).supportFragmentManager
+//        이거 혜주한테 물어봐야함 무슨 코드??
+//        //search Listener
+//        val sv_sns = binding.svSns
+//        sv_sns.setOnClickListener {
+//            val fragmentManager = (activity as FragmentActivity).supportFragmentManager
+//
+//            val transaction = fragmentManager.beginTransaction()
+//            transaction.replace(R.id.frameLayout, SNSSearchResults())
+//            transaction.addToBackStack(null)
+//            transaction.commit()
+//        }
 
-            val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.frameLayout, SNSSearchResults())
-            transaction.addToBackStack(null)
-            transaction.commit()
+        //searchview 리스너
+        sv_sns = binding.svSns
+        sv_sns.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                // SNSSearchResults 화면으로 전환해야함
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
+            }
+
         }
-
+        )
 
         return view
     }

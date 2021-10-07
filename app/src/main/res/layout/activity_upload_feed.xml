@@ -20,6 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:text="취소"
+            android:textSize="15sp"
+            android:textColor="#FF5C5C"
             app:layout_constraintBottom_toBottomOf="@+id/tv_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_title" />
@@ -132,7 +134,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="@id/iv_hashtag"
             app:layout_constraintTop_toBottomOf="@+id/iv_privacy"
-            app:srcCompat="@drawable/iv_image" />
+            app:srcCompat="@drawable/iv_photo" />
 
         <TextView
             android:id="@+id/tv_photo"

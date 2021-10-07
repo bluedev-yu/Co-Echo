@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.SNSSearchResults">
+    tools:context=".fragment.SNSSearchResults"
+    android:background="@color/CoEcho_mainBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="30dp"
-        android:orientation="vertical">><TextView
+        android:orientation="vertical">
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -31,7 +33,7 @@
             android:textStyle="bold" />
 
         <SearchView
-            android:id="@+id/search"
+            android:id="@+id/sv_sns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

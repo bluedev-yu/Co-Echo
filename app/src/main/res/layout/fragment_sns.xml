@@ -34,7 +34,7 @@
             android:textStyle="bold" />
 
         <SearchView
-            android:id="@+id/search"
+            android:id="@+id/sv_sns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
