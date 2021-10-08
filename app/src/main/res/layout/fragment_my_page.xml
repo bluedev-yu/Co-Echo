@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/CoEcho_mainBackground"
-    tools:context=".fragment.FragmentMyPage">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/MyPageDrawerLayout"
+    tools:context=".fragment.FragmentMyPage"
+    >
 
-    <!-- 전체 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -55,19 +57,24 @@
                 android:layout_height="match_parent"
                 android:layout_weight="6">
 
-
-
-                <androidx.appcompat.widget.AppCompatButton
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/MyPageOptionButton"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/optionbutton">
+                    android:src="@drawable/ic_baseline_menu_50"
+                    android:id="@+id/MyPageOptionButton" />
 
-                </androidx.appcompat.widget.AppCompatButton>
+
+                <!--                <androidx.appcompat.widget.AppCompatButton-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:id="@+id/MyPageOptionButton"-->
+                <!--                    android:layout_marginTop="10dp"-->
+                <!--                    android:layout_marginBottom="10dp"-->
+                <!--                    android:layout_marginLeft="15dp"-->
+                <!--                    android:layout_marginRight="15dp"-->
+                <!--                    android:background="@drawable/ic_baseline_menu_50">-->
+                <!--                </androidx.appcompat.widget.AppCompatButton>-->
+
             </LinearLayout>
         </LinearLayout>
 
@@ -164,8 +171,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="7"
-            android:orientation="vertical"
-            android:background="@drawable/mypage_background">
+            android:background="@drawable/mypage_background"
+            android:orientation="vertical">
 
             <!--
                         <Button
@@ -179,22 +186,28 @@
                 android:id="@+id/MyPageTabs"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                app:tabIndicatorFullWidth="false"
-                app:tabIndicatorColor="#00B06A"
-                app:tabSelectedTextColor="#00B06A"
                 android:background="#00000000"
+                app:tabIndicatorColor="#00B06A"
+                app:tabIndicatorFullWidth="false"
+                app:tabMode="fixed"
 
-                app:tabMode="fixed">
-            </com.google.android.material.tabs.TabLayout>
+                app:tabSelectedTextColor="#00B06A"></com.google.android.material.tabs.TabLayout>
 
             <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/viewPager">
-            </androidx.viewpager.widget.ViewPager>
+                android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
 
         </LinearLayout>
 
     </LinearLayout>
 
-</FrameLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/mypage_drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        app:menu="@menu/mypage_items" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
