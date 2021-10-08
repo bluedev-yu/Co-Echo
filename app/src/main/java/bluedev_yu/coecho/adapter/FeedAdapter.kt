@@ -4,13 +4,17 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.FeedDetail
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.Feeds
+import bluedev_yu.coecho.fragment.FragmentMyPage
 
 
 class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
@@ -21,7 +25,18 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
+        holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
+        holder.profileImgUrl.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(v: View?) {
+                val activity = v!!.context as AppCompatActivity
+                val fragmentmypage = FragmentMyPage()
+                activity.supportFragmentManager.beginTransaction()
+                    .replace(R.id.snsLayout, FragmentMyPage())
+                    .addToBackStack(null)
+                    .commit()
+            }
+
+        })
         holder.userId.text = feedList.get(position).userId
         holder.content.text = feedList.get(position).content
         holder.hashtag.text = feedList.get(position).hashtag
@@ -40,7 +55,7 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
     }
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        //var profileImgUrl = itemView.findViewById<ImageView>(R.id.iv_profile) //프로필 이미지
+        var profileImgUrl = itemView.findViewById<ImageView>(R.id.iv_profile) //프로필 이미지
         var userId = itemView.findViewById<TextView>(R.id.tv_name) //이름
         var content = itemView.findViewById<TextView>(R.id.tv_content) //피드 글
         var hashtag = itemView.findViewById<TextView>(R.id.tv_hashtag) //해시태그

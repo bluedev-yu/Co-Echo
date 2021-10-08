@@ -1,6 +1,6 @@
 package bluedev_yu.coecho.data.model
 
-class Feeds(var profileImgUrl: String? = null,
+class Feeds(var profileImgUrl: Int = 0,
             var feedImgUrl: String? = null,
             var uid: String? = null,
             var userId: String? = null,

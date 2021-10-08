@@ -35,10 +35,10 @@ class FragmentResultPeople : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_result_people, container, false)
 
         val userlist = arrayListOf(
-            Feeds(null, null, "윤혜영", "윤혜영", null, 0, 0, null),
-            Feeds(null, null, "길혜주", "길혜주", null, 0, 0, null),
-            Feeds(null, null, "김예현", "김예현", null, 0, 0, null),
-            Feeds(null, null, "강미주", "강미주", null, 0, 0, null),
+            Feeds(R.drawable.man1, null, "윤혜영", "윤혜영", null, 0, 0, null),
+            Feeds(R.drawable.woman1, null, "길혜주", "길혜주", null, 0, 0, null),
+            Feeds(R.drawable.man1, null, "김예현", "김예현", null, 0, 0, null),
+            Feeds(R.drawable.woman1, null, "강미주", "강미주", null, 0, 0, null),
             )
 
         rv_result_people = view.findViewById(R.id.rv_result_people)
