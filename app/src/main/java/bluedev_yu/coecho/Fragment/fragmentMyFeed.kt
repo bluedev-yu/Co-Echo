@@ -31,11 +31,10 @@ class fragmentMyFeed : Fragment() {
         // Inflate the layout for this fragment
 
         val myfeedList = arrayListOf(
-            Feeds(null, null, null, "윤혜영", "나야나", 100, 90, "해시태그1"),
+            Feeds(null, null, null, 0,0,"애융", false,  ),
+            Feeds(null, null, null, 0,0,"길", false,  ),
+            Feeds(null, null, null, 0,0,"김", false,  ),
 
-            Feeds(null, null, null, "윤혜영", "dd", 10, 0, "해시태그2"),
-
-            Feeds(null, null, null, "윤혜영", "ss", 90, 90, "해시태그3")
         )
 
         val view = inflater.inflate(R.layout.fragment_my_feed, container, false)
