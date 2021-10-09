@@ -16,8 +16,8 @@ import bluedev_yu.coecho.UploadFeed
 import bluedev_yu.coecho.adapter.FeedAdapter
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.databinding.FragmentFeedsBinding
-import bluedev_yu.coecho.databinding.FragmentSnsBinding
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,7 +37,7 @@ class FragmentFeeds : Fragment() {
     private lateinit var binding: FragmentFeedsBinding
 
     lateinit var rv_feed: RecyclerView
-    lateinit var fab: ExtendedFloatingActionButton
+    lateinit var fab: FloatingActionButton
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
 
@@ -71,7 +71,7 @@ class FragmentFeeds : Fragment() {
         rv_feed.setHasFixedSize(true)
         rv_feed.adapter = FeedAdapter(feedList)
 
-        fab = view.findViewById(R.id.btn_upload)
+        fab = view.findViewById(R.id.btn_uploadFeed)
         fab.setOnClickListener {
             val intent = Intent(requireContext(), UploadFeed::class.java)
             requireContext().startActivity(intent)

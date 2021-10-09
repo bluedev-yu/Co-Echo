@@ -39,7 +39,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/search_background"
             android:iconifiedByDefault="false"
             android:queryBackground="@null"
             android:queryHint="검색어를 입력하세요">
