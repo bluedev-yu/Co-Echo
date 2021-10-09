@@ -21,6 +21,14 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
+
+        var iv_feed_menu: ImageView
+        iv_feed_menu = view.findViewById(R.id.iv_feed_menu)
+        iv_feed_menu.setOnClickListener {
+            //옵션 메뉴 추가
+
+        }
+
         return CustomViewHolder(view)
     }
 
@@ -35,8 +43,8 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
                     .addToBackStack(null)
                     .commit()
             }
-
         })
+
         holder.userId.text = feedList.get(position).userId
         holder.content.text = feedList.get(position).content
         holder.hashtag.text = feedList.get(position).hashtag
@@ -48,7 +56,6 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
         }
     }
-
 
     override fun getItemCount(): Int {
         return feedList.size
@@ -62,9 +69,6 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
         //var feedImgUrl = itemView.findViewById<ImageView>(R.id.iv_image) //피드 이미지
         var likeCnt = itemView.findViewById<TextView>(R.id.tv_like) //좋아요 수
         var commentCnt = itemView.findViewById<TextView>(R.id.tv_comment) //댓글 수
-
         var feedCardView = itemView.findViewById<CardView>(R.id.feed_cardview) //피드 카드뷰
     }
-
-
 }

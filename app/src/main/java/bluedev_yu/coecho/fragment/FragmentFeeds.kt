@@ -6,18 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import bluedev_yu.coecho.adapter.FeedAdapter
-import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.UploadFeed
+import bluedev_yu.coecho.adapter.FeedAdapter
+import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.databinding.FragmentFeedsBinding
 import bluedev_yu.coecho.databinding.FragmentSnsBinding
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -29,18 +26,25 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [FragmentMap.newInstance] factory method to
+ * Use the [FragmentFeeds.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentSNS : Fragment() {
-
+class FragmentFeeds : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var binding: FragmentSnsBinding
+    private lateinit var binding: FragmentFeedsBinding
 
-    lateinit var sv_sns: SearchView
+    lateinit var rv_feed: RecyclerView
+    lateinit var fab: ExtendedFloatingActionButton
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
+
+    val feedList = arrayListOf(
+        Feeds(R.drawable.man1, null, null, "윤혜영", "안녕하세용", 22, 10, "#친환경")
+        //여기다가 데이터 배열로 넣으면 돼
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,32 +58,42 @@ class FragmentSNS : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSnsBinding.inflate(layoutInflater)
+        // Inflate the layout for this fragment
+
+        binding = FragmentFeedsBinding.inflate(layoutInflater)
         val view = binding.root
 
-        //searchview 리스너
-        sv_sns = binding.svSns
-        sv_sns.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                //fragment feed에서 fragment search result로 바꿔야함!
-                val transaction = childFragmentManager.beginTransaction()
-                transaction.replace(R.id.layout_child, FragmentSearchResults())
-                transaction.disallowAddToBackStack()
-                transaction.commit()
-                return false
-            }
+        //리사이클러뷰 추가하기
+        rv_feed = view.findViewById(R.id.rv_feed)
 
-            override fun onQueryTextChange(p0: String?): Boolean {
-                return false
-            }
+        rv_feed.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        rv_feed.setHasFixedSize(true)
+        rv_feed.adapter = FeedAdapter(feedList)
 
+        fab = view.findViewById(R.id.btn_upload)
+        fab.setOnClickListener {
+            val intent = Intent(requireContext(), UploadFeed::class.java)
+            requireContext().startActivity(intent)
         }
-        )
 
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(R.id.layout_child, FragmentFeeds())
-        transaction.disallowAddToBackStack()
-        transaction.commit()
+//        이거 혜주한테 물어봐야함 무슨 코드??
+//        //search Listener
+//        val sv_sns = binding.svSns
+//        sv_sns.setOnClickListener {
+//            val fragmentManager = (activity as FragmentActivity).supportFragmentManager
+//
+//            val transaction = fragmentManager.beginTransaction()
+//            transaction.replace(R.id.frameLayout, SNSSearchResults())
+//            transaction.addToBackStack(null)
+//            transaction.commit()
+//        }
+
+        swipeRefreshLayout = binding.swipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener {
+            //스와이프 할 때마다 피드 추가
+            Toast.makeText(requireContext(), "하이~~~", Toast.LENGTH_SHORT).show()
+        }
 
         return view
     }
@@ -91,12 +105,12 @@ class FragmentSNS : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentMap.
+         * @return A new instance of fragment FragmentFeeds.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FragmentSNS().apply {
+            FragmentFeeds().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
