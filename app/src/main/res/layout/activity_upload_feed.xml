@@ -39,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_upload"
+            android:id="@+id/tv_uploadFeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -104,27 +104,38 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_hashtag"
             app:srcCompat="@drawable/iv_privacy" />
 
-        <RadioButton
-            android:id="@+id/rb_public"
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="전체보기"
+            android:checkedButton="@id/rb_public"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
             app:layout_constraintStart_toEndOf="@+id/iv_privacy"
-            app:layout_constraintTop_toTopOf="@+id/iv_privacy"
-            android:onClick="onRadioButtonClicked"/>
+            app:layout_constraintTop_toTopOf="@+id/iv_privacy">
 
-        <RadioButton
-            android:id="@+id/rb_private"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="나만보기"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
-            app:layout_constraintStart_toEndOf="@+id/rb_public"
-            app:layout_constraintTop_toTopOf="@+id/iv_privacy"
-            android:onClick="onRadioButtonClicked"/>
+            <RadioButton
+                android:id="@+id/rb_public"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:onClick="onRadioButtonClicked"
+                android:text="전체보기"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
+                app:layout_constraintStart_toEndOf="@+id/iv_privacy"
+                app:layout_constraintTop_toTopOf="@+id/iv_privacy" />
+
+            <RadioButton
+                android:id="@+id/rb_private"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:onClick="onRadioButtonClicked"
+                android:text="나만보기"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
+                app:layout_constraintStart_toEndOf="@+id/rb_public"
+                app:layout_constraintTop_toTopOf="@+id/iv_privacy" />
+        </RadioGroup>
+
 
         <ImageView
             android:id="@+id/iv_photo"
@@ -144,6 +155,15 @@
             app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
             app:layout_constraintStart_toEndOf="@+id/iv_photo"
             app:layout_constraintTop_toTopOf="@+id/iv_photo" />
+
+        <ImageView
+            android:id="@+id/ImagePreview"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/et_text"
+            app:layout_constraintTop_toBottomOf="@+id/iv_photo"
+            tools:srcCompat="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -15,11 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.FeedDetail
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.Feeds
+import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.fragment.FragmentMyPage
 import com.google.firebase.auth.FirebaseAuth
 
 
-class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
+class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDTO>) : RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
     var auth : FirebaseAuth? = null
 
@@ -40,8 +41,8 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
 
         auth = FirebaseAuth.getInstance()
 
-        holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
-        holder.userId.text = feedList.get(position).userId
+        //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
+        holder.userId.text = userList.get(position).userid
         holder.userId.setOnClickListener(object: View.OnClickListener{
             //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {

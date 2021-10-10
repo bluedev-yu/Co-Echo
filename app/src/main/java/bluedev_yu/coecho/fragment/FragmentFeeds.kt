@@ -15,6 +15,7 @@ import bluedev_yu.coecho.R
 import bluedev_yu.coecho.UploadFeed
 import bluedev_yu.coecho.adapter.FeedAdapter
 import bluedev_yu.coecho.data.model.Feeds
+import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.databinding.FragmentFeedsBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -40,8 +41,11 @@ class FragmentFeeds : Fragment() {
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
 
+    val userList = arrayListOf(
+        userDTO("윤혜영", null, "윤혜영", null, 0)
+    )
     val feedList = arrayListOf(
-        Feeds(R.drawable.man1, null, null, "윤혜영", "안녕하세용", 22, 10, "#친환경")
+        Feeds(null, null, "하이", 10, 14, "해시태그1", true)
         //여기다가 데이터 배열로 넣으면 돼
     )
 
@@ -68,7 +72,7 @@ class FragmentFeeds : Fragment() {
         rv_feed.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_feed.setHasFixedSize(true)
-        rv_feed.adapter = FeedAdapter(feedList)
+        rv_feed.adapter = FeedAdapter(feedList, userList)
 
         fab = view.findViewById(R.id.btn_uploadFeed)
         fab.setOnClickListener {

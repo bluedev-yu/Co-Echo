@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.FeedDetail
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.Feeds
+import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.fragment.FragmentMyPage
 import com.google.firebase.auth.FirebaseAuth
 
-class SearchPeopleAdapter(val userlist: ArrayList<Feeds>) : RecyclerView.Adapter<SearchPeopleAdapter.CustomViewHolder>(){
+class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapter<SearchPeopleAdapter.CustomViewHolder>(){
 
     var auth : FirebaseAuth? = null
 
@@ -30,7 +31,7 @@ class SearchPeopleAdapter(val userlist: ArrayList<Feeds>) : RecyclerView.Adapter
         auth = FirebaseAuth.getInstance()
 
         //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
-        holder.userId.text = userlist.get(position).userId
+        holder.userId.text = userlist.get(position).userid
         holder.userId.setOnClickListener(object: View.OnClickListener{
             //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {
