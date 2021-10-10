@@ -49,7 +49,7 @@ class UploadFeed : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(view)
+        setContentView(R.layout.upload_feed)
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
@@ -84,27 +84,27 @@ class UploadFeed : AppCompatActivity() {
 
             if (ContextCompat.checkSelfPermission(
                     this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
             )
-                CoroutineScope(Dispatchers.IO).launch {
-                    var uriString: String?
-                    uriString = funImageUpLoad(view!!)
-                    FeedDTO.feedImgUrl = uriString
+            //CoroutineScope(Dispatchers.IO).launch {
+            //uriString = funImageUpLoad()
+                FeedDTO.feedImgUrl = null
 
-                    FeedDTO.privacy = privacy
-                    FeedDTO.uid = auth?.uid
-                    FeedDTO.likes = HashMap()
+            FeedDTO.privacy = privacy
+            FeedDTO.uid = auth?.uid
+            FeedDTO.likes = HashMap()
 
-                    firestore?.collection("Feeds")?.document()?.set(FeedDTO)
-                        ?.addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                Log.d("real","Real End")
-                            }
-                        }
+            firestore?.collection("Feeds")?.document()?.set(FeedDTO)
+                ?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "게시 완료", Toast.LENGTH_SHORT).show()
+                        val nextIntent = Intent(this, MainActivity::class.java)
+                        startActivity(nextIntent)
+                    }
                 }
-                Toast.makeText(this,"게시 완료",Toast.LENGTH_SHORT).show()
-                val nextIntent = Intent(this, MainActivity::class.java)
-                startActivity(nextIntent)
+
+
 
         }
     }
@@ -122,17 +122,26 @@ class UploadFeed : AppCompatActivity() {
         }
     }
 
-    suspend fun funImageUpLoad(view : View) : String?{
+    suspend fun funImageUpLoad() : String?{
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var user = auth?.currentUser?.uid.toString()
         var imgFileName = "Feed"+user+timestamp+".png"
         var storageRef = firestorage?.reference?.child("Feed")?.child(imgFileName)
+        var FeedDTO : Feeds? = null
 
-
-        storageRef?.putFile(uriPhoto!!)
+        storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
+            storageRef.downloadUrl.addOnSuccessListener{
+                    uri->
+                FeedDTO = Feeds()
+                FeedDTO!!.feedImgUrl = uri.toString()
+                firestore?.collection("Feeds")?.document(auth?.uid.toString())?.update("feedImgUrl",FeedDTO)
+            }
+        }
         Looper.prepare()
-        Toast.makeText(this,storageRef?.downloadUrl.toString(),Toast.LENGTH_LONG).show()
-        return storageRef?.downloadUrl.toString()
+        Toast.makeText(this,"피드",Toast.LENGTH_LONG)
+        delay(5000)
+        Toast.makeText(this,FeedDTO?.feedImgUrl.toString(),Toast.LENGTH_LONG)
+        return FeedDTO!!.feedImgUrl.toString()
     }
 
     fun onRadioButtonClicked(view: View){
