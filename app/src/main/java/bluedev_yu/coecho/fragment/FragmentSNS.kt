@@ -8,13 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.ImageView
+import android.widget.SearchView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import bluedev_yu.coecho.FeedAdapter
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import bluedev_yu.coecho.adapter.FeedAdapter
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.UploadFeed
 import bluedev_yu.coecho.data.model.FollowDTO
+import bluedev_yu.coecho.databinding.FragmentFeedsBinding
+import bluedev_yu.coecho.databinding.FragmentSnsBinding
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -43,6 +51,10 @@ class FragmentSNS : Fragment() {
     lateinit var rv_feed: RecyclerView
     lateinit var fab: ExtendedFloatingActionButton
 
+    private lateinit var binding: FragmentSnsBinding
+
+    lateinit var sv_sns: SearchView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -55,8 +67,8 @@ class FragmentSNS : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_sns, container, false)
+        binding = FragmentSnsBinding.inflate(layoutInflater)
+        val view = binding.root
 
         var feedList : ArrayList<Feeds> = arrayListOf()
 
@@ -108,12 +120,29 @@ class FragmentSNS : Fragment() {
 
 
 
+        //searchview 리스너
+        sv_sns = binding.svSns
+        sv_sns.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                //fragment feed에서 fragment search result로 바꿔야함!
+                val transaction = childFragmentManager.beginTransaction()
+                transaction.replace(R.id.layout_child, FragmentSearchResults())
+                transaction.disallowAddToBackStack()
+                transaction.commit()
+                return false
+            }
 
-        fab = view.findViewById(R.id.btn_upload)
-        fab.setOnClickListener {
-            val intent = Intent(requireContext(), UploadFeed::class.java)
-            requireContext().startActivity(intent)
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
+            }
+
         }
+        )
+
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.replace(R.id.layout_child, FragmentFeeds())
+        transaction.disallowAddToBackStack()
+        transaction.commit()
 
         return view
     }
@@ -130,7 +159,7 @@ class FragmentSNS : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FragmentMap().apply {
+            FragmentSNS().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

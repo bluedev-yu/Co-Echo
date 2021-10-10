@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/snsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f9ffe1"
@@ -12,6 +13,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="30dp"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <TextView
@@ -34,36 +36,24 @@
             android:textStyle="bold" />
 
         <SearchView
-            android:id="@+id/search"
+            android:id="@+id/sv_sns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/search_background"
             android:iconifiedByDefault="false"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:queryBackground="@null"
-            android:queryHint="검색어를 입력하세요" />
+            android:queryHint="검색어를 입력하세요">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_feed"
+        </SearchView>
+
+        <FrameLayout
+            android:id="@+id/layout_child"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </androidx.recyclerview.widget.RecyclerView>
+        </FrameLayout>
 
     </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/btn_upload"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/green"
-        android:contentDescription="글쓰기"
-        android:text="글쓰기"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:icon="@drawable/plus"
-        app:iconSize="18dp" />
 
 </FrameLayout>

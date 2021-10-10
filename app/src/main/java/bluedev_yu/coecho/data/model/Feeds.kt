@@ -7,5 +7,5 @@ class Feeds(
             var likeCnt: Int = 0,
             var commentCnt: Int =0,
             var hashtag: String? = null,
-            var privacy : Boolean = false,
+            var privacy: Boolean = false,
             var likes:MutableMap<String, Boolean> = HashMap())

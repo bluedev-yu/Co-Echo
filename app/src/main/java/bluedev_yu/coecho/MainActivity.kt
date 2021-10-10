@@ -13,12 +13,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.fragment.FragmentMap
 import bluedev_yu.coecho.fragment.FragmentMyPage
 import bluedev_yu.coecho.fragment.FragmentSNS
 import bluedev_yu.coecho.databinding.ActivityMainBinding
+import bluedev_yu.coecho.fragment.FragmentMap
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -53,7 +52,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         binding.bottomNavBar.itemIconTintList = null;
 
         //firebase 로그인, 권한
-        //유저 정보 생성
         firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener {
             doc ->
             if(doc.exists()){
@@ -65,19 +63,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 userInfo.uid = auth?.currentUser?.uid
                 userInfo.strName = auth?.currentUser?.displayName
                 firestore?.collection("User")?.document(auth?.uid.toString())?.set(userInfo)
-            }
-        }
-
-        //팔로워 있는가
-        firestore?.collection("Follow")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener {
-                doc ->
-            if(doc.exists()){
-
-            }
-            else
-            {
-                var followDTO = FollowDTO()
-                firestore?.collection("Follow")?.document(auth?.uid.toString())?.set(followDTO)
             }
         }
 

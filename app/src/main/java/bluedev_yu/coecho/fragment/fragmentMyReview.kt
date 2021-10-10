@@ -1,4 +1,4 @@
-package bluedev_yu.coecho.Fragment
+package bluedev_yu.coecho.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,23 +14,22 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [fragmentSubscriber.newInstance] factory method to
+ * Use the [fragmentMyReview.newInstance] factory method to
  * create an instance of this fragment.
  */
-class fragmentSubscriber : Fragment() {
-
+class fragmentMyReview : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_subscriber, container, false)
+        return inflater.inflate(R.layout.fragment_my_review, container, false)
     }
 
-    fun newInstant() : fragmentSubscriber
+    fun newInstant() : fragmentMyReview
     {
         val args = Bundle()
-        val frag = fragmentSubscriber()
+        val frag = fragmentMyReview()
         frag.arguments = args
         return frag
     }
