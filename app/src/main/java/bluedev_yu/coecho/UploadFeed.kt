@@ -11,7 +11,7 @@ class UploadFeed : AppCompatActivity() {
     lateinit var tvPhoto: TextView
     lateinit var etHashtag: EditText
     lateinit var etText: EditText
-    lateinit var btnUpload: Button
+    lateinit var tvUpload: TextView
     lateinit var privacy: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +32,8 @@ class UploadFeed : AppCompatActivity() {
         etHashtag = findViewById(R.id.et_hashtag)
         etText = findViewById(R.id.et_text)
 
-        btnUpload = findViewById(R.id.btn_upload)
-        btnUpload.setOnClickListener {
+        tvUpload = findViewById(R.id.tv_upload)
+        tvUpload.setOnClickListener {
             //해시태그, 글, 공개범위 등록
             var hashtag = etHashtag.text //해시태그 문자열
             var text = etText.text //글 문자열
