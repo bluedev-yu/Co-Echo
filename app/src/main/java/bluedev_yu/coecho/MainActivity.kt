@@ -2,9 +2,16 @@ package bluedev_yu.coecho
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Layout
+import android.util.Log
 import android.view.MenuItem
+import android.view.WindowManager
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.fragment.FragmentMyPage
@@ -39,6 +46,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         binding.bottomNavBar.setOnItemSelectedListener(this)
 
+
         setDefaultFragment()
 
         binding.bottomNavBar.itemIconTintList = null;
@@ -62,6 +70,12 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         //앨범 권한
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1)
 
+        //val optionbutton : ImageView = findViewById(R.id.MyPageOptionButton)
+        //val drawerLayout : DrawerLayout = findViewById(R.id.MyPageDrawerLayout)
+        // 햄버거 메뉴 선택시 오른쪽으로 열린다
+        //optionbutton.setOnClickListener{
+        //    drawerLayout.openDrawer(GravityCompat.END)
+        //}
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean { //내비게이션바 아이템 선택시 프래그먼트 교체
