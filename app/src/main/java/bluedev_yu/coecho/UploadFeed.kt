@@ -9,23 +9,14 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
-import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
 import bluedev_yu.coecho.data.model.Feeds
-import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.fragment.FragmentMyPage
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.*
-import kotlinx.coroutines.tasks.await
-import org.koin.androidx.scope.lifecycleScope
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -49,7 +40,7 @@ class UploadFeed : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.upload_feed)
+        setContentView(R.layout.activity_upload_feed)
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
@@ -120,6 +111,7 @@ class UploadFeed : AppCompatActivity() {
                 ImagePreview.visibility = View.VISIBLE
             }
         }
+
     }
 
     suspend fun funImageUpLoad() : String?{

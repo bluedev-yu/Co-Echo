@@ -2,17 +2,23 @@ package bluedev_yu.coecho.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.FeedAdapter
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.UploadFeed
+import bluedev_yu.coecho.data.model.FollowDTO
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,13 +36,12 @@ class FragmentSNS : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    var auth : FirebaseAuth? = FirebaseAuth.getInstance()
+    var firestore : FirebaseFirestore?= FirebaseFirestore.getInstance() //String 등 자료형 데이터베이스
+    var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
+
     lateinit var rv_feed: RecyclerView
     lateinit var fab: ExtendedFloatingActionButton
-
-    val feedList = arrayListOf(
-        Feeds(null, null, null, 0, 0, "22", true, )
-        //여기다가 데이터 배열로 넣으면 돼
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,13 +58,58 @@ class FragmentSNS : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_sns, container, false)
 
+        var feedList : ArrayList<Feeds> = arrayListOf()
+
         //리사이클러뷰 추가하기
         rv_feed = view.findViewById(R.id.rv_feed)
 
         rv_feed.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_feed.setHasFixedSize(true)
 
-        rv_feed.adapter = FeedAdapter(feedList)
+        var followings : ArrayList<String> = ArrayList()
+        var feeds : ArrayList<Feeds> = ArrayList()
+
+
+        //1) 해당 uid의 follows 가져오기
+
+        firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{
+            documentSnapshot, firebaseFirestoreException ->
+
+            var document = documentSnapshot?.toObject(FollowDTO::class.java)
+            if(document?.followingCount == 0) //팔로우 하는사람 없음
+            {
+                //자식프레그먼트 text뷰 추가 필요
+                followings = arrayListOf()
+            }
+            else
+            {
+                followings = document?.followings!!
+                //2) 해당 사람들의 피드 가져와서 timestamp로 정렬, 피드 보여주기
+
+                if(followings.isNotEmpty()) //팔로우 하는사람 있을 때
+                {
+                    feeds.clear()
+                    firestore?.collection("Feeds")?.whereIn("uid", followings)?.addSnapshotListener{
+                        querySnapshot, firebaseFirestoreException ->
+                        if(querySnapshot == null) {
+                            Toast.makeText(this.context,"no!!!!!!!",Toast.LENGTH_LONG).show()
+                            return@addSnapshotListener
+                        }
+                        for(snapshot in querySnapshot!!.documents)
+                        {
+                            var item = snapshot.toObject(Feeds::class.java)!!
+                            Toast.makeText(this.context,item.uid.toString(),Toast.LENGTH_LONG).show()
+                            feeds.add(item)
+                        }
+                        rv_feed.adapter = FeedAdapter(feeds)
+                    }
+                }
+            }
+        }
+
+
+
+
 
         fab = view.findViewById(R.id.btn_upload)
         fab.setOnClickListener {
