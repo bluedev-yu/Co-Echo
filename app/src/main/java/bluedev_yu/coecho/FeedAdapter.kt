@@ -16,11 +16,11 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
     }
 
     override fun onBindViewHolder(holder: FeedAdapter.CustomViewHolder, position: Int) {
-        //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
-        //holder.userId.text = feedList.get(position).userId
+        holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
+        holder.userId.text = feedList.get(position).userId
         holder.content.text = feedList.get(position).content
         holder.hashtag.text = feedList.get(position).hashtag
-        //holder.feedImgUrl.setImageResource(feedList.get(position).feedImgUrl)
+        holder.feedImgUrl.setImageResource(feedList.get(position).feedImgUrl)
         holder.likeCnt.text = feedList.get(position).likeCnt.toString()
         holder.commentCnt.text = feedList.get(position).commentCnt.toString()
     }

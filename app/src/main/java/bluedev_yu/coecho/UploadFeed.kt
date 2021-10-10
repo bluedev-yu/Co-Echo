@@ -4,16 +4,18 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.databinding.UploadFeedBinding
 import bluedev_yu.coecho.fragment.FragmentMyPage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -24,6 +26,8 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import org.koin.androidx.scope.lifecycleScope
 import java.lang.Exception
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class UploadFeed : AppCompatActivity() {
@@ -39,16 +43,12 @@ class UploadFeed : AppCompatActivity() {
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
     var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
-    private lateinit var binding : UploadFeedBinding
 
     var pickImageFromAlbum =0
     var uriPhoto : Uri?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = UploadFeedBinding.inflate(layoutInflater)
-        view = binding.root
         setContentView(view)
 
         auth = FirebaseAuth.getInstance()
@@ -63,7 +63,7 @@ class UploadFeed : AppCompatActivity() {
         tvPhoto = findViewById(R.id.tv_photo)
 
         //프로필이미지 바꾸기
-        val FeedPhotoUploadButton : Button = binding.FeedPhotoUploadButton
+        val FeedPhotoUploadButton : Button = findViewById(R.id.FeedPhotoUploadButton)
         FeedPhotoUploadButton.setOnClickListener{
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type = "image/*"
@@ -82,29 +82,30 @@ class UploadFeed : AppCompatActivity() {
             FeedDTO.hashtag = etHashtag.text.toString() //해시태그 문자열
             FeedDTO.content = etText.text.toString() //글 문자열
 
-            if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+            )
                 CoroutineScope(Dispatchers.IO).launch {
-                    var uriString : String?
-                    runBlocking {
-                        uriString = funImageUpLoad(view!!)
-                    }
+                    var uriString: String?
+                    uriString = funImageUpLoad(view!!)
                     FeedDTO.feedImgUrl = uriString
-                }
-            }
 
-            FeedDTO.privacy = privacy
-            FeedDTO.uid = auth?.uid
-            FeedDTO.likes = HashMap()
+                    FeedDTO.privacy = privacy
+                    FeedDTO.uid = auth?.uid
+                    FeedDTO.likes = HashMap()
 
-            firestore?.collection("Feeds")?.document()?.set(FeedDTO)?.addOnCompleteListener {
-                task ->
-                if(task.isSuccessful)
-                {
-                    Toast.makeText(this,"게시 완료",Toast.LENGTH_SHORT).show()
-                    val nextIntent = Intent(this,MainActivity::class.java)
-                    startActivity(nextIntent)
+                    firestore?.collection("Feeds")?.document()?.set(FeedDTO)
+                        ?.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Log.d("real","Real End")
+                            }
+                        }
                 }
-            }
+                Toast.makeText(this,"게시 완료",Toast.LENGTH_SHORT).show()
+                val nextIntent = Intent(this, MainActivity::class.java)
+                startActivity(nextIntent)
+
         }
     }
 
@@ -114,7 +115,7 @@ class UploadFeed : AppCompatActivity() {
         if(requestCode == pickImageFromAlbum){
             if(resultCode == Activity.RESULT_OK){
                 uriPhoto = data?.data
-                val ImagePreview : ImageView = binding.ImagePreview
+                val ImagePreview : ImageView = findViewById(R.id.ImagePreview)
                 ImagePreview.setImageURI(uriPhoto)
                 ImagePreview.visibility = View.VISIBLE
             }
@@ -122,15 +123,16 @@ class UploadFeed : AppCompatActivity() {
     }
 
     suspend fun funImageUpLoad(view : View) : String?{
-        //var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var user = auth?.currentUser?.uid.toString()
-        var imgFileName = "Feed"+user+".png"
+        var imgFileName = "Feed"+user+timestamp+".png"
         var storageRef = firestorage?.reference?.child("Feed")?.child(imgFileName)
 
-        return withContext(Dispatchers.IO) {
-            storageRef?.putFile(uriPhoto!!)?.await()
-                ?.storage?.downloadUrl?.await().toString()
-        }
+
+        storageRef?.putFile(uriPhoto!!)
+        Looper.prepare()
+        Toast.makeText(this,storageRef?.downloadUrl.toString(),Toast.LENGTH_LONG).show()
+        return storageRef?.downloadUrl.toString()
     }
 
     fun onRadioButtonClicked(view: View){
