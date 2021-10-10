@@ -17,6 +17,9 @@ class SearchHashtagAdapter(val hashtagList: ArrayList<Feeds>): RecyclerView.Adap
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.hashtag.text = hashtagList.get(position).hashtag
+        holder.hashtag.setOnClickListener {
+            //해당 해시태그 선택시 해당 해시태그를 포함하는 피드 띄우기
+        }
     }
 
 

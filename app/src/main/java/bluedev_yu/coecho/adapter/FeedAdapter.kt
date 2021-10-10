@@ -37,7 +37,6 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
         holder.profileImgUrl.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
                 val activity = v!!.context as AppCompatActivity
-                val fragmentmypage = FragmentMyPage()
                 activity.supportFragmentManager.beginTransaction()
                     .replace(R.id.snsLayout, FragmentMyPage())
                     .addToBackStack(null)

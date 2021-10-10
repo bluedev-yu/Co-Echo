@@ -16,7 +16,6 @@ import bluedev_yu.coecho.UploadFeed
 import bluedev_yu.coecho.adapter.FeedAdapter
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.databinding.FragmentFeedsBinding
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
