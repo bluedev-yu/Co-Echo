@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.ViewPager
@@ -73,6 +74,11 @@ class FragmentMyPage : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         viewProfile =  inflater.inflate(R.layout.fragment_my_page, container, false)
+
+        //uid 받아오기 - uid가 null이 아니면 다른 사람 페이지
+        //MYPAGE, 나의에코, 톱니바퀴 버튼, 설정 총 4개 안보이도록 만들어야함
+        val uid = arguments?.getString("uid")
+        Toast.makeText(requireContext(), uid.toString(), Toast.LENGTH_SHORT).show()
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()

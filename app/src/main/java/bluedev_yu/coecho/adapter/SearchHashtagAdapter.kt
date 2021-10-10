@@ -4,22 +4,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.Feeds
+import bluedev_yu.coecho.fragment.FragmentMyPage
 
 class SearchHashtagAdapter(val hashtagList: ArrayList<Feeds>): RecyclerView.Adapter<SearchHashtagAdapter.CustomViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_search_hashtag, parent, false)
-        return CustomViewHolder(view)
+        return CustomViewHolder(view).apply {
+            itemView.setOnClickListener {
+                val curPos: Int = adapterPosition
+                val feed: Feeds = hashtagList.get(curPos)
+                Toast.makeText(parent.context, "해시태그 : ${feed.hashtag}", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.hashtag.text = hashtagList.get(position).hashtag
-        holder.hashtag.setOnClickListener {
-            //해당 해시태그 선택시 해당 해시태그를 포함하는 피드 띄우기
-        }
     }
 
 

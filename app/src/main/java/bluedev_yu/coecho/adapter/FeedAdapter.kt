@@ -1,6 +1,7 @@
 package bluedev_yu.coecho.adapter
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +16,12 @@ import bluedev_yu.coecho.FeedDetail
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.fragment.FragmentMyPage
+import com.google.firebase.auth.FirebaseAuth
 
 
 class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
+
+    var auth : FirebaseAuth? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
@@ -33,18 +37,26 @@ class FeedAdapter(val feedList: ArrayList<Feeds>) : RecyclerView.Adapter<FeedAda
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+
+        auth = FirebaseAuth.getInstance()
+
         holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
-        holder.profileImgUrl.setOnClickListener(object: View.OnClickListener{
+        holder.userId.text = feedList.get(position).userId
+        holder.userId.setOnClickListener(object: View.OnClickListener{
+            //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {
+                var fragmentUserPage = FragmentMyPage()
+                var bundle = Bundle()
+                bundle.putString("uid", auth?.uid.toString())
+                fragmentUserPage.arguments = bundle
+
                 val activity = v!!.context as AppCompatActivity
                 activity.supportFragmentManager.beginTransaction()
-                    .replace(R.id.snsLayout, FragmentMyPage())
+                    .replace(R.id.snsLayout, fragmentUserPage)
                     .addToBackStack(null)
                     .commit()
             }
         })
-
-        holder.userId.text = feedList.get(position).userId
         holder.content.text = feedList.get(position).content
         holder.hashtag.text = feedList.get(position).hashtag
         //holder.feedImgUrl.setImageResource(feedList.get(position).feedImgUrl)
