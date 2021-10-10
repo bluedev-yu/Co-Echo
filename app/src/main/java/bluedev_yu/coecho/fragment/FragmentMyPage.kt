@@ -6,23 +6,24 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.ViewPager
 import bluedev_yu.coecho.adapter.FragmentAdapter
 
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.userDTO
+import bluedev_yu.coecho.databinding.FragmentMyPageBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,12 +40,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 // TODO: Rename and change types of parameters
-class FragmentMyPage : Fragment() {
+class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListener {
     private var param1: String? = null
     private var param2: String? = null
 
-    private var _binding: FragmentMyPage? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentMyPageBinding
+    private val _binding get() = binding!!
+    private lateinit var navigationView: NavigationView
 
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
@@ -72,6 +74,21 @@ class FragmentMyPage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        binding = FragmentMyPageBinding.inflate(inflater, container, false)
+
+        // 설정 버튼 선택시 오른쪽으로 열린다
+        binding.MyPageOptionButton.setOnClickListener{
+            binding.MyPageDrawerLayout.openDrawer(GravityCompat.END)
+        }
+
+        // 네비게이션 드로워 아이템 클릭 속성 부여
+        binding.navigationView.setNavigationItemSelectedListener(this)
+
+        val view = binding.root
+        return view
+
+
         // Inflate the layout for this fragment
         viewProfile =  inflater.inflate(R.layout.fragment_my_page, container, false)
 
@@ -201,5 +218,17 @@ class FragmentMyPage : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId)
+        {
+            R.id.itme1 -> Toast.makeText(context, "몰라", Toast.LENGTH_SHORT).show()
+            R.id.itme2 -> Toast.makeText(context, "몰라2", Toast.LENGTH_SHORT).show()
+            R.id.itme3 -> Toast.makeText(context, "몰라3", Toast.LENGTH_SHORT).show()
+
+        }
+        binding.MyPageDrawerLayout.closeDrawers()
+        return false
     }
 }
