@@ -46,7 +46,6 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
 
     private lateinit var binding: FragmentMyPageBinding
     private val _binding get() = binding!!
-    private lateinit var navigationView: NavigationView
 
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
