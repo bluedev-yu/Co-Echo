@@ -29,23 +29,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentMyPage.newInstance] factory method to
- * create an instance of this fragment.
- */
-// TODO: Rename and change types of parameters
 class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListener {
-    private var param1: String? = null
-    private var param2: String? = null
 
     private lateinit var binding: FragmentMyPageBinding
-    private val _binding get() = binding!!
+    //private val _binding get() = binding!!
 
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
@@ -62,11 +49,6 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-
     }
 
     override fun onCreateView(
@@ -76,7 +58,7 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
 
         binding = FragmentMyPageBinding.inflate(inflater, container, false)
 
-        // 설정 버튼 선택시 오른쪽으로 열린다
+        // 옵션 버튼 선택시 오른쪽으로 열린다
         binding.MyPageOptionButton.setOnClickListener{
             binding.MyPageDrawerLayout.openDrawer(GravityCompat.END)
         }
@@ -198,26 +180,6 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
 
     }
 
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentMyPage.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentMyPage().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId)
