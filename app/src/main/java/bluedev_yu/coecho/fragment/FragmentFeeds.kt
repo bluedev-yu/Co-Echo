@@ -42,7 +42,7 @@ class FragmentFeeds : Fragment() {
 
 
     val userList = arrayListOf(
-        userDTO("윤혜영", null, "윤혜영", null, 0)
+        userDTO("윤혜영", null, null, null)
     )
     val feedList = arrayListOf(
         Feeds(null, null, "하이", 10, 14, "해시태그1", true)
