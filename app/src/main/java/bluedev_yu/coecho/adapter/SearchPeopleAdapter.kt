@@ -31,8 +31,8 @@ class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapt
         auth = FirebaseAuth.getInstance()
 
         //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
-        holder.userId.text = userlist.get(position).userid
-        holder.userId.setOnClickListener(object: View.OnClickListener{
+        holder.strName.text = userlist.get(position).strName
+        holder.strName.setOnClickListener(object: View.OnClickListener{
             //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {
                 var fragmentUserPage = FragmentMyPage()
@@ -56,7 +56,7 @@ class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapt
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         //var profileImgUrl = itemView.findViewById<ImageView>(R.id.iv_profile) //프로필 이미지
-        var userId = itemView.findViewById<TextView>(R.id.tv_search_name) //이름
+        var strName = itemView.findViewById<TextView>(R.id.tv_search_name) //이름
     }
 
 

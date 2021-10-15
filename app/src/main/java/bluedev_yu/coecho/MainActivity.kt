@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             {
                 var userInfo = userDTO()
                 userInfo.uid = auth?.currentUser?.uid
-                userInfo.userid = auth?.currentUser?.email
                 userInfo.strName = auth?.currentUser?.displayName
                 firestore?.collection("User")?.document(auth?.uid.toString())?.set(userInfo)
             }

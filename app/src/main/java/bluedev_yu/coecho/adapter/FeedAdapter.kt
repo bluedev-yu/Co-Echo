@@ -27,10 +27,10 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDT
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
 
-        var iv_feed_menu: ImageView
-        iv_feed_menu = view.findViewById(R.id.iv_feed_menu)
-        iv_feed_menu.setOnClickListener {
-            //옵션 메뉴 추가
+        var iv_feed_share: ImageView
+        iv_feed_share = view.findViewById(R.id.iv_feed_share)
+        iv_feed_share.setOnClickListener {
+            //하단 드로어
 
         }
 
@@ -42,8 +42,8 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDT
         auth = FirebaseAuth.getInstance()
 
         //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
-        holder.userId.text = userList.get(position).userid
-        holder.userId.setOnClickListener(object: View.OnClickListener{
+        holder.strName.text = userList.get(position).strName
+        holder.strName.setOnClickListener(object: View.OnClickListener{
             //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {
                 var fragmentUserPage = FragmentMyPage()
@@ -67,6 +67,9 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDT
             val intent = Intent(holder.itemView?.context, FeedDetail::class.java)
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
         }
+        holder.ivLike.setOnClickListener {
+            
+        }
     }
 
     override fun getItemCount(): Int {
@@ -75,12 +78,13 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDT
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var profileImgUrl = itemView.findViewById<ImageView>(R.id.iv_profile) //프로필 이미지
-        var userId = itemView.findViewById<TextView>(R.id.tv_name) //이름
+        var strName = itemView.findViewById<TextView>(R.id.tv_name) //이름
         var content = itemView.findViewById<TextView>(R.id.tv_content) //피드 글
         var hashtag = itemView.findViewById<TextView>(R.id.tv_hashtag) //해시태그
         //var feedImgUrl = itemView.findViewById<ImageView>(R.id.iv_image) //피드 이미지
         var likeCnt = itemView.findViewById<TextView>(R.id.tv_like) //좋아요 수
         var commentCnt = itemView.findViewById<TextView>(R.id.tv_comment) //댓글 수
         var feedCardView = itemView.findViewById<CardView>(R.id.feed_cardview) //피드 카드뷰
+        var ivLike = itemView.findViewById<ImageView>(R.id.iv_like) //좋아요 하트
     }
 }

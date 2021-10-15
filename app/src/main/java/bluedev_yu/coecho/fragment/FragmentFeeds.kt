@@ -42,10 +42,20 @@ class FragmentFeeds : Fragment() {
 
 
     val userList = arrayListOf(
-        userDTO("윤혜영", null, "윤혜영", null, 0)
-    )
+        userDTO("윤혜영", null, null, 0),
+        userDTO("윤혜돌", null, null, 0),
+        userDTO("윤혜명", null,  null, 0),
+        userDTO("윤혜준", null,  null, 0),
+        userDTO("윤혜지", null,  null, 0)
+        )
+
     val feedList = arrayListOf(
-        Feeds(null, null, "하이", 10, 14, "해시태그1", true)
+        Feeds(null, null, "하이", 10, 14, "해시태그1", true),
+        Feeds(null, null, "하이", 23, 4, "해시태그2", true),
+        Feeds(null, null, "하이", 19, 44, "해시태그3", true),
+        Feeds(null, null, "하이", 30, 14, "해시태그4", true),
+        Feeds(null, null, "하이", 34, 95, "해시태그5", true)
+
         //여기다가 데이터 배열로 넣으면 돼
     )
 
@@ -74,28 +84,19 @@ class FragmentFeeds : Fragment() {
         rv_feed.setHasFixedSize(true)
         rv_feed.adapter = FeedAdapter(feedList, userList)
 
+        //fab 클릭하면 피드 작성 페이지로
         fab = view.findViewById(R.id.btn_uploadFeed)
         fab.setOnClickListener {
             val intent = Intent(requireContext(), UploadFeed::class.java)
             requireContext().startActivity(intent)
         }
 
-//        이거 혜주한테 물어봐야함 무슨 코드??
-//        //search Listener
-//        val sv_sns = binding.svSns
-//        sv_sns.setOnClickListener {
-//            val fragmentManager = (activity as FragmentActivity).supportFragmentManager
-//
-//            val transaction = fragmentManager.beginTransaction()
-//            transaction.replace(R.id.frameLayout, SNSSearchResults())
-//            transaction.addToBackStack(null)
-//            transaction.commit()
-//        }
-
+        //pull to refresh
         swipeRefreshLayout = binding.swipeRefreshLayout
         swipeRefreshLayout.setOnRefreshListener {
             //스와이프 할 때마다 피드 추가
             Toast.makeText(requireContext(), "하이~~~", Toast.LENGTH_SHORT).show()
+            swipeRefreshLayout.isRefreshing = false
         }
 
         return view
