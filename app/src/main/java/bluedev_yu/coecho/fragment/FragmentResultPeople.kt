@@ -35,11 +35,11 @@ class FragmentResultPeople : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_result_people, container, false)
 
         val userlist = arrayListOf(
-            userDTO("윤혜영", null, "윤혜영", null),
-            userDTO("윤혜돌", null, "윤혜영", null ),
-            userDTO("윤혜영", null, "윤혜영", null),
-            userDTO("윤혜영", null, "윤혜영", null),
-            userDTO("윤혜영", null, "윤혜영", null),
+            userDTO("윤혜영", null, "윤혜영", 0),
+            userDTO("윤혜돌", null, "윤혜영", 0),
+            userDTO("윤혜명", null, "윤혜영", 0),
+            userDTO("윤혜석", null, "윤혜영", 0),
+            userDTO("윤혜준", null, "윤혜영", 0),
             )
 
         rv_result_people = view.findViewById(R.id.rv_result_people)
