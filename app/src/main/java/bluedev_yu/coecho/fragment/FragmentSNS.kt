@@ -104,11 +104,13 @@ class FragmentSNS : Fragment() {
                     firestore?.collection("Feeds")?.whereIn("uid", followings)?.addSnapshotListener{
                         querySnapshot, firebaseFirestoreException ->
                         if(querySnapshot == null) {
+                            Toast.makeText(this.context,"no!!!!!!!",Toast.LENGTH_LONG).show()
                             return@addSnapshotListener
                         }
                         for(snapshot in querySnapshot!!.documents)
                         {
                             var item = snapshot.toObject(Feeds::class.java)!!
+                            Toast.makeText(this.context,item.uid.toString(),Toast.LENGTH_LONG).show()
                             feeds.add(item)
                         }
                         rv_feed.adapter = FeedAdapter(feeds)
