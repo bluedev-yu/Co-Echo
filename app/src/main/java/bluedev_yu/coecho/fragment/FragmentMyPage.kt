@@ -136,7 +136,6 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
         //탭레이아웃
         val fragmentManager = (activity as FragmentActivity).supportFragmentManager
 
-
         val pagerAdapter = FragmentAdapter(fragmentManager)
         val pager = viewProfile!!.findViewById<ViewPager>(R.id.viewPager)
         pager.adapter = pagerAdapter
@@ -179,7 +178,6 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
         }
 
     }
-
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId)

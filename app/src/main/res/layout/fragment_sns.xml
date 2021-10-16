@@ -44,7 +44,6 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:queryBackground="@null"
             android:queryHint="검색어를 입력하세요">
-
         </SearchView>
 
         <FrameLayout

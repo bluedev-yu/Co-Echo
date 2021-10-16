@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.text.Layout
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
+import android.widget.AdapterView
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -24,7 +27,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 
-class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener{
+class MainActivity : AppCompatActivity(),
+    NavigationBarView.OnItemSelectedListener,
+    AdapterView.OnItemSelectedListener {
 
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
@@ -86,6 +91,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
             R.id.action_map -> {
                 loadFragment(FragmentMap())
+                val spinner:Spinner = findViewById(R.id.MapSpinner)
+                spinner.onItemSelectedListener = this
                 return true
             }
             R.id.action_myPage -> {
@@ -105,6 +112,16 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         transaction.replace(R.id.frameLayout, fragment)
         transaction.disallowAddToBackStack()
         transaction.commit()
+    }
+
+    // 스피너
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        TODO("Not yet implemented")
+    }
+
+    // 스피너
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("Not yet implemented")
     }
 
 }

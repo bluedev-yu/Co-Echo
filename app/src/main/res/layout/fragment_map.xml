@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/MAP"
                 android:textColor="@color/green"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/eco_map"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TextView_map" />
@@ -73,8 +73,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="10dp" />
 
-
             <Spinner
+                android:id="@+id/MapSpinner"
                 android:layout_width="120dp"
                 android:layout_height="45dp"
                 android:background="@drawable/chose_spinner"
@@ -98,7 +98,7 @@
         android:id="@+id/map_navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_marginStart="15dp"
         app:menu="@menu/map_items" />
 

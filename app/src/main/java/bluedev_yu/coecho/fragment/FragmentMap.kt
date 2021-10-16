@@ -1,8 +1,12 @@
 package bluedev_yu.coecho.fragment
 
+// import android.app.Fragment
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.core.view.GravityCompat
@@ -13,10 +17,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
-
 class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: FragmentMapBinding
+
 
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
@@ -25,6 +29,11 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
     }
 
     override fun onCreateView(
@@ -42,10 +51,20 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
         // 네비게이션 드로워 아이템 클릭 속성 부여
         binding.mapNavigationView.setNavigationItemSelectedListener(this)
 
+
         val view = binding.root
         return view
     }
 
+
+
+    // 네비게이션 드로워가 켜진 상태에서 뒤로가기 버튼을 눌렀을때 네비게이션 드로워 종료
+//    override fun onBackPressed() {
+//        if(binding.MapDrawerLayout.isDrawerOpen(GravityCompat.END))
+//        {
+//            binding.MapDrawerLayout.closeDrawers()
+//        }
+//    }
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
