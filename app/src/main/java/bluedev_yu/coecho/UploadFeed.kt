@@ -9,6 +9,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
@@ -83,6 +84,7 @@ class UploadFeed : AppCompatActivity() {
             FeedDTO.privacy = privacy
             FeedDTO.uid = auth?.uid
             FeedDTO.likes = HashMap()
+            FeedDTO.timeStamp = System.currentTimeMillis()
 
             firestore?.collection("Feeds")?.document()?.set(FeedDTO)
                 ?.addOnCompleteListener { task ->
