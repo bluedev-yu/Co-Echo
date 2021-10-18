@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager.widget.ViewPager
 import bluedev_yu.coecho.R
+import bluedev_yu.coecho.adapter.FragmentAdapter
+import com.google.android.material.tabs.TabLayout
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,8 +38,20 @@ class fragmentMapSearch : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map_search, container, false)
+
+        val fragmentManager = (activity as FragmentActivity).supportFragmentManager
+
+//        val pagerAdapter = FragmentAdapter(fragmentManager)
+//        val pager = viewProfile!!.findViewById<ViewPager>(R.id.viewPager)
+//        pager.adapter = pagerAdapter
+//        val tab = viewProfile!!.findViewById<TabLayout>(R.id.MyPageTabs)
+//        tab.setupWithViewPager(pager)
+//
+//
+//        return viewProfile
+
+        return null
+
     }
 
     companion object {

@@ -24,11 +24,12 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="#00000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map_search_bar"
         app:tabIndicatorColor="#00B06A"
         app:tabIndicatorFullWidth="false"
         app:tabMode="fixed"
         app:tabSelectedTextColor="#00B06A" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

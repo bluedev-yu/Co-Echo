@@ -9,6 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#00B06A</color>
     <color name="lightGreen">#B9FFCC</color>
+    <color name="gray">#555555</color>
+    <color name="red">#FF0000</color>
     <color name="CoEcho_background">#f8ffe0</color>
     <color name="CoEcho_mainBackground">#f9ffe1</color>
+
 </resources>
