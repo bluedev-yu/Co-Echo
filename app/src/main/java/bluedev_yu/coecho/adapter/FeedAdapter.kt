@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -17,6 +18,7 @@ import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.fragment.FragmentMyPage
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -31,7 +33,15 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDT
         iv_feed_share = view.findViewById(R.id.iv_feed_share)
         iv_feed_share.setOnClickListener {
             //하단 드로어
+            val bottomSheetDialog = BottomSheetDialog(
+                parent.context, R.style.BottomSheetDialogTheme)
 
+            val bottomSheetView = LayoutInflater.from(parent.context).inflate(
+                R.layout.layout_bottom_sheet, parent.findViewById(R.id.bottomSheet) as LinearLayout?
+            )
+
+            bottomSheetDialog.setContentView(bottomSheetView)
+            bottomSheetDialog.show()
         }
 
         return CustomViewHolder(view)
@@ -68,7 +78,8 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDT
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
         }
         holder.ivLike.setOnClickListener {
-            
+            holder.ivLike.setImageResource(R.drawable.like)
+            //좋아요수 + 1 하고 데이터에 넘기기
         }
     }
 
