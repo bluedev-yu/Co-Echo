@@ -1,10 +1,11 @@
 package bluedev_yu.coecho.fragment
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -33,6 +34,8 @@ class FragmentSNS : Fragment() {
         transaction.disallowAddToBackStack()
         transaction.commit()
 
+
+
         //searchview 리스너
         svSNS = binding.svSns
 //        val id: Int = svSNS.getContext().getResources()
@@ -55,6 +58,8 @@ class FragmentSNS : Fragment() {
                 transaction.replace(R.id.layout_child, FragmentSearchResults())
                 transaction.disallowAddToBackStack()
                 transaction.commit()
+
+                svSNS.clearFocus()
 
                 return true
             }
