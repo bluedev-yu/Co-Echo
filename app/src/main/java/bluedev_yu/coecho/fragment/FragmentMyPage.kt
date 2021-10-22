@@ -210,8 +210,10 @@ class FragmentMyPage : Fragment() {
 
             }
 
+            Log.v("followButtonText",followButton.text.toString())
+
             //언팔로우하기
-            if(followButton.text.equals("팔로우 취소"))//이미 있음
+            if(followButton.text.toString().equals("팔로우 취소"))//이미 있음
             {
                 followButton.setOnClickListener{
                     //팔로우 항목에서 제거하기
@@ -232,7 +234,7 @@ class FragmentMyPage : Fragment() {
                     val addfollowing = hashMapOf<String,Any>()
                     addfollowing.put(uid,uid)
 
-                    docRef?.update(addfollowing)?.addOnCompleteListener{
+                    docRef?.update("followings",addfollowing)?.addOnCompleteListener{
                         followButton.setText("팔로우 취소")
                     }
                     //uid 항목을 삭제
