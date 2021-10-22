@@ -1,6 +1,5 @@
-package bluedev_yu.coecho.fragment
+package bluedev_yu.coecho.Fragment
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater

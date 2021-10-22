@@ -1,20 +1,15 @@
 package bluedev_yu.coecho.adapter
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import bluedev_yu.coecho.FeedDetail
 import bluedev_yu.coecho.R
-import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.fragment.FragmentMyPage
+import bluedev_yu.coecho.Fragment.FragmentMyPage
 import com.google.firebase.auth.FirebaseAuth
 
 class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapter<SearchPeopleAdapter.CustomViewHolder>(){

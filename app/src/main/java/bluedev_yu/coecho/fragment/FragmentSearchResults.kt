@@ -1,4 +1,4 @@
-package bluedev_yu.coecho.fragment
+package bluedev_yu.coecho.Fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
-import bluedev_yu.coecho.R
 import bluedev_yu.coecho.SNSFragementAdapter
 import bluedev_yu.coecho.databinding.FragmentSearchResultsBinding
 

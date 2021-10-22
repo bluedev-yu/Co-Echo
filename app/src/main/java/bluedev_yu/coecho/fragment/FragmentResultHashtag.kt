@@ -1,4 +1,4 @@
-package bluedev_yu.coecho.fragment
+package bluedev_yu.coecho.Fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.adapter.SearchHashtagAdapter
-import bluedev_yu.coecho.adapter.SearchPeopleAdapter
 import bluedev_yu.coecho.data.model.Feeds
 
 // TODO: Rename parameter arguments, choose names that match

@@ -1,4 +1,4 @@
-package bluedev_yu.coecho.fragment
+package bluedev_yu.coecho.Fragment
 
 import android.Manifest
 import android.app.Activity
@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,14 +18,17 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.ViewPager
+import bluedev_yu.coecho.LoginActivity
 import bluedev_yu.coecho.adapter.FragmentAdapter
 
 import bluedev_yu.coecho.R
+import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.userDTO
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
@@ -78,62 +82,166 @@ class FragmentMyPage : Fragment() {
         //uid 받아오기 - uid가 null이 아니면 다른 사람 페이지
         //MYPAGE, 나의에코, 톱니바퀴 버튼, 설정 총 4개 안보이도록 만들어야함
         val uid = arguments?.getString("uid")
-        Toast.makeText(requireContext(), uid.toString(), Toast.LENGTH_SHORT).show()
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         firestorage = FirebaseStorage.getInstance()
 
-        firestore?.collection("User")?.document(auth?.uid.toString())?.addSnapshotListener{
-            documentSnapshot, firebaseFirestoreException ->
-            var document = documentSnapshot?.toObject(userDTO::class.java)
-            val ProfileImage : ImageView = viewProfile!!.findViewById(R.id.MypageProfileImage)
+        if(uid == null) //마이페이지
+        {
+            firestore?.collection("User")?.document(auth?.uid.toString())?.addSnapshotListener{
+                    documentSnapshot, firebaseFirestoreException ->
+                var document = documentSnapshot?.toObject(userDTO::class.java)
+                val ProfileImage : ImageView = viewProfile!!.findViewById(R.id.MypageProfileImage)
 
-            //칭호
-            val MypageTitle : TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
-            if(document?.title ==0)
-            {
-                MypageTitle.setText(R.string.grade1)
-            }
-            else
-            {
-                MypageTitle.setText(R.string.grade2)
-            }
+                //칭호
+                val MypageTitle : TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
+                if(document?.title ==0)
+                {
+                    MypageTitle.setText(R.string.grade1)
+                }
+                else
+                {
+                    MypageTitle.setText(R.string.grade2)
+                }
 
-            //사람이름
-            val MypageUsername : TextView = viewProfile!!.findViewById(R.id.MyPageUserName)
-            MypageUsername.setText(document?.strName)
+                //사람이름
+                val MypageUsername : TextView = viewProfile!!.findViewById(R.id.MyPageUserName)
+                MypageUsername.setText(document?.strName)
 
-            //프로필사진
-            if(document?.imageUrl == null)
-                ProfileImage.setImageResource(R.drawable.default_profilephoto)
-            else
-            {
-                activity?.let {
-                    Glide.with(it)
-                        .load(document?.imageUrl)
-                        .apply(RequestOptions().circleCrop()).into(viewProfile!!.findViewById(R.id.MypageProfileImage))
+                //프로필사진
+                if(document?.imageUrl == null)
+                    ProfileImage.setImageResource(R.drawable.default_profilephoto)
+                else
+                {
+                    activity?.let {
+                        Glide.with(it)
+                            .load(document?.imageUrl)
+                            .apply(RequestOptions().circleCrop()).into(viewProfile!!.findViewById(R.id.MypageProfileImage))
+                    }
                 }
             }
+
+            //프로필이미지 바꾸기
+            val MypageProfileOptionButton : Button = viewProfile!!.findViewById(R.id.MyPageProfileOptionButton)
+            MypageProfileOptionButton.setOnClickListener{
+                var photoPickerIntent = Intent(Intent.ACTION_PICK)
+                photoPickerIntent.type = "image/*"
+                startActivityForResult(photoPickerIntent,pickImageFromAlbum)
+            }
+
+            //로그아웃
+            val LogoutButton : Button = viewProfile!!.findViewById(R.id.FollowButton)
+            LogoutButton.setOnClickListener{
+                auth!!.signOut()
+                Toast.makeText(this.context,"로그아웃 되었습니다.",Toast.LENGTH_LONG).show()
+                val intent = Intent(this.context, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
 
-        //프로필이미지 바꾸기
-        val MypageProfileOptionButton : Button = viewProfile!!.findViewById(R.id.MyPageProfileOptionButton)
-        MypageProfileOptionButton.setOnClickListener{
-            var photoPickerIntent = Intent(Intent.ACTION_PICK)
-            photoPickerIntent.type = "image/*"
-            startActivityForResult(photoPickerIntent,pickImageFromAlbum)
+        else //남의 페이지
+        {
+            //각종 버튼 숨기기, 보이기
+            val mypageText : TextView = viewProfile!!.findViewById(R.id.MypageText) //MYPAGE TEXT
+            mypageText.visibility = View.INVISIBLE
+            val myEchoText : TextView = viewProfile!!.findViewById(R.id.MyEchoText) //나의에코 TEXT
+            myEchoText.visibility = View.INVISIBLE
+            val MyPageOptionButton : ImageView = viewProfile!!.findViewById(R.id.MyPageOptionButton) //옵션 네비게이션 드로워
+            MyPageOptionButton.visibility = View.INVISIBLE
+            val MypageProfileOptionButton : Button = viewProfile!!.findViewById(R.id.MyPageProfileOptionButton) //마이페이지 배경변경 버튼
+            MypageProfileOptionButton.visibility = View.INVISIBLE
+            val followButton : Button = viewProfile!!.findViewById(R.id.FollowButton) //팔로우 버튼 팔로우/언팔로우로 보이기
+            followButton.setText("팔로우")
+
+
+            firestore?.collection("User")?.document(uid)?.addSnapshotListener{
+                    documentSnapshot, firebaseFirestoreException ->
+                var document = documentSnapshot?.toObject(userDTO::class.java)
+                val ProfileImage : ImageView = viewProfile!!.findViewById(R.id.MypageProfileImage)
+
+                //칭호
+                val MypageTitle : TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
+                if(document?.title ==0)
+                {
+                    MypageTitle.setText(R.string.grade1)
+                }
+                else
+                {
+                    MypageTitle.setText(R.string.grade2)
+                }
+
+                //사람이름
+                val MypageUsername : TextView = viewProfile!!.findViewById(R.id.MyPageUserName)
+                MypageUsername.setText(document?.strName)
+
+                //프로필사진
+                if(document?.imageUrl == null)
+                    ProfileImage.setImageResource(R.drawable.default_profilephoto)
+                else
+                {
+                    activity?.let {
+                        Glide.with(it)
+                            .load(document?.imageUrl)
+                            .apply(RequestOptions().circleCrop()).into(viewProfile!!.findViewById(R.id.MypageProfileImage))
+                    }
+                }
+            }
+
+            //내가 팔로우하고 있는가 아닌가에 따라 변경 -> 나의 following 에 없으면 버튼이름 "팔로우", 있으면 "팔로우 취소"
+            //follower -> 나를, following -> 내가
+            //팔로우시 내 following에 남 추가, 남의 follower에 나 추가
+            //팔로우 취소시 내 following에서 남 삭제, 남의 follower에서 나 삭제
+
+            firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{ //내 팔로우 데이터 가져오기
+                    documentSnapshot, firebaseFirestoreException ->
+
+                var document = documentSnapshot?.toObject(FollowDTO::class.java) //내 팔로우 데이터
+                if(document!!.followings.contains(uid)) //내가 이미 팔로우하고 있는 경우
+                {
+                    Log.v("contains",document.toString())
+                    followButton.setText("팔로우 취소")
+                }
+                else
+                {
+                    Log.v("Notcontains",document.toString())
+                    followButton.setText("팔로우")
+                }
+
+            }
+
+            //언팔로우하기
+            if(followButton.text.equals("팔로우 취소"))//이미 있음
+            {
+                followButton.setOnClickListener{
+                    //팔로우 항목에서 제거하기
+                    val docRef = firestore?.collection("Follow")?.document(auth?.uid.toString())
+                    val updates = hashMapOf<String,Any>(uid to FieldValue.delete())
+
+                    docRef?.update("followings",updates)?.addOnCompleteListener{
+                        followButton.setText("팔로우")
+                    }
+                    //uid 항목을 삭제
+                }
+            }
+            else //팔로우하기
+            {
+                followButton.setOnClickListener{
+                    //팔로우 항목에서 제거하기
+                    val docRef = firestore?.collection("Follow")?.document(auth?.uid.toString())
+                    val addfollowing = hashMapOf<String,Any>()
+                    addfollowing.put(uid,uid)
+
+                    docRef?.update(addfollowing)?.addOnCompleteListener{
+                        followButton.setText("팔로우 취소")
+                    }
+                    //uid 항목을 삭제
+                }
+            }
+
+
         }
 
-        //로그아웃
-        /*
-        val LogoutButton : Button = viewProfile!!.findViewById(R.id.LogOutButton)
-        LogoutButton.setOnClickListener{
-            auth!!.signOut()
-            Toast.makeText(this.context,"로그아웃 되었습니다.",Toast.LENGTH_LONG)
-            val intent = Intent(this.context, LoginActivity::class.java)
-            startActivity(intent)
-        }*/
 
         //탭레이아웃
         val fragmentManager = (activity as FragmentActivity).supportFragmentManager

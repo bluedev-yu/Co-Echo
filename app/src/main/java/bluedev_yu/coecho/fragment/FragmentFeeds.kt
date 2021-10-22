@@ -47,8 +47,7 @@ class FragmentFeeds : Fragment() {
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
     var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
-    var followings  = arrayListOf<String>()
-
+    var followings :MutableMap<String,String> = mutableMapOf()
 
     var userSet = hashSetOf<String>()
     var userList = arrayListOf<userDTO>()
@@ -86,11 +85,12 @@ class FragmentFeeds : Fragment() {
         firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{
                 documentSnapshot, firebaseFirestoreException ->
 
+            Log.v("Following document", documentSnapshot?.toObject(FollowDTO::class.java).toString())
             var document = documentSnapshot?.toObject(FollowDTO::class.java)
             if(document?.followingCount == 0) //팔로우 하는사람 없음
             {
                 //자식프레그먼트 text뷰 추가 필요
-                followings = arrayListOf()
+                followings = mutableMapOf()
             }
             else
             {
@@ -100,7 +100,7 @@ class FragmentFeeds : Fragment() {
                 if(followings.isNotEmpty()) //팔로우 하는사람 있을 때
                 {
                     feedList.clear()
-                    firestore?.collection("Feeds")?.whereIn("uid", followings)?.addSnapshotListener{
+                    firestore?.collection("Feeds")?.whereIn("uid", followings.values.toList())?.addSnapshotListener{
                             querySnapshot, firebaseFirestoreException ->
                         if(querySnapshot == null) {
                             Toast.makeText(this.context,"no!!!!!!!",Toast.LENGTH_LONG).show()

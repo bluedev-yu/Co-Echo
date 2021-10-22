@@ -12,17 +12,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.FeedDetail
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.fragment.FragmentMyPage
+import bluedev_yu.coecho.Fragment.FragmentMyPage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
-import org.w3c.dom.Text
 
 
 class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDTO>) : RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
@@ -72,7 +70,7 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDT
             override fun onClick(v: View?) {
                 var fragmentUserPage = FragmentMyPage()
                 var bundle = Bundle()
-                bundle.putString("uid", auth?.uid.toString())
+                bundle.putString("uid", feeduid)
                 fragmentUserPage.arguments = bundle
 
                 val activity = v!!.context as AppCompatActivity

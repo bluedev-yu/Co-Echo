@@ -2,22 +2,16 @@ package bluedev_yu.coecho
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Layout
-import android.util.Log
 import android.view.MenuItem
-import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.fragment.FragmentMyPage
-import bluedev_yu.coecho.fragment.FragmentSNS
+import bluedev_yu.coecho.Fragment.FragmentMyPage
+import bluedev_yu.coecho.Fragment.FragmentSNS
 import bluedev_yu.coecho.databinding.ActivityMainBinding
-import bluedev_yu.coecho.fragment.FragmentMap
+import bluedev_yu.coecho.Fragment.FragmentMap
+import bluedev_yu.coecho.data.model.FollowDTO
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -63,6 +57,19 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 userInfo.uid = auth?.currentUser?.uid
                 userInfo.strName = auth?.currentUser?.displayName
                 firestore?.collection("User")?.document(auth?.uid.toString())?.set(userInfo)
+            }
+        }
+
+        //follow
+        firestore?.collection("Follow")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener {
+                doc ->
+            if(doc.exists()){
+
+            }
+            else
+            {
+                var followDTO = FollowDTO()
+                firestore?.collection("Follow")?.document(auth?.uid.toString())?.set(followDTO)
             }
         }
 

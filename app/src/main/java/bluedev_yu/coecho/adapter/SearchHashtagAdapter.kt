@@ -5,11 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.Feeds
-import bluedev_yu.coecho.fragment.FragmentMyPage
 
 class SearchHashtagAdapter(val hashtagList: ArrayList<Feeds>): RecyclerView.Adapter<SearchHashtagAdapter.CustomViewHolder>(){
 

@@ -1,31 +1,13 @@
-package bluedev_yu.coecho.fragment
+package bluedev_yu.coecho.Fragment
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.SearchView
-import android.widget.Toast
-import androidx.cardview.widget.CardView
-import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import bluedev_yu.coecho.Fragment.FragmentFeeds
-import bluedev_yu.coecho.adapter.FeedAdapter
-import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.R
-import bluedev_yu.coecho.UploadFeed
-import bluedev_yu.coecho.data.model.FollowDTO
-import bluedev_yu.coecho.databinding.FragmentFeedsBinding
 import bluedev_yu.coecho.databinding.FragmentSnsBinding
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
