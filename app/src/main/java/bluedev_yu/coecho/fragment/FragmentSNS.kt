@@ -59,9 +59,7 @@ class FragmentSNS : Fragment() {
                 transaction.disallowAddToBackStack()
                 transaction.commit()
 
-                svSNS.clearFocus()
-
-                return true
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
