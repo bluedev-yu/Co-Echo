@@ -37,10 +37,10 @@ class KAKAO_Place {
 
     interface KAKAOSearch {
         @GET("/v2/local/search/keyword.json")
-        fun getSearchKeyword(@Header("Authorization") key: String,
+        fun getSearchKeyword(@Header("Authorization")key: String,
                              @Query("query") query: String,
                              @Query("x") x:String,
-                             @Query("y")y:String,
+                             @Query("y") y:String,
                              @Query("radius")radius:Int):retrofit2.Call<ResultSearchKeyword>
     }
 }

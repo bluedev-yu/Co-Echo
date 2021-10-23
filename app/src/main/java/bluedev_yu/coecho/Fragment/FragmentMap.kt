@@ -15,10 +15,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import bluedev_yu.coecho.KAKAO_Place
-import bluedev_yu.coecho.Place
-import bluedev_yu.coecho.PlaceAdapter
-import bluedev_yu.coecho.R
+import bluedev_yu.coecho.*
 import com.google.android.material.navigation.NavigationView
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
@@ -46,11 +43,15 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
     private var param2: String? = null
 
     //디폴트 위치 진천동
-    var UserLong:Double =35.81
-    var UserLati:Double =128.52
+    var UserLati:Double =35.81//x
+    var UserLong:Double =128.52//y
+
 
     //네비게이션뷰에 들어가는 데이터
     val placeList = arrayListOf<Place>()
+    //마커 표시하는 데이터 배열
+    val markerList = arrayListOf<MapPOIItem>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +78,11 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
             val mapView=MapView(activity)
             val mapViewContainer = thisFragView.findViewById<MapView>(R.id.map_view) as ViewGroup
             mapViewContainer.addView(mapView)
+
+            //firebase DB 접근
+            val dbinst= DB_Place()
+            dbinst.insert_data("temporary","레레레","12.34","56.78")
+            dbinst.read_data()
 
             if(mapView==null)
             {
@@ -125,8 +131,6 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
             t_rv_places.setHasFixedSize(true)
             loadRecommendationP(mapView,t_rv_places)
 
-            t_rv_places.adapter = PlaceAdapter(placeList)
-
             // 검색버튼 선택시 프래그먼트 실행
             thisFragView.findViewById<ImageView>(R.id.search_button).setOnClickListener{
                 //setFrag(0)
@@ -160,7 +164,7 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val interFace=retrofit.create(KAKAO_Place.KAKAOSearch::class.java)
-        val call=interFace.getSearchKeyword(API_KEY,keyword,UserLong.toString(),UserLati.toString(),1000)
+        val call=interFace.getSearchKeyword(API_KEY,keyword,UserLong.toString(),UserLati.toString(),3000)
         call.enqueue(object: Callback<KAKAO_Place.ResultSearchKeyword> {
             override fun onResponse(call: retrofit2.Call<KAKAO_Place.ResultSearchKeyword>, response: Response<KAKAO_Place.ResultSearchKeyword>) {
                 Log.d("카카오 검색 성공", "Raw: ${response.raw()}")
@@ -168,13 +172,13 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
                 if(response.body()!=null) {
                     var len=Math.min(10,response.body()!!.meta.pageable_count)
                     placeList.clear()
+                    markerList.clear()
                     for(i in 0 until len-1)
                     {
                         val tmp=response.body()!!.documents[i]
                         //Toast.makeText(this@MapActivity,tmp.place_name+" "+tmp.address_name,Toast.LENGTH_SHORT).show()
-                        placeList.add(Place(null,tmp.place_name,tmp.category_name,0,tmp.address_name,tmp.distance))
-                        //mapView.addPOIItem(newMapPoiItem(tmp.address_name,tmp.x,tmp.y))
-                        //mapView.fitMapViewAreaToShowAllPOIItems()
+                        placeList.add(Place(null,tmp.place_name,tmp.category_name,0,tmp.address_name,tmp.distance,tmp.x.toDouble(),tmp.y.toDouble()))
+                        markerList.add(newCustomMapPoiItem(tmp.place_name,tmp.y.toDouble(),tmp.x.toDouble(),i))
                     }
                 }
 
@@ -195,10 +199,18 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
         else
         {
             Log.i("loadP","b 진입")
-            searchKeyword(mapView,"환경")
+            searchKeyword(mapView,"에코")
         }
         Log.i("loadP",placeList.size.toString())
+        mapView.removeAllPOIItems()
+        for(i in 0 until markerList.size)
+        {
+            mapView.addPOIItem(markerList.get(i))
+        }
+        mapView.fitMapViewAreaToShowAllPOIItems()
+        t_rv_places.getRecycledViewPool().clear()
         t_rv_places.adapter = PlaceAdapter(placeList)
+        PlaceAdapter(placeList).notifyDataSetChanged()
     }
     //현재 위치로 맵 조정했을 때 사용자 위경도 저장(+이후 추천순 검색 기능 추가)
     val mCurrentLocationEventListener= object:MapView.CurrentLocationEventListener{
@@ -211,7 +223,7 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
                 {
                     UserLong = p1.mapPointGeoCoord.longitude
                     UserLati = p1.mapPointGeoCoord.latitude
-                    Log.i("사용자 경위도",UserLong.toString()+" "+UserLati.toString())
+                    Log.i("사용자 경위도",UserLati.toString()+" "+UserLong.toString())
                 }
             }
         }
@@ -303,6 +315,36 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
         override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {
             //마커 속성이 idDraggable = true일 때 마커 이동시
         }
+    }
+
+    //마커 추가 함수
+    fun newMapPoiItem(iName: String, lat: String, lon: String): MapPOIItem//지도에 마커 추가 함수
+    {
+        val marker = MapPOIItem()
+        marker.apply {
+            itemName = iName
+            mapPoint = MapPoint.mapPointWithGeoCoord(lat.toDouble(), lon.toDouble())
+            markerType = MapPOIItem.MarkerType.BluePin
+            selectedMarkerType = MapPOIItem.MarkerType.BluePin
+            isCustomImageAutoscale = true
+            setCustomImageAnchor(0.5f, 1.0f)
+        }
+        return marker
+    }
+
+    //커스텀 마커
+    fun newCustomMapPoiItem(iName: String, lat:Double, lon:Double,tagN:Int): MapPOIItem {
+        val marker = MapPOIItem();
+        marker.apply {
+            itemName = iName
+            tag = tagN
+            mapPoint = MapPoint.mapPointWithGeoCoord(lat, lon)
+            markerType = MapPOIItem.MarkerType.CustomImage // 마커타입을 커스텀 마커로 지정.
+            customImageResourceId = R.drawable.echo_custom_marker //마커 이미지 설정 -> 나뭇잎 모양
+            isCustomImageAutoscale = true
+            setCustomImageAnchor(0.5f, 1.0f)
+        }
+        return marker
     }
 
 //    // 검색 프래그먼트 실행

@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import bluedev_yu.coecho.fragment.FragmentMap
 import bluedev_yu.coecho.fragment.FragmentMyPage
 import bluedev_yu.coecho.fragment.FragmentSNS
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         var keyHash = Utility.getKeyHash(this)
         Log.d("해시 키",keyHash)
     }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean { //내비게이션바 아이템 선택시 프래그먼트 교체
         when (item.itemId) {
             R.id.action_sns -> {
@@ -70,7 +72,10 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 return true
             }
             R.id.action_map -> {
-                loadFragment(FragmentMap())
+                Log.d("Fragment 상태",FragmentMap().isAdded.toString()+" "+FragmentMap().isVisible.toString())
+                if(!FragmentMap().isVisible) {
+                    loadFragment(FragmentMap())
+                }
                 return true
             }
             R.id.action_myPage -> {
@@ -94,35 +99,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
 
 
-    //마커 추가 함수
-    fun newMapPoiItem(iName: String, lat: String, lon: String): MapPOIItem//지도에 마커 추가 함수
-    {
-        val marker = MapPOIItem()
-        marker.apply {
-            itemName = iName
-            mapPoint = MapPoint.mapPointWithGeoCoord(lat.toDouble(), lon.toDouble())
-            markerType = MapPOIItem.MarkerType.BluePin
-            selectedMarkerType = MapPOIItem.MarkerType.BluePin
-            isCustomImageAutoscale = true
-            setCustomImageAnchor(0.5f, 1.0f)
-        }
-        return marker
-    }
-
-    //커스텀 마커
-    fun newCustomMapPoiItem(iName: String, lat:String, lon: String): MapPOIItem {
-        val marker = MapPOIItem();
-        marker.apply {
-            itemName = iName
-            tag = 1
-            mapPoint = MapPoint.mapPointWithGeoCoord(lat.toDouble(), lon.toDouble())
-            markerType = MapPOIItem.MarkerType.CustomImage // 마커타입을 커스텀 마커로 지정.
-            customImageResourceId = R.drawable.echo_custom_marker //마커 이미지 설정 -> 나뭇잎 모양
-            isCustomImageAutoscale = true
-            setCustomImageAnchor(0.5f, 1.0f)
-        }
-        return marker
-    }
 
 
 }
