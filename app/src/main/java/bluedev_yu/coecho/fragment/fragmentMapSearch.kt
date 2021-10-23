@@ -50,7 +50,7 @@ class fragmentMapSearch : Fragment() {
 //
 //        return viewProfile
 
-        return null
+        return inflater.inflate(R.layout.fragment_map_detail, container, false)
 
     }
 
