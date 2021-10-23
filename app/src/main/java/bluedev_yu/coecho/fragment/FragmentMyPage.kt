@@ -152,7 +152,7 @@ class FragmentMyPage : Fragment() {
             val MypageProfileOptionButton : Button = viewProfile!!.findViewById(R.id.MyPageProfileOptionButton) //마이페이지 배경변경 버튼
             MypageProfileOptionButton.visibility = View.INVISIBLE
             val followButton : Button = viewProfile!!.findViewById(R.id.FollowButton) //팔로우 버튼 팔로우/언팔로우로 보이기
-            followButton.setText("팔로우")
+            //followButton.setText("팔로우")
 
 
             firestore?.collection("User")?.document(uid)?.addSnapshotListener{
@@ -208,37 +208,35 @@ class FragmentMyPage : Fragment() {
                     followButton.setText("팔로우")
                 }
 
-            }
+                //언팔로우하기
+                if(followButton.text.toString().equals("팔로우 취소"))//이미 있음
+                {
+                    followButton.setOnClickListener{
+                        //팔로우 항목에서 제거하기
+                        val docRef = firestore?.collection("Follow")?.document(auth?.uid.toString())
+                        val updates = hashMapOf<String,Any>(uid to FieldValue.delete())
 
-            Log.v("followButtonText",followButton.text.toString())
-
-            //언팔로우하기
-            if(followButton.text.toString().equals("팔로우 취소"))//이미 있음
-            {
-                followButton.setOnClickListener{
-                    //팔로우 항목에서 제거하기
-                    val docRef = firestore?.collection("Follow")?.document(auth?.uid.toString())
-                    val updates = hashMapOf<String,Any>(uid to FieldValue.delete())
-
-                    docRef?.update("followings",updates)?.addOnCompleteListener{
-                        followButton.setText("팔로우")
+                        docRef?.update("followings",updates)?.addOnCompleteListener{
+                            followButton.setText("팔로우")
+                        }
+                        //uid 항목을 삭제
                     }
-                    //uid 항목을 삭제
                 }
-            }
-            else //팔로우하기
-            {
-                followButton.setOnClickListener{
-                    //팔로우 항목에서 제거하기
-                    val docRef = firestore?.collection("Follow")?.document(auth?.uid.toString())
-                    val addfollowing = hashMapOf<String,Any>()
-                    addfollowing.put(uid,uid)
-
-                    docRef?.update("followings",addfollowing)?.addOnCompleteListener{
-                        followButton.setText("팔로우 취소")
+                else //팔로우하기
+                {
+                    followButton.setOnClickListener{
+                        //팔로우 항목에서 제거하기
+                        val docRef = firestore?.collection("Follow")?.document(auth?.uid.toString())
+                        val addfollowing = hashMapOf<String,Any>()
+                        addfollowing.put(uid,uid)
+                        Log.v("addfollowing",addfollowing.toString())
+                        docRef?.update("followings",addfollowing)?.addOnCompleteListener{
+                            followButton.setText("팔로우 취소")
+                        }
+                        //uid 항목을 삭제
                     }
-                    //uid 항목을 삭제
                 }
+
             }
 
 
