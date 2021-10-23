@@ -3,4 +3,13 @@
     <string name="SNS">SNS</string>
     <string name="MAP">MAP</string>
     <string name="MY_PAGE">MY PAGE</string>
+
+    <string name="에코맵">에코맵</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="spinner_array">
+        <item>거리순</item>
+        <item>별점순</item>
+    </string-array>
 </resources>
