@@ -1,40 +1,27 @@
 package bluedev_yu.coecho.Fragment
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.databinding.FragmentSnsBinding
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import androidx.fragment.app.Fragment
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentMap.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentSNS : Fragment() {
-
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
     private lateinit var binding: FragmentSnsBinding
 
-    lateinit var sv_sns: SearchView
+    lateinit var svSNS: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -44,51 +31,47 @@ class FragmentSNS : Fragment() {
         binding = FragmentSnsBinding.inflate(layoutInflater)
         val view = binding.root
 
-        //searchview 리스너
-        sv_sns = binding.svSns
-        sv_sns.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                //fragment feed에서 fragment search result로 바꿔야함!
-                val transaction = childFragmentManager.beginTransaction()
-                transaction.replace(R.id.layout_child, FragmentSearchResults())
-                transaction.disallowAddToBackStack()
-                transaction.commit()
-                return false
-            }
-
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                return false
-            }
-
-        }
-        )
-
         val transaction = childFragmentManager.beginTransaction()
         transaction.replace(R.id.layout_child, FragmentFeeds())
         transaction.disallowAddToBackStack()
         transaction.commit()
 
+
+        //searchview 리스너
+        svSNS = binding.svSns
+//        val id: Int = svSNS.getContext().getResources()
+//            .getIdentifier("android:id/search_src_text", null, null)
+//        val editText: EditText = svSNS.findViewById(id)
+//        editText.setOnClickListener {
+//            val transaction = childFragmentManager.beginTransaction()
+//            transaction.replace(R.id.layout_child, FragmentSearchResults())
+//            transaction.disallowAddToBackStack()
+//            transaction.commit()
+//        }
+
+        svSNS.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                //검색 버튼 눌러졌을 때 이벤트 처리 ->
+                //검색 결과 페이지로 이동
+                Toast.makeText(requireContext(), query, Toast.LENGTH_SHORT).show()
+
+                val transaction = childFragmentManager.beginTransaction()
+                transaction.replace(R.id.layout_child, FragmentSearchResults())
+                transaction.disallowAddToBackStack()
+                transaction.commit()
+
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                //검색어 변경되었을 때 이벤트 처리
+//                Toast.makeText(requireContext(), newText, Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+        })
+
         return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentMap.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentSNS().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

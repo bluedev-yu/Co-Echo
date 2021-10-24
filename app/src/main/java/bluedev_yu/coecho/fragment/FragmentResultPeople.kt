@@ -11,16 +11,6 @@ import bluedev_yu.coecho.R
 import bluedev_yu.coecho.adapter.SearchPeopleAdapter
 import bluedev_yu.coecho.data.model.userDTO
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentResultPeople.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentResultPeople : Fragment() {
 
     lateinit var rv_result_people: RecyclerView

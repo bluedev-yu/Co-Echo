@@ -43,9 +43,7 @@
             android:iconifiedByDefault="false"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:queryBackground="@null"
-            android:queryHint="검색어를 입력하세요">
-
-        </SearchView>
+            android:queryHint="검색어를 입력하세요"/>
 
         <FrameLayout
             android:id="@+id/layout_child"
