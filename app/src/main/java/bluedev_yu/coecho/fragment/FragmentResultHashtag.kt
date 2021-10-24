@@ -29,12 +29,7 @@ class FragmentResultHashtag : Fragment() {
         val query = arguments?.getString("query")
         Toast.makeText(requireContext(), "내 쿼리는 $query", Toast.LENGTH_SHORT).show()
 
-        val hashtagList = arrayListOf(
-            Feeds(null, null, null, 0, 0, 123,"해시태그1", false),
-            Feeds(null, null, null, 0, 0, 123,"해시태그2", false),
-            Feeds(null, null, null, 0, 0, 123,"해시태그3", false),
-            Feeds(null, null, null, 0, 0, 213,"해시태그4", false)
-        )
+        val hashtagList = arrayListOf<Feeds>()
 
         rv_result_hashtag = view.findViewById(R.id.rv_result_hashtag)
         rv_result_hashtag.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

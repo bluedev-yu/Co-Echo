@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -23,11 +24,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 
-class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDTO>) : RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
+class FeedAdapter(val feedList: ArrayList<Feeds>, val contentUidList : ArrayList<String>) : RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
     var auth : FirebaseAuth? = null
+    var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
+    var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
@@ -46,32 +52,23 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDT
             bottomSheetDialog.setContentView(bottomSheetView)
             bottomSheetDialog.show()
         }
-
         return CustomViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+
         var feeduid = feedList.get(position).uid
 
-        var userIterator = userList.iterator() //해당 유저 정보 찾기
-        while(userIterator.hasNext())
+        holder.strName.text = feedList.get(position).strName //유저 이름
+        Glide.with(holder.itemView.context).load(feedList.get(position).imageUrl!!.toUri()).apply(
+            RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
+        when(feedList.get(position).title) //칭호
         {
-            var imsi = userIterator.next()
-            Log.v("imsi",imsi.toString())
-            if(imsi.uid.equals(feeduid)) //해당 유저
-            {
-                holder.strName.text = imsi.strName //유저 이름
-                Glide.with(holder.itemView.context).load(imsi.imageUrl!!.toUri()).apply( 
-                    RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
-                when(imsi.title) //칭호
-                {
-                    0 -> holder.userTitle.setText(R.string.grade1)
-                    1 -> holder.userTitle.setText(R.string.grade2)
-                }
-                break
-            }
+            0 -> holder.userTitle.setText(R.string.grade1)
+            1 -> holder.userTitle.setText(R.string.grade2)
         }
 
 
@@ -103,9 +100,42 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDT
             val intent = Intent(holder.itemView?.context, FeedDetail::class.java)
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
         }
-        holder.ivLike.setOnClickListener { 
+
+        //미리 하트가 비었는가 찼는가
+        if(feedList[position].likes.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
+        {
             holder.ivLike.setImageResource(R.drawable.like)
-            //좋아요수 + 1 하고 데이터에 넘기기
+        }
+        else
+        {
+            holder.ivLike.setImageResource(R.drawable.blank_like) //안눌렀을 경우
+        }
+
+        holder.isLikeClicked.setOnClickListener {
+            likeEvent(position)
+        }
+    }
+
+    private fun likeEvent(position: Int)
+    {
+        var tsDoc = firestore?.collection("Feeds")?.document(contentUidList[position])
+        firestore?.runTransaction{
+            transaction ->
+
+            val uid = auth?.uid.toString()
+            val feedDTO = transaction.get(tsDoc!!).toObject(Feeds::class.java)
+
+            if(feedDTO!!.likes.containsKey(uid)){ //이미 좋아요 한 경우 -> 좋아요 철회
+                feedDTO?.likeCnt = feedDTO.likeCnt-1
+                feedDTO?.likes.remove(uid)
+            }
+            else //좋아요 아직 안함 -> 좋아요 하기
+            {
+                feedDTO.likes[uid] = uid
+                feedDTO.likeCnt = feedDTO.likeCnt+1
+            }
+
+            transaction.set(tsDoc,feedDTO)
         }
     }
 
@@ -121,6 +151,7 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDT
         var content = itemView.findViewById<TextView>(R.id.tv_content) //피드 글
         var hashtag = itemView.findViewById<TextView>(R.id.tv_hashtag) //해시태그
         //var feedImgUrl = itemView.findViewById<ImageView>(R.id.iv_image) //피드 이미지
+        var isLikeClicked = itemView.findViewById<ImageView>(R.id.iv_like) //좋아요 하트
         var likeCnt = itemView.findViewById<TextView>(R.id.tv_like) //좋아요 수
         var commentCnt = itemView.findViewById<TextView>(R.id.tv_comment) //댓글 수
         var feedCardView = itemView.findViewById<CardView>(R.id.feed_cardview) //피드 카드뷰

@@ -14,6 +14,8 @@ import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
 import bluedev_yu.coecho.data.model.Feeds
+import bluedev_yu.coecho.data.model.FollowDTO
+import bluedev_yu.coecho.data.model.userDTO
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -86,16 +88,23 @@ class UploadFeed : AppCompatActivity() {
             FeedDTO.likes = HashMap()
             FeedDTO.timeStamp = System.currentTimeMillis()
 
-            firestore?.collection("Feeds")?.document()?.set(FeedDTO)
-                ?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(this, "게시 완료", Toast.LENGTH_SHORT).show()
-                        val nextIntent = Intent(this, MainActivity::class.java)
-                        startActivity(nextIntent)
+            //피드에서 나의 정보 가져오기
+            firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener{
+                    task ->
+                var document = task?.toObject(userDTO::class.java)
+                FeedDTO.imageUrl = document?.imageUrl
+                FeedDTO.strName = document?.strName
+                FeedDTO.title = document?.title
+
+                firestore?.collection("Feeds")?.document()?.set(FeedDTO)
+                    ?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this, "게시 완료", Toast.LENGTH_SHORT).show()
+                            val nextIntent = Intent(this, MainActivity::class.java)
+                            startActivity(nextIntent)
+                        }
                     }
-                }
-
-
+            }
 
         }
     }

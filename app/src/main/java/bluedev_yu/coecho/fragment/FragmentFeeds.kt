@@ -36,17 +36,8 @@ class FragmentFeeds : Fragment() {
     var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
     var followings :MutableMap<String,String> = mutableMapOf()
 
-    var userSet = hashSetOf<String>()
-    var userList = arrayListOf<userDTO>()
-    val feedList = arrayListOf(
-        Feeds(null, null, "하이 안녕하세요 저는 윤혜영입니다. 안녕하세요~~~~ 안녕하세요 안녕하세요 ~~~ 안녕하세요 ~~~ 안녕하세요 ~~~ 안녕하세요 ~~~", null,  10, 14, "해시태그1", true),
-        Feeds(null, null, "하이", null, 23, 4, "해시태그2", true),
-        Feeds(null, null, "하이", null,  19, 44, "해시태그3", true),
-        Feeds(null, null, "하이", null,  30, 14, "해시태그4", true),
-        Feeds(null, null, "하이", null,  34, 95, "해시태그5", true)
-
-        //여기다가 데이터 배열로 넣으면 돼
-    )
+    var feedList = arrayListOf<Feeds>()
+    var contentUidList = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,9 +85,11 @@ class FragmentFeeds : Fragment() {
 
                 if(followings.isNotEmpty()) //팔로우 하는사람 있을 때
                 {
-                    feedList.clear()
+                    Log.v("FeedSize",feedList.size.toString())
                     firestore?.collection("Feeds")?.whereIn("uid", followings.values.toList())?.addSnapshotListener{
                             querySnapshot, firebaseFirestoreException ->
+                        feedList.clear()
+                        contentUidList.clear()
                         if(querySnapshot == null) {
                             Toast.makeText(this.context,"no!!!!!!!",Toast.LENGTH_LONG).show()
                             return@addSnapshotListener
@@ -105,17 +98,16 @@ class FragmentFeeds : Fragment() {
                         {
                             var item = snapshot.toObject(Feeds::class.java)!!
                             feedList.add(item)
-                            firestore?.collection("User")?.document(item.uid.toString())?.addSnapshotListener{
-                                    documentSnapshots, firebaseFirestoreException ->
-                                var user = documentSnapshots?.toObject(userDTO::class.java)
-                                if(!userSet.contains(user?.uid.toString())) //처음본 유저
-                                {
-                                    userSet.add(user?.uid.toString())
-                                    userList.add(user!!)
-                                }
-                                //개선 필요
-                                rv_feed.adapter = FeedAdapter(feedList,userList)
-                            }
+                            contentUidList.add(snapshot.id)
+                        }
+                        if(feedList.size ==0)
+                        {
+
+                        }
+                        else
+                        {
+                            rv_feed.adapter = FeedAdapter(feedList,contentUidList)
+                            rv_feed.adapter!!.notifyDataSetChanged()
                         }
                     }
                 }
