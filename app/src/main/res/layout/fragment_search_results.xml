@@ -22,7 +22,6 @@
             app:tabMode="fixed"
             app:tabSelectedTextColor="#00B06A" />
 
-
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/SNSViewPager"
             android:layout_width="match_parent"

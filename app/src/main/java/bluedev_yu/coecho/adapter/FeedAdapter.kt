@@ -28,31 +28,45 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 
-class FeedAdapter(val feedList: ArrayList<Feeds>, val contentUidList : ArrayList<String>) : RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
+
+class FeedAdapter(val feedList: ArrayList<Feeds>, val contentUidList : ArrayList<String>) : 
+RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
     var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
 
         var iv_feed_share: ImageView
-        iv_feed_share = view.findViewById(R.id.iv_feed_share)
-        iv_feed_share.setOnClickListener {
-            //하단 드로어
-            val bottomSheetDialog = BottomSheetDialog(
-                parent.context, R.style.BottomSheetDialogTheme)
 
-            val bottomSheetView = LayoutInflater.from(parent.context).inflate(
-                R.layout.layout_bottom_sheet, parent.findViewById(R.id.bottomSheet) as LinearLayout?
-            )
+//        iv_feed_share = view.findViewById(R.id.feed_share)
+//        iv_feed_share.setOnClickListener {
+//            //하단 드로어
+//            val bottomSheetDialog = BottomSheetDialog(
+//                parent.context, R.style.BottomSheetDialogTheme
+//            )
+//
+//            val bottomSheetView = LayoutInflater.from(parent.context).inflate(
+//                R.layout.layout_bottom_sheet, parent.findViewById(R.id.bottomSheet) as LinearLayout?
+//            )
+//
+//            bottomSheetDialog.setContentView(bottomSheetView)
+//            bottomSheetDialog.show()
+//        }
 
-            bottomSheetDialog.setContentView(bottomSheetView)
-            bottomSheetDialog.show()
+        return CustomViewHolder(view).apply {
+            feedCardView.setOnClickListener {
+                val curPos: Int = adapterPosition
+                val feed: Feeds = feedList.get(curPos)
+
+                val intent = Intent(parent.context, FeedDetail::class.java)
+                intent.putExtra("content", feed.content)
+                ContextCompat.startActivity(parent.context, intent, null)
+
+            }
         }
-        return CustomViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
@@ -71,8 +85,9 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val contentUidList : ArrayList
             1 -> holder.userTitle.setText(R.string.grade2)
         }
 
-
-        holder.strName.setOnClickListener(object: View.OnClickListener{
+        //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
+        holder.strName.text = userList.get(position).strName
+        holder.strName.setOnClickListener(object : View.OnClickListener {
             //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {
                 var fragmentUserPage = FragmentMyPage()
@@ -98,6 +113,10 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val contentUidList : ArrayList
         holder.commentCnt.text = feedList.get(position).commentCnt.toString()
         holder.feedCardView.setOnClickListener {
             val intent = Intent(holder.itemView?.context, FeedDetail::class.java)
+            intent.putExtra("name", feedList.get(position).uid)
+            intent.putExtra("content", feedList.get(position).content)
+            intent.putExtra("hashtag", feedList.get(position).hashtag)
+            intent.putExtra("likeCnt", feedList.get(position).likeCnt)
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
         }
 
