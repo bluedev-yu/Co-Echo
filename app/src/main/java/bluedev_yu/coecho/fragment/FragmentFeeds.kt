@@ -40,11 +40,11 @@ class FragmentFeeds : Fragment() {
     var userSet = hashSetOf<String>()
     var userList = arrayListOf<userDTO>()
     val feedList = arrayListOf(
-        Feeds(null, null, "하이 안녕하세요 저는 윤혜영입니다. 안녕하세요~~~~ 안녕하세요 안녕하세요 ~~~ 안녕하세요 ~~~ 안녕하세요 ~~~ 안녕하세요 ~~~", 10, 14, "해시태그1", true),
-        Feeds(null, null, "하이", 23, 4, "해시태그2", true),
-        Feeds(null, null, "하이", 19, 44, "해시태그3", true),
-        Feeds(null, null, "하이", 30, 14, "해시태그4", true),
-        Feeds(null, null, "하이", 34, 95, "해시태그5", true)
+        Feeds(null, null, "하이 안녕하세요 저는 윤혜영입니다. 안녕하세요~~~~ 안녕하세요 안녕하세요 ~~~ 안녕하세요 ~~~ 안녕하세요 ~~~ 안녕하세요 ~~~", null,  10, 14, "해시태그1", true),
+        Feeds(null, null, "하이", null, 23, 4, "해시태그2", true),
+        Feeds(null, null, "하이", null,  19, 44, "해시태그3", true),
+        Feeds(null, null, "하이", null,  30, 14, "해시태그4", true),
+        Feeds(null, null, "하이", null,  34, 95, "해시태그5", true)
 
         //여기다가 데이터 배열로 넣으면 돼
     )
@@ -73,50 +73,50 @@ class FragmentFeeds : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_feed.setHasFixedSize(true)
         //1) 해당 uid의 follows 가져오기
-
-        firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{
-                documentSnapshot, firebaseFirestoreException ->
-
-            var document = documentSnapshot?.toObject(FollowDTO::class.java)
-            if(document?.followingCount == 0) //팔로우 하는사람 없음
-            {
-                //자식프레그먼트 text뷰 추가 필요
-                followings = arrayListOf()
-            }
-            else
-            {
-                followings = document?.followings!!
-                //2) 해당 사람들의 피드 가져와서 timestamp로 정렬, 피드 보여주기
-
-                if(followings.isNotEmpty()) //팔로우 하는사람 있을 때
-                {
-                    feedList.clear()
-                    firestore?.collection("Feeds")?.whereIn("uid", followings)?.addSnapshotListener{
-                            querySnapshot, firebaseFirestoreException ->
-                        if(querySnapshot == null) {
-                            Toast.makeText(this.context,"no!!!!!!!",Toast.LENGTH_LONG).show()
-                            return@addSnapshotListener
-                        }
-                        for(snapshot in querySnapshot!!.documents)
-                        {
-                            var item = snapshot.toObject(Feeds::class.java)!!
-                            feedList.add(item)
-                            firestore?.collection("User")?.document(item.uid.toString())?.addSnapshotListener{
-                                    documentSnapshots, firebaseFirestoreException ->
-                                var user = documentSnapshots?.toObject(userDTO::class.java)
-                                if(!userSet.contains(user?.uid.toString())) //처음본 유저
-                                {
-                                    userSet.add(user?.uid.toString())
-                                    userList.add(user!!)
-                                }
-                                //개선 필요
-                                rv_feed.adapter = FeedAdapter(feedList,userList)
-                            }
-                        }
-                    }
-                }
-            }
-        }
+//
+//        firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{
+//                documentSnapshot, firebaseFirestoreException ->
+//
+//            var document = documentSnapshot?.toObject(FollowDTO::class.java)
+//            if(document?.followingCount == 0) //팔로우 하는사람 없음
+//            {
+//                //자식프레그먼트 text뷰 추가 필요
+//                followings = arrayListOf()
+//            }
+//            else
+//            {
+//                followings = document?.followings!!
+//                //2) 해당 사람들의 피드 가져와서 timestamp로 정렬, 피드 보여주기
+//
+//                if(followings.isNotEmpty()) //팔로우 하는사람 있을 때
+//                {
+//                    feedList.clear()
+//                    firestore?.collection("Feeds")?.whereIn("uid", followings)?.addSnapshotListener{
+//                            querySnapshot, firebaseFirestoreException ->
+//                        if(querySnapshot == null) {
+//                            Toast.makeText(this.context,"no!!!!!!!",Toast.LENGTH_LONG).show()
+//                            return@addSnapshotListener
+//                        }
+//                        for(snapshot in querySnapshot!!.documents)
+//                        {
+//                            var item = snapshot.toObject(Feeds::class.java)!!
+//                            feedList.add(item)
+//                            firestore?.collection("User")?.document(item.uid.toString())?.addSnapshotListener{
+//                                    documentSnapshots, firebaseFirestoreException ->
+//                                var user = documentSnapshots?.toObject(userDTO::class.java)
+//                                if(!userSet.contains(user?.uid.toString())) //처음본 유저
+//                                {
+//                                    userSet.add(user?.uid.toString())
+//                                    userList.add(user!!)
+//                                }
+//                                //개선 필요
+//                                rv_feed.adapter = FeedAdapter(feedList,userList)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         //fab 클릭하면 피드 작성 페이지로
         fab = view.findViewById(R.id.btn_uploadFeed)

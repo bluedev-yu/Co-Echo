@@ -25,12 +25,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-
-class FragmentSNS : Fragment() {
 import androidx.fragment.app.Fragment
-import bluedev_yu.coecho.R
-import bluedev_yu.coecho.databinding.FragmentSnsBinding
-
 
 class FragmentSNS : Fragment() {
     private lateinit var binding: FragmentSnsBinding
