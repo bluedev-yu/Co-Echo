@@ -1,11 +1,17 @@
 package bluedev_yu.coecho.Fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import bluedev_yu.coecho.LoginActivity
 import bluedev_yu.coecho.R
+import bluedev_yu.coecho.UploadReview
+import bluedev_yu.coecho.databinding.FragmentMapBinding
+import bluedev_yu.coecho.databinding.FragmentSnsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -28,6 +34,7 @@ class FragmentMap : Fragment() {
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
     var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
+    private lateinit var binding: FragmentMapBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +50,16 @@ class FragmentMap : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        binding = FragmentMapBinding.inflate(layoutInflater)
+        val view = binding.root
+
+        var button : Button = binding.Test
+        button.setOnClickListener{
+            val intent = Intent(this.context, UploadReview::class.java)
+            startActivity(intent)
+        }
+
+        return view
     }
 
     companion object {

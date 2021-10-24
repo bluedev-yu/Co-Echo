@@ -15,6 +15,25 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/tv_photo2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="사진"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_photo2"
+            app:layout_constraintStart_toEndOf="@+id/iv_photo2"
+            app:layout_constraintTop_toTopOf="@+id/iv_photo2" />
+
+        <ImageView
+            android:id="@+id/iv_photo2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/iv_hashtag"
+            app:layout_constraintTop_toBottomOf="@+id/iv_hashtag"
+            app:srcCompat="@drawable/iv_photo" />
+
+        <TextView
             android:id="@+id/tv_cancleWriting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="글쓰기"
+            android:text="리뷰 쓰기"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -39,7 +58,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_uploadFeed"
+            android:id="@+id/JustText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="가게에서 환경보호를 실천할 수 있었나요?"
+            android:textSize="18sp"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_writeFeed" />
+
+        <TextView
+            android:id="@+id/rv_uploadFeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -51,26 +82,25 @@
             app:layout_constraintTop_toTopOf="@+id/tv_writeFeed" />
 
         <EditText
-            android:id="@+id/et_text"
+            android:id="@+id/rv_text"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
             android:gravity="top"
-            android:hint="새 소식을 공유해보세요."
+            android:hint="리뷰를 작성해 보세요."
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_writeFeed" />
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
         <ImageView
             android:id="@+id/iv_hashtag"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="@+id/et_text"
-            app:layout_constraintTop_toBottomOf="@+id/et_text"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/rv_text"
+            app:layout_constraintTop_toBottomOf="@+id/rv_text"
             app:srcCompat="@drawable/iv_hashtag" />
 
         <TextView
@@ -84,7 +114,7 @@
             app:layout_constraintTop_toTopOf="@+id/iv_hashtag" />
 
         <EditText
-            android:id="@+id/et_hashtag"
+            android:id="@+id/rv_hashtag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -95,75 +125,18 @@
             app:layout_constraintStart_toEndOf="@+id/tv_uploadHashtag"
             app:layout_constraintTop_toTopOf="@+id/iv_hashtag" />
 
-        <ImageView
-            android:id="@+id/iv_star"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="@id/iv_hashtag"
-            app:layout_constraintTop_toBottomOf="@+id/iv_hashtag"
-            app:srcCompat="@drawable/iv_privacy" />
-
-        <RadioGroup
+        <RatingBar
+            android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checkedButton="@id/rb_public"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_star"
-            app:layout_constraintStart_toEndOf="@+id/iv_star"
-            app:layout_constraintTop_toTopOf="@+id/iv_star">
+            android:layout_marginTop="5dp"
+            android:max="5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/JustText">
 
-            <RadioButton
-                android:id="@+id/rb_public"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:onClick="onRadioButtonClicked"
-                android:text="전체보기"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_star"
-                app:layout_constraintStart_toEndOf="@+id/iv_star"
-                app:layout_constraintTop_toTopOf="@+id/iv_star" />
+        </RatingBar>
 
-            <RadioButton
-                android:id="@+id/rb_private"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:onClick="onRadioButtonClicked"
-                android:text="나만보기"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_star"
-                app:layout_constraintStart_toEndOf="@+id/rb_public"
-                app:layout_constraintTop_toTopOf="@+id/iv_star" />
-        </RadioGroup>
-
-
-        <ImageView
-            android:id="@+id/iv_photo"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="@id/iv_hashtag"
-            app:layout_constraintTop_toBottomOf="@+id/iv_star"
-            app:srcCompat="@drawable/iv_photo" />
-
-        <TextView
-            android:id="@+id/tv_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="사진"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
-            app:layout_constraintStart_toEndOf="@+id/iv_photo"
-            app:layout_constraintTop_toTopOf="@+id/iv_photo" />
-
-        <ImageView
-            android:id="@+id/ImagePreview"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/et_text"
-            app:layout_constraintTop_toBottomOf="@+id/iv_photo"
-            tools:srcCompat="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
