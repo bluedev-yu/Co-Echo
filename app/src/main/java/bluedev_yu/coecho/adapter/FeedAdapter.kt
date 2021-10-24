@@ -63,8 +63,15 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val contentUidList : ArrayList
         var feeduid = feedList.get(position).uid
 
         holder.strName.text = feedList.get(position).strName //유저 이름
-        Glide.with(holder.itemView.context).load(feedList.get(position).imageUrl!!.toUri()).apply(
-            RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
+        //프로필사진
+        if(feedList.get(position).imageUrl == null) //기본 이미지
+            Glide.with(holder.itemView.context).load(R.drawable.default_profilephoto).apply(
+                RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
+        else
+        {
+            Glide.with(holder.itemView.context).load(feedList.get(position).imageUrl!!.toUri()).apply(
+                RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
+        }
         when(feedList.get(position).title) //칭호
         {
             0 -> holder.userTitle.setText(R.string.grade1)
