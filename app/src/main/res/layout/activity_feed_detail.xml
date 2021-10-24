@@ -96,23 +96,22 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/feed_share"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/feed_timestamp"
-                        app:srcCompat="@drawable/iv_feed_share" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/feed_share"-->
+<!--                        android:layout_width="20dp"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:layout_marginEnd="8dp"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/feed_timestamp"-->
+<!--                        app:srcCompat="@drawable/iv_feed_share" />-->
 
                     <TextView
                         android:id="@+id/feed_comment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
                         android:text="1"
                         android:textColor="#00B06A"
-                        app:layout_constraintBottom_toBottomOf="@+id/feed_image"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
 
                     <ImageView
@@ -158,14 +157,14 @@
                         app:layout_constraintStart_toStartOf="@+id/feed_timestamp"
                         app:layout_constraintTop_toBottomOf="@+id/feed_timestamp" />
 
-                    <ImageView
-                        android:id="@+id/feed_image"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="@+id/feed_content"
-                        app:layout_constraintTop_toBottomOf="@+id/feed_hashtag"
-                        app:srcCompat="@drawable/feedimg2" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/feed_image"-->
+<!--                        android:layout_width="100dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        app:layout_constraintStart_toStartOf="@+id/feed_content"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/feed_hashtag"-->
+<!--                        app:srcCompat="@drawable/feedimg2" />-->
 
                     <TextView
                         android:id="@+id/feed_hashtag"

@@ -137,33 +137,33 @@
         </RadioGroup>
 
 
-        <ImageView
-            android:id="@+id/iv_photo"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="@id/iv_hashtag"
-            app:layout_constraintTop_toBottomOf="@+id/iv_privacy"
-            app:srcCompat="@drawable/iv_photo" />
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_photo"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            app:layout_constraintStart_toStartOf="@id/iv_hashtag"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/iv_privacy"-->
+<!--            app:srcCompat="@drawable/iv_photo" />-->
 
-        <TextView
-            android:id="@+id/tv_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="사진"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
-            app:layout_constraintStart_toEndOf="@+id/iv_photo"
-            app:layout_constraintTop_toTopOf="@+id/iv_photo" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_photo"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:text="사진"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/iv_photo"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/iv_photo"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/iv_photo" />-->
 
-        <ImageView
-            android:id="@+id/ImagePreview"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/et_text"
-            app:layout_constraintTop_toBottomOf="@+id/iv_photo"
-            tools:srcCompat="@tools:sample/avatars" />
+<!--        <ImageView-->
+<!--            android:id="@+id/ImagePreview"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/et_text"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/iv_photo"-->
+<!--            tools:srcCompat="@tools:sample/avatars" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

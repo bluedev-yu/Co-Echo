@@ -26,10 +26,10 @@ class FragmentResultHashtag : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_result_hashtag, container, false)
 
         val hashtagList = arrayListOf(
-            Feeds(null, null, null, null,0, 0, "해시태그1", false),
-            Feeds(null, null, null, null,0, 0, "해시태그2", false),
-            Feeds(null, null, null, null,0, 0, "해시태그3", false),
-            Feeds(null, null, null, null,0, 0, "해시태그4", false)
+            Feeds(null, null, "해시태그1", true,0, 0),
+            Feeds(null, null, "해시태그2", true,0, 0),
+            Feeds(null, null, "해시태그3", true,0, 0),
+            Feeds(null, null, "해시태그4", true,0, 0)
         )
 
         rv_result_hashtag = view.findViewById(R.id.rv_result_hashtag)

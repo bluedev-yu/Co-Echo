@@ -36,11 +36,11 @@ class FragmentFeeds : Fragment() {
         )
 
     val feedList = arrayListOf(
-        Feeds(null, null,null, "안녕하세욤 저는 혜주에욤", 909, 404, "혜주짱", true),
-        Feeds(null, null,null, "하이", 23, 4, "해시태그2", true),
-        Feeds(null, null,null, "하이", 19, 44, "해시태그3", true),
-        Feeds(null, null,null, "하이", 30, 14, "해시태그4", true),
-        Feeds(null, null,null, "하이", 34, 95, "해시태그5", true)
+        Feeds(null, "안녕하세욤 저는 혜주에욤", "샘플1", true, 404, 3),
+        Feeds(null, "하이", "샘플2", true, 4, 4),
+        Feeds(null, "하이", "샘플3", true, 44, 31),
+        Feeds(null,  "하이", "샘플4", true, 14, 93),
+        Feeds(null,  "하이", "샘플5", true, 95, 200)
 
         //여기다가 데이터 배열로 넣으면 돼
     )

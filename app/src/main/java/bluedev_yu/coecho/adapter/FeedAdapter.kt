@@ -30,20 +30,20 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDT
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
 
         var iv_feed_share: ImageView
-        iv_feed_share = view.findViewById(R.id.feed_share)
-        iv_feed_share.setOnClickListener {
-            //하단 드로어
-            val bottomSheetDialog = BottomSheetDialog(
-                parent.context, R.style.BottomSheetDialogTheme
-            )
-
-            val bottomSheetView = LayoutInflater.from(parent.context).inflate(
-                R.layout.layout_bottom_sheet, parent.findViewById(R.id.bottomSheet) as LinearLayout?
-            )
-
-            bottomSheetDialog.setContentView(bottomSheetView)
-            bottomSheetDialog.show()
-        }
+//        iv_feed_share = view.findViewById(R.id.feed_share)
+//        iv_feed_share.setOnClickListener {
+//            //하단 드로어
+//            val bottomSheetDialog = BottomSheetDialog(
+//                parent.context, R.style.BottomSheetDialogTheme
+//            )
+//
+//            val bottomSheetView = LayoutInflater.from(parent.context).inflate(
+//                R.layout.layout_bottom_sheet, parent.findViewById(R.id.bottomSheet) as LinearLayout?
+//            )
+//
+//            bottomSheetDialog.setContentView(bottomSheetView)
+//            bottomSheetDialog.show()
+//        }
 
         return CustomViewHolder(view).apply {
             feedCardView.setOnClickListener {
