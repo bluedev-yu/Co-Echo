@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
@@ -22,6 +23,10 @@ class FragmentResultPeople : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_result_people, container, false)
 
+        val query = arguments?.getString("query")
+        Toast.makeText(requireContext(), "내 쿼리는 $query", Toast.LENGTH_SHORT).show()
+
+        //마찬가지
         val userlist = arrayListOf(
             userDTO("윤혜영", null, "윤혜영", 0),
             userDTO("윤혜돌", null, "윤혜영", 0),

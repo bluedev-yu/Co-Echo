@@ -40,6 +40,9 @@ class FragmentSearchResults : Fragment() {
         val tab = binding.SNSTab
         tab.setupWithViewPager(pager)
 
+        val query = arguments?.getString("query")
+        Toast.makeText(requireContext(), "쿼리 : $query", Toast.LENGTH_SHORT).show()
+
         return view
     }
 

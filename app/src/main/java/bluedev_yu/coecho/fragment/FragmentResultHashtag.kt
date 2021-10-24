@@ -23,6 +23,12 @@ class FragmentResultHashtag : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_result_hashtag, container, false)
 
+        //해시태그 검색어는 어디에서 저장되어 날아오는지?
+        // query는 무엇인지?
+
+        val query = arguments?.getString("query")
+        Toast.makeText(requireContext(), "내 쿼리는 $query", Toast.LENGTH_SHORT).show()
+
         val hashtagList = arrayListOf(
             Feeds(null, null, null, 0, 0, 123,"해시태그1", false),
             Feeds(null, null, null, 0, 0, 123,"해시태그2", false),
@@ -35,8 +41,7 @@ class FragmentResultHashtag : Fragment() {
         rv_result_hashtag.setHasFixedSize(true)
         rv_result_hashtag.adapter = SearchHashtagAdapter(hashtagList)
 
-        val query = arguments?.getString("query")
-        Toast.makeText(requireContext(), "내 쿼리는 $query", Toast.LENGTH_SHORT).show()
+
         return view
     }
 

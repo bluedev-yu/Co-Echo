@@ -103,7 +103,7 @@ class FeedAdapter(val feedList: ArrayList<Feeds>, val userList: ArrayList<userDT
             val intent = Intent(holder.itemView?.context, FeedDetail::class.java)
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
         }
-        holder.ivLike.setOnClickListener {
+        holder.ivLike.setOnClickListener { 
             holder.ivLike.setImageResource(R.drawable.like)
             //좋아요수 + 1 하고 데이터에 넘기기
         }

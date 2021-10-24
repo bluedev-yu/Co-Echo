@@ -64,6 +64,8 @@ class FragmentMyPage : Fragment() {
         //uid 받아오기 - uid가 null이 아니면 다른 사람 페이지
         //MYPAGE, 나의에코, 톱니바퀴 버튼, 설정 총 4개 안보이도록 만들어야함
         val uid = arguments?.getString("uid")
+        val MypageFollower : TextView = viewProfile!!.findViewById(R.id.MyPageFollower) //팔로워 수
+        val MyPageFollowing : TextView = viewProfile!!.findViewById(R.id.MyPageFollowing) //팔로잉수
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
@@ -71,6 +73,7 @@ class FragmentMyPage : Fragment() {
 
         if(uid == null || uid == auth?.uid.toString()) //마이페이지
         {
+
             firestore?.collection("User")?.document(auth?.uid.toString())?.addSnapshotListener{
                     documentSnapshot, firebaseFirestoreException ->
                 var document = documentSnapshot?.toObject(userDTO::class.java)
@@ -120,6 +123,13 @@ class FragmentMyPage : Fragment() {
                 val intent = Intent(this.context, LoginActivity::class.java)
                 startActivity(intent)
             }
+
+            firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{ //팔로워 팔로잉 수
+                    documentSnapshot, firebaseFirestoreException ->
+                var followDTO = documentSnapshot?.toObject(FollowDTO::class.java)
+                MypageFollower.setText((followDTO?.followerCount!!-1).toString()+" 팔로워") //한명은 자기 자신
+                MyPageFollowing.setText((followDTO?.followingCount!!-1).toString()+" 팔로잉")
+            }
         }
 
         else //남의 페이지
@@ -134,6 +144,7 @@ class FragmentMyPage : Fragment() {
             val MypageProfileOptionButton : Button = viewProfile!!.findViewById(R.id.MyPageProfileOptionButton) //마이페이지 배경변경 버튼
             MypageProfileOptionButton.visibility = View.INVISIBLE
             val followButton : Button = viewProfile!!.findViewById(R.id.FollowButton) //팔로우 버튼 팔로우/언팔로우로 보이기
+
             firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{
                     documentSnapshot, firebaseFirestoreException ->
                 var followDTO = documentSnapshot?.toObject(FollowDTO::class.java)
@@ -145,6 +156,14 @@ class FragmentMyPage : Fragment() {
                 {
                     followButton.setText("팔로우")
                 }
+
+            }
+
+            firestore?.collection("Follow")?.document(uid)?.addSnapshotListener{ //팔로워 팔로잉 수
+                    documentSnapshot, firebaseFirestoreException ->
+                var followDTO = documentSnapshot?.toObject(FollowDTO::class.java)
+                MypageFollower.setText((followDTO?.followerCount!!-1).toString()+" 팔로워") //한명은 자기 자신
+                MyPageFollowing.setText((followDTO?.followingCount!!-1).toString()+" 팔로잉")
             }
 
 

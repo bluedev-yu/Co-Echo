@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
+import android.widget.Toast
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.databinding.FragmentSnsBinding
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -48,12 +49,19 @@ class FragmentSNS : Fragment() {
 //            transaction.disallowAddToBackStack()
 //            transaction.commit()
 //        }
-
         svSNS.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
             override fun onQueryTextSubmit(query: String?): Boolean {
                 //검색 버튼 눌러졌을 때 이벤트 처리 ->
                 //검색 결과 페이지로 이동
-                Toast.makeText(requireContext(), query, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(requireContext(), query, Toast.LENGTH_SHORT).show()
+
+                var fragmentResult = FragmentSearchResults()
+                var bundle = Bundle()
+
+                bundle.putString("query", query)
+
+               fragmentResult.arguments = bundle
 
                 val transaction = childFragmentManager.beginTransaction()
                 transaction.replace(R.id.layout_child, FragmentSearchResults())
