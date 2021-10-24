@@ -12,30 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <RelativeLayout
             android:id="@+id/map_view"
             android:layout_width="match_parent"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="110dp"
             android:layout_height="wrap_content"
             android:visibility="visible">
         </RelativeLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
-            android:layout_marginRight="10dp">
-
-            <ImageButton
-                android:id="@+id/btnTracking"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="230dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/traking_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_marginRight="10dp"
+            android:background="#f8ffe0">
 
             <ImageView
                 android:id="@+id/search_button"
@@ -59,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_map"
-                android:text="@string/에코맵"
+                android:text="@string/eco_map"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
@@ -86,29 +78,43 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_recommendation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:orientation="vertical">
-
             <Spinner
                 android:id="@+id/spinner_map_recom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/choose"
-                tools:listitem="" />
+                tools:listitem=""
+                app:layout_constraintLeft_toLeftOf="@id/rv_places"
+                app:layout_constraintBottom_toTopOf="@id/rv_places"/>
+
+            <ImageButton
+                android:id="@+id/btnTracking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/traking_button"
+                app:layout_constraintTop_toTopOf="@id/spinner_map_recom"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_places"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="10dp" />
-        </LinearLayout>
+                android:layout_marginBottom="80dp"
+                android:layout_marginHorizontal="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
-
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/hambuger_navigation_view"

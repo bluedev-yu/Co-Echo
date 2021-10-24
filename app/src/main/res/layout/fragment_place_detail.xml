@@ -1,14 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.PlaceDetailFragment">
+    android:background="@color/CoEcho_mainBackground"
+    tools:context=".fragment.PlaceDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/ib_backbutton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/TextView_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search"
+            android:textColor="@color/green"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/ib_backbutton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_placename_placedetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가게명"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/ib_backbutton"
+            app:layout_constraintTop_toBottomOf="@+id/TextView_search" />
+
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_placename_placedetail" />
+
+        <LinearLayout
+            android:id="@+id/place_info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/white"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/horizontalScrollView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="10dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignLeft="@+id/hashtag1_1"
+                        android:layout_alignTop="@+id/hashtag1_1"
+                        android:layout_alignRight="@+id/hashtag1_1"
+                        android:layout_alignBottom="@+id/hashtag1_1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/hashtag" />
+
+                    <TextView
+                        android:id="@+id/hashtag1_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="   #제로웨이스트샵   "
+                        android:textColor="#00B06A" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignLeft="@+id/hashtag1_2"
+                        android:layout_alignTop="@+id/hashtag1_2"
+                        android:layout_alignRight="@+id/hashtag1_2"
+                        android:layout_alignBottom="@+id/hashtag1_2"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/hashtag" />
+
+                    <TextView
+                        android:id="@+id/hashtag1_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="   #친환경제품   "
+                        android:textColor="#00B06A" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_address_placedetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="주소" />
+
+                <TextView
+                    android:id="@+id/tv_category_placedetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="카테고리"
+                    android:textColor="#FF0000" />
+
+                <TextView
+                    android:id="@+id/tv_phone_placedetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="전화번호" />
+
+                <TextView
+                    android:id="@+id/tv_url_placedetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:autoLink="web"
+                    android:background="@null"
+                    android:linksClickable="true"
+                    android:text="URL" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="3dp"
+                    android:background="#E0E0E0" />
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/place_info_layout"
+                tools:layout_editor_absoluteY="450dp" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

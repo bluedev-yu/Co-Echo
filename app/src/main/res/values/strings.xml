@@ -4,7 +4,14 @@
     <string name="MAP">MAP</string>
     <string name="MY_PAGE">MY PAGE</string>
 
-    <string name="에코맵">에코맵</string>
+    <!--에코맵-->
+    <string name="eco_map">에코맵</string>
+    <string-array name="eco_map_sipnner">
+        <item>거리순</item>
+        <item>추천순</item>
+    </string-array>
+    <string name="search">search</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

@@ -26,11 +26,10 @@ import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 
 
-class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener{
+class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
 
-    var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
-    var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
-    val placeList = arrayListOf<Place>()
+    var firestore: FirebaseFirestore? = null //String 등 자료형 데이터베이스
+    var firestorage: FirebaseStorage? = null //사진, GIF 등의 파일 데이터베이스
 
     private lateinit var binding: ActivityMainBinding
 
@@ -47,22 +46,30 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         binding.bottomNavBar.itemIconTintList = null;
 
         //권한 요청 코드
-        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
         ) {
             Log.d("권한 허용 여부", "***denied***")
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1004)
-        }
-        else if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1004
+            )
+        } else if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
         ) {
             Log.d("권한 허용 여부", "***granted***")
         }
     }
 
-    fun printHash()
-    {
+    fun printHash() {
         //--해시 키 발급--
         var keyHash = Utility.getKeyHash(this)
-        Log.d("해시 키",keyHash)
+        Log.d("해시 키", keyHash)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean { //내비게이션바 아이템 선택시 프래그먼트 교체
@@ -72,8 +79,11 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 return true
             }
             R.id.action_map -> {
-                Log.d("Fragment 상태",FragmentMap().isAdded.toString()+" "+FragmentMap().isVisible.toString())
-                if(!FragmentMap().isVisible) {
+                Log.d(
+                    "Fragment 상태",
+                    FragmentMap().isAdded.toString() + " " + FragmentMap().isVisible.toString()
+                )
+                if (!FragmentMap().isVisible) {
                     loadFragment(FragmentMap())
                 }
                 return true
@@ -86,19 +96,16 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         return false
     }
 
-    private fun setDefaultFragment(){ //앱 실행시 디폴트 프래그먼트 설정
+    private fun setDefaultFragment() { //앱 실행시 디폴트 프래그먼트 설정
         loadFragment(FragmentSNS())
     }
 
-    private fun loadFragment(fragment: Fragment) { //프래그먼트 로드
+    fun loadFragment(fragment: Fragment) { //프래그먼트 로드
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout, fragment)
         transaction.disallowAddToBackStack()
         transaction.commit()
     }
-
-
-
 
 
 }

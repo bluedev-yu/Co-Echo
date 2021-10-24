@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/place_cardview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-
+                android:src="@drawable/ic_baseline_arrow_forward_ios_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:padding="10dp"/>
@@ -35,7 +35,7 @@
                 android:id="@+id/placeRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                style="@style/style_ratingbar"
                 android:layout_marginTop="8dp"
                 android:isIndicator="true"
                 app:layout_constraintStart_toStartOf="@id/tv_placeHashtag"
@@ -70,9 +70,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-
+                android:background="@color/lightGreen"
                 android:text="#해시태그"
-
+                android:textColor="@color/green"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />
