@@ -80,9 +80,9 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
             mapViewContainer.addView(mapView)
 
             //firebase DB 접근
-            val dbinst= DB_Place()
-            dbinst.insert_data("temporary","레레레","12.34","56.78")
-            dbinst.read_data()
+//            val dbinst= DB_Place()
+//            dbinst.insert_data("레레레","12.34","56.78","대구 동구")
+//            dbinst.read_data()
 
             if(mapView==null)
             {
