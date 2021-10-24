@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.sql.DatabaseMetaData
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,7 +88,7 @@ class FragmentMyPage : Fragment() {
         firestore = FirebaseFirestore.getInstance()
         firestorage = FirebaseStorage.getInstance()
 
-        if(uid == null) //마이페이지
+        if(uid == null || uid == auth?.uid.toString()) //마이페이지
         {
             firestore?.collection("User")?.document(auth?.uid.toString())?.addSnapshotListener{
                     documentSnapshot, firebaseFirestoreException ->
@@ -152,7 +153,18 @@ class FragmentMyPage : Fragment() {
             val MypageProfileOptionButton : Button = viewProfile!!.findViewById(R.id.MyPageProfileOptionButton) //마이페이지 배경변경 버튼
             MypageProfileOptionButton.visibility = View.INVISIBLE
             val followButton : Button = viewProfile!!.findViewById(R.id.FollowButton) //팔로우 버튼 팔로우/언팔로우로 보이기
-            //followButton.setText("팔로우")
+            firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{
+                    documentSnapshot, firebaseFirestoreException ->
+                var followDTO = documentSnapshot?.toObject(FollowDTO::class.java)
+                if(followDTO?.followings!!.containsKey(uid.toString())) //follow하고 있을 경우
+                {
+                    followButton.setText("팔로우 취소")
+                }
+                else
+                {
+                    followButton.setText("팔로우")
+                }
+            }
 
 
             firestore?.collection("User")?.document(uid)?.addSnapshotListener{
@@ -188,56 +200,75 @@ class FragmentMyPage : Fragment() {
                 }
             }
 
+            followButton.setOnClickListener{
+                var tsDocFollowing = firestore?.collection("Follow")?.document(auth?.uid.toString())
+                firestore?.runTransaction { //내 팔로우 데이터 가져오기
+                        transaction ->
+                    var followDTO = transaction.get(tsDocFollowing!!).toObject(FollowDTO::class.java)
+                    if (followDTO == null) //empty
+                    {
+                        followDTO = FollowDTO()
+                        followDTO.followingCount = 1
+                        followDTO.followings[uid!!] = uid
+
+                        if (tsDocFollowing != null) {
+                            transaction.set(tsDocFollowing, followDTO)
+                        }
+                        return@runTransaction
+                    }
+
+                    if (followDTO?.followings?.containsKey(uid)) { //이미 팔로우하고 있을 경우 -> 언팔로우
+                        followDTO?.followingCount = followDTO?.followingCount - 1
+                        followDTO?.followings.remove(uid)
+                    } else //팔로우하기
+                    {
+                        followDTO?.followingCount = followDTO?.followingCount + 1
+                        followDTO?.followings[uid] = uid
+                    }
+
+                    if (tsDocFollowing != null) {
+                        transaction.set(tsDocFollowing, followDTO)
+                    }
+                    return@runTransaction
+                }
+
+                var tsDocFollower = firestore?.collection("Follow")?.document(uid) //남의 아이디
+                firestore?.runTransaction { //내 팔로우 데이터 가져오기
+                        transaction ->
+
+                    var followDTO =
+                        tsDocFollower?.let { transaction.get(it).toObject(FollowDTO::class.java) }
+                    if (followDTO == null) //empty
+                    {
+                        followDTO = FollowDTO()
+                        followDTO!!.followerCount = 1
+                        followDTO!!.followers[auth?.uid.toString()!!] = auth?.uid.toString()
+
+                        if (tsDocFollower != null) {
+                            transaction.set(tsDocFollower, followDTO!!)
+                        }
+                        return@runTransaction
+                    }
+
+                    if (followDTO?.followers?.containsKey(auth?.uid.toString())!!) { //이미 팔로우하고 있을 경우 -> 언팔로우
+                        followDTO?.followerCount = followDTO?.followerCount!! - 1
+                        followDTO?.followers!!.remove(auth?.uid.toString())
+                    } else //팔로우하기
+                    {
+                        followDTO?.followerCount = followDTO?.followerCount!! + 1
+                        followDTO?.followers!![auth?.uid.toString()] = auth?.uid.toString()
+                    }
+
+                    if (tsDocFollower != null) {
+                        transaction.set(tsDocFollower, followDTO!!)
+                    }
+                    return@runTransaction
+                }
+            }
             //내가 팔로우하고 있는가 아닌가에 따라 변경 -> 나의 following 에 없으면 버튼이름 "팔로우", 있으면 "팔로우 취소"
             //follower -> 나를, following -> 내가
             //팔로우시 내 following에 남 추가, 남의 follower에 나 추가
             //팔로우 취소시 내 following에서 남 삭제, 남의 follower에서 나 삭제
-
-            firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{ //내 팔로우 데이터 가져오기
-                    documentSnapshot, firebaseFirestoreException ->
-
-                var document = documentSnapshot?.toObject(FollowDTO::class.java) //내 팔로우 데이터
-                if(document!!.followings.contains(uid)) //내가 이미 팔로우하고 있는 경우
-                {
-                    Log.v("contains",document.toString())
-                    followButton.setText("팔로우 취소")
-                }
-                else
-                {
-                    Log.v("Notcontains",document.toString())
-                    followButton.setText("팔로우")
-                }
-
-                //언팔로우하기
-                if(followButton.text.toString().equals("팔로우 취소"))//이미 있음
-                {
-                    followButton.setOnClickListener{
-                        //팔로우 항목에서 제거하기
-                        val docRef = firestore?.collection("Follow")?.document(auth?.uid.toString())
-                        val updates = hashMapOf<String,Any>(uid to FieldValue.delete())
-
-                        docRef?.update("followings",updates)?.addOnCompleteListener{
-                            followButton.setText("팔로우")
-                        }
-                        //uid 항목을 삭제
-                    }
-                }
-                else //팔로우하기
-                {
-                    followButton.setOnClickListener{
-                        //팔로우 항목에서 제거하기
-                        val docRef = firestore?.collection("Follow")?.document(auth?.uid.toString())
-                        val addfollowing = hashMapOf<String,Any>()
-                        addfollowing.put(uid,uid)
-                        Log.v("addfollowing",addfollowing.toString())
-                        docRef?.update("followings",addfollowing)?.addOnCompleteListener{
-                            followButton.setText("팔로우 취소")
-                        }
-                        //uid 항목을 삭제
-                    }
-                }
-
-            }
 
 
         }

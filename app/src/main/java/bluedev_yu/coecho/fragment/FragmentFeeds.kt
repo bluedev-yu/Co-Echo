@@ -85,9 +85,13 @@ class FragmentFeeds : Fragment() {
         firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{
                 documentSnapshot, firebaseFirestoreException ->
 
-            Log.v("Following document", documentSnapshot?.toObject(FollowDTO::class.java).toString())
+            //Log.v("Following document", documentSnapshot?.toObject(FollowDTO::class.java).toString())
             var document = documentSnapshot?.toObject(FollowDTO::class.java)
-            if(document?.followingCount == 0) //팔로우 하는사람 없음
+            if(document == null)
+            {
+
+            }
+            else if(document?.followingCount == 0) //팔로우 하는사람 없음
             {
                 //자식프레그먼트 text뷰 추가 필요
                 followings = mutableMapOf()

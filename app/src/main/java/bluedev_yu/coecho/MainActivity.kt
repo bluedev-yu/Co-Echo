@@ -2,7 +2,9 @@ package bluedev_yu.coecho
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -44,31 +46,40 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         setDefaultFragment()
 
         binding.bottomNavBar.itemIconTintList = null;
+        
 
+        Toast.makeText(this,auth?.uid.toString(),Toast.LENGTH_LONG).show()
+        Log.v("User!",auth?.uid.toString())
         //firebase 로그인, 권한
         firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener {
             doc ->
             if(doc.exists()){
-
+                Log.v("Login1","not exist")
             }
             else
             {
+                Log.v("Login2","not exist")
                 var userInfo = userDTO()
                 userInfo.uid = auth?.currentUser?.uid
                 userInfo.strName = auth?.currentUser?.displayName
                 firestore?.collection("User")?.document(auth?.uid.toString())?.set(userInfo)
             }
+        }?.addOnFailureListener{
+            Log.e("What!!!!!!", "Error getting data", it)
         }
 
         //follow
         firestore?.collection("Follow")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener {
                 doc ->
+            Log.v("followisexist","true")
             if(doc.exists()){
 
             }
             else
             {
                 var followDTO = FollowDTO()
+                followDTO.followers.put(auth?.uid.toString(),auth?.uid.toString())
+                followDTO.followings.put(auth?.uid.toString(),auth?.uid.toString())
                 firestore?.collection("Follow")?.document(auth?.uid.toString())?.set(followDTO)
             }
         }

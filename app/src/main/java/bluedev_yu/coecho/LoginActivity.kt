@@ -106,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
 
         //자동 로그인 설정 -> 로그아웃 안됐는데 다시 로그인페이지로 넘어온 경우 패스하는 역할인듯듯
-       moveMainPage(auth?.currentUser)
+//       moveMainPage(auth?.currentUser)
     }
 
 }
