@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +28,7 @@ class FragmentFeeds : Fragment() {
 
 
     val userList = arrayListOf(
-        userDTO("윤혜영", null, null, 0),
+        userDTO("길혜주", null, null, 0),
         userDTO("윤혜돌", null, null, 0),
         userDTO("윤혜명", null,  null, 0),
         userDTO("윤혜준", null,  null, 0),
@@ -37,11 +36,11 @@ class FragmentFeeds : Fragment() {
         )
 
     val feedList = arrayListOf(
-        Feeds(null, null, "하이 안녕하세요 저는 윤혜영입니다. 안녕하세요~~~~ 안녕하세요 안녕하세요 ~~~ 안녕하세요 ~~~ 안녕하세요 ~~~ 안녕하세요 ~~~", 10, 14, "해시태그1", true),
-        Feeds(null, null, "하이", 23, 4, "해시태그2", true),
-        Feeds(null, null, "하이", 19, 44, "해시태그3", true),
-        Feeds(null, null, "하이", 30, 14, "해시태그4", true),
-        Feeds(null, null, "하이", 34, 95, "해시태그5", true)
+        Feeds(null, null,null, "안녕하세욤 저는 혜주에욤", 909, 404, "혜주짱", true),
+        Feeds(null, null,null, "하이", 23, 4, "해시태그2", true),
+        Feeds(null, null,null, "하이", 19, 44, "해시태그3", true),
+        Feeds(null, null,null, "하이", 30, 14, "해시태그4", true),
+        Feeds(null, null,null, "하이", 34, 95, "해시태그5", true)
 
         //여기다가 데이터 배열로 넣으면 돼
     )

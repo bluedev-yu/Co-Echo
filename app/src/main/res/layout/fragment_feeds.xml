@@ -29,7 +29,7 @@
         android:clickable="true"
         app:tint="@null"
         app:backgroundTint="@color/green"
-        android:src="@drawable/plus"/>
+        android:src="@drawable/iv_plus"/>
 
 
 </FrameLayout>

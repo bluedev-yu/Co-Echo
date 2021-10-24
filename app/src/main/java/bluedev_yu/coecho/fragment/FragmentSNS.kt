@@ -52,10 +52,13 @@ class FragmentSNS : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 //검색 버튼 눌러졌을 때 이벤트 처리 ->
                 //검색 결과 페이지로 이동
-                Toast.makeText(requireContext(), query, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), query, Toast.LENGTH_SHORT).show()
+
+                val bundle = Bundle().apply{ putString("query", query)}
+                val fragmentChild = FragmentSearchResults().apply{arguments = bundle}
 
                 val transaction = childFragmentManager.beginTransaction()
-                transaction.replace(R.id.layout_child, FragmentSearchResults())
+                transaction.replace(R.id.layout_child, fragmentChild)
                 transaction.disallowAddToBackStack()
                 transaction.commit()
 

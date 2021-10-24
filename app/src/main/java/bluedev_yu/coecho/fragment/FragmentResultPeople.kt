@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
@@ -42,9 +43,9 @@ class FragmentResultPeople : Fragment() {
     }
 
     private fun newInstant(): FragmentResultPeople {
-        val args = Bundle()
+        val bundle = Bundle()
         val frag = FragmentResultPeople()
-        frag.arguments = args
+        frag.arguments = bundle
         return frag
     }
 }

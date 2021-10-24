@@ -28,6 +28,12 @@ class FragmentSearchResults : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //검색 query 받아오기
+        val bundle = arguments
+        val query = bundle!!.getString("query")
+
+        Toast.makeText(requireContext(), "검색결과 : $query", Toast.LENGTH_SHORT).show()
+
         // Inflate the layout for this fragment
         binding = FragmentSearchResultsBinding.inflate(layoutInflater)
         val view = binding.root

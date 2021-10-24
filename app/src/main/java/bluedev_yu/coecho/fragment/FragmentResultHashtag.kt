@@ -16,6 +16,7 @@ import bluedev_yu.coecho.data.model.Feeds
 class FragmentResultHashtag : Fragment() {
 
     lateinit var rv_result_hashtag: RecyclerView
+    private var orderId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,10 +26,10 @@ class FragmentResultHashtag : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_result_hashtag, container, false)
 
         val hashtagList = arrayListOf(
-            Feeds(null, null, null, 0, 0, "해시태그1", false),
-            Feeds(null, null, null, 0, 0, "해시태그2", false),
-            Feeds(null, null, null, 0, 0, "해시태그3", false),
-            Feeds(null, null, null, 0, 0, "해시태그4", false)
+            Feeds(null, null, null, null,0, 0, "해시태그1", false),
+            Feeds(null, null, null, null,0, 0, "해시태그2", false),
+            Feeds(null, null, null, null,0, 0, "해시태그3", false),
+            Feeds(null, null, null, null,0, 0, "해시태그4", false)
         )
 
         rv_result_hashtag = view.findViewById(R.id.rv_result_hashtag)
@@ -36,16 +37,13 @@ class FragmentResultHashtag : Fragment() {
         rv_result_hashtag.setHasFixedSize(true)
         rv_result_hashtag.adapter = SearchHashtagAdapter(hashtagList)
 
-        val query = arguments?.getString("query")
-        Toast.makeText(requireContext(), "내 쿼리는 $query", Toast.LENGTH_SHORT).show()
         return view
     }
 
-    private fun newInstant() : FragmentResultHashtag
-    {
-        val args = Bundle()
+    private fun newInstant() : FragmentResultHashtag {
+        val bundle = Bundle()
         val frag = FragmentResultHashtag()
-        frag.arguments = args
+        frag.arguments = bundle
         return frag
     }
 }

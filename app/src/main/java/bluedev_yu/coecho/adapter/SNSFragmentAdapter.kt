@@ -7,6 +7,7 @@ import bluedev_yu.coecho.fragment.FragmentResultHashtag
 import bluedev_yu.coecho.fragment.FragmentResultPeople
 
 class SNSFragementAdapter(fm : FragmentManager) : FragmentPagerAdapter(fm){
+
     override fun getCount(): Int = 2
 
     override fun getItem(position: Int): Fragment {

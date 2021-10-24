@@ -13,41 +13,195 @@
 
         <ImageView
             android:id="@+id/iv_arrow"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/arrow" />
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/list_item"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/iv_arrow" />
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/iv_arrow">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/feed_profile"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/woman1" />
+
+                <TextView
+                    android:id="@+id/feed_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="새싹"
+                    android:textColor="@color/green"
+                    app:layout_constraintBottom_toBottomOf="@+id/feed_profile"
+                    app:layout_constraintStart_toEndOf="@+id/feed_profile"
+                    app:layout_constraintTop_toTopOf="@+id/feed_profile" />
+
+                <TextView
+                    android:id="@+id/feed_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="윤혜영"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/feed_title"
+                    app:layout_constraintTop_toTopOf="@+id/feed_profile" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/feed_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/feed_timestamp"
+                        android:layout_width="39dp"
+                        android:layout_height="21dp"
+                        android:layout_marginStart="8dp"
+                        android:text="20분전"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/feed_share"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/feed_timestamp"
+                        app:srcCompat="@drawable/iv_feed_share" />
+
+                    <TextView
+                        android:id="@+id/feed_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="1"
+                        android:textColor="#00B06A"
+                        app:layout_constraintBottom_toBottomOf="@+id/feed_image"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/feed_like_img"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/feed_like_cnt"
+                        app:layout_constraintEnd_toStartOf="@+id/feed_like_cnt"
+                        app:layout_constraintTop_toTopOf="@+id/feed_like_cnt"
+                        app:srcCompat="@drawable/blank_like" />
+
+                    <TextView
+                        android:id="@+id/feed_like_cnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="1"
+                        android:textColor="#00B06A"
+                        app:layout_constraintBottom_toBottomOf="@+id/feed_comment_img"
+                        app:layout_constraintEnd_toStartOf="@+id/feed_comment_img"
+                        app:layout_constraintTop_toTopOf="@+id/feed_comment_img" />
+
+                    <ImageView
+                        android:id="@+id/feed_comment_img"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/feed_comment"
+                        app:layout_constraintEnd_toStartOf="@+id/feed_comment"
+                        app:layout_constraintTop_toTopOf="@+id/feed_comment"
+                        app:srcCompat="@drawable/comment" />
+
+                    <TextView
+                        android:id="@+id/feed_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="안녕 test"
+                        android:textColor="#000000"
+                        app:layout_constraintStart_toStartOf="@+id/feed_timestamp"
+                        app:layout_constraintTop_toBottomOf="@+id/feed_timestamp" />
+
+                    <ImageView
+                        android:id="@+id/feed_image"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="@+id/feed_content"
+                        app:layout_constraintTop_toBottomOf="@+id/feed_hashtag"
+                        app:srcCompat="@drawable/feedimg2" />
+
+                    <TextView
+                        android:id="@+id/feed_hashtag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/lightGreen"
+                        android:text="#해시태그"
+                        android:textColor="@color/green"
+                        app:layout_constraintStart_toStartOf="@+id/feed_content"
+                        app:layout_constraintTop_toBottomOf="@+id/feed_content" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_comments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="@+id/include"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/feed_user_profile"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:src="@drawable/woman1"
             app:layout_constraintStart_toStartOf="@+id/rv_comments"
             app:layout_constraintTop_toBottomOf="@+id/rv_comments" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/feed_user_comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -57,21 +211,21 @@
             android:inputType="textPersonName"
             android:textColor="@color/black"
             android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintEnd_toStartOf="@+id/tv_uploadComment"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            app:layout_constraintBottom_toBottomOf="@+id/feed_user_profile"
+            app:layout_constraintEnd_toStartOf="@+id/feed_comment_upload"
+            app:layout_constraintStart_toEndOf="@+id/feed_user_profile"
+            app:layout_constraintTop_toTopOf="@+id/feed_user_profile" />
 
         <TextView
-            android:id="@+id/tv_uploadComment"
+            android:id="@+id/feed_comment_upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="게시"
             android:textColor="@color/green"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+            app:layout_constraintBottom_toBottomOf="@+id/feed_user_comment"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName" />
+            app:layout_constraintTop_toTopOf="@+id/feed_user_comment" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
