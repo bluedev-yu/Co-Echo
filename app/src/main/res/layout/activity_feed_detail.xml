@@ -106,7 +106,7 @@
 <!--                        app:srcCompat="@drawable/iv_feed_share" />-->
 
                     <TextView
-                        android:id="@+id/feed_comment"
+                        android:id="@+id/feed_comment_cnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1"
@@ -140,9 +140,9 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginEnd="8dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/feed_comment"
-                        app:layout_constraintEnd_toStartOf="@+id/feed_comment"
-                        app:layout_constraintTop_toTopOf="@+id/feed_comment"
+                        app:layout_constraintBottom_toBottomOf="@+id/feed_comment_cnt"
+                        app:layout_constraintEnd_toStartOf="@+id/feed_comment_cnt"
+                        app:layout_constraintTop_toTopOf="@+id/feed_comment_cnt"
                         app:srcCompat="@drawable/comment" />
 
                     <TextView

@@ -28,7 +28,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 
-
 class FeedAdapter(val feedList: ArrayList<Feeds>, val contentUidList : ArrayList<String>) : 
 RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
@@ -77,8 +76,10 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         var feeduid = feedList.get(position).uid
 
         holder.strName.text = feedList.get(position).strName //유저 이름
-        Glide.with(holder.itemView.context).load(feedList.get(position).imageUrl!!.toUri()).apply(
-            RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
+//        Glide.with(holder.itemView.context).load(feedList.get(position).imageUrl!!.toUri()).apply(
+//            RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
+//여기에 프로필 이미지가 null인 경우 기본이미지로 설정하는 코드 추가해야함
+
         when(feedList.get(position).title) //칭호
         {
             0 -> holder.userTitle.setText(R.string.grade1)
@@ -86,7 +87,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         }
 
         //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
-        holder.strName.text = userList.get(position).strName
+        holder.strName.text = feedList.get(position).strName
         holder.strName.setOnClickListener(object : View.OnClickListener {
             //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {
@@ -163,18 +164,18 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
     }
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var profileImgUrl = itemView.findViewById<ImageView>(R.id.iv_profile) //프로필 이미지
-        var userTitle = itemView.findViewById<TextView>(R.id.tv_user_title) //칭호
-        var strName = itemView.findViewById<TextView>(R.id.tv_name) //이름
-        var timeStamp = itemView.findViewById<TextView>(R.id.tv_timestamp) //타임스탬프
-        var content = itemView.findViewById<TextView>(R.id.tv_content) //피드 글
-        var hashtag = itemView.findViewById<TextView>(R.id.tv_hashtag) //해시태그
+        var profileImgUrl = itemView.findViewById<ImageView>(R.id.feed_profile) //프로필 이미지
+        var userTitle = itemView.findViewById<TextView>(R.id.feed_title) //칭호
+        var strName = itemView.findViewById<TextView>(R.id.feed_name) //이름
+        var timeStamp = itemView.findViewById<TextView>(R.id.feed_timestamp) //타임스탬프
+        var content = itemView.findViewById<TextView>(R.id.feed_content) //피드 글
+        var hashtag = itemView.findViewById<TextView>(R.id.feed_hashtag) //해시태그
         //var feedImgUrl = itemView.findViewById<ImageView>(R.id.iv_image) //피드 이미지
-        var isLikeClicked = itemView.findViewById<ImageView>(R.id.iv_like) //좋아요 하트
-        var likeCnt = itemView.findViewById<TextView>(R.id.tv_like) //좋아요 수
-        var commentCnt = itemView.findViewById<TextView>(R.id.tv_comment) //댓글 수
+        var isLikeClicked = itemView.findViewById<ImageView>(R.id.feed_like_img) //좋아요 하트
+        var likeCnt = itemView.findViewById<TextView>(R.id.feed_like_cnt) //좋아요 수
+        var commentCnt = itemView.findViewById<TextView>(R.id.feed_comment_cnt) //댓글 수
         var feedCardView = itemView.findViewById<CardView>(R.id.feed_cardview) //피드 카드뷰
-        var ivLike = itemView.findViewById<ImageView>(R.id.iv_like) //좋아요 하트
+        var ivLike = itemView.findViewById<ImageView>(R.id.feed_like_img) //좋아요 하트
 
 
     }
