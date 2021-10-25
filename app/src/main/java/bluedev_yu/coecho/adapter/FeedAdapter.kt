@@ -109,11 +109,25 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             }
         })
 
+        var isheared : Boolean
+
+        //미리 하트가 비었는가 찼는가
+        if(feedList[position].likes.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
+        {
+            holder.ivLike.setImageResource(R.drawable.like)
+            isheared = true
+        }
+        else
+        {
+            holder.ivLike.setImageResource(R.drawable.blank_like) //안눌렀을 경우
+            isheared = false
+        }
+
         holder.timeStamp.text = feedList.get(position).timeStamp.toString()
         //애용.... timestamp 부탁해......
 
         holder.content.text = feedList.get(position).content
-        holder.hashtag.text = feedList.get(position).hashtag
+        holder.hashtag.text = "#"+feedList.get(position).hashtag
         //holder.feedImgUrl.setImageResource(feedList.get(position).feedImgUrl)
         holder.likeCnt.text = feedList.get(position).likeCnt.toString()
         holder.commentCnt.text = feedList.get(position).commentCnt.toString()
@@ -127,19 +141,10 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             intent.putExtra("strName", feedList.get(position).strName)
             intent.putExtra("imageUrl",feedList.get(position).imageUrl)
             intent.putExtra("title",feedList.get(position).title)
+            intent.putExtra("ishearted",isheared)
 
             intent.putExtra("contentUid",contentUidList.get(position))
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
-        }
-
-        //미리 하트가 비었는가 찼는가
-        if(feedList[position].likes.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
-        {
-            holder.ivLike.setImageResource(R.drawable.like)
-        }
-        else
-        {
-            holder.ivLike.setImageResource(R.drawable.blank_like) //안눌렀을 경우
         }
 
         holder.isLikeClicked.setOnClickListener {

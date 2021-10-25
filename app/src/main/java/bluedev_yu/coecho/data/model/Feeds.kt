@@ -20,9 +20,8 @@ class Feeds(
 
 {
         data class Comment(
-            var profileImgUrl: String? = null, //프로필 이미지
             var strName : String?= null, //유저 닉네임
-            var timestamp: Timestamp?= null,
+            var timestamp: Long?= null,
             var uid: String? = null, // uid
             var comment: String? = null //comment
         )
