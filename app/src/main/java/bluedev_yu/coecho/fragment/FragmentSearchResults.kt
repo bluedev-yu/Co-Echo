@@ -32,7 +32,7 @@ class FragmentSearchResults : Fragment() {
         val bundle = arguments
         val query = bundle!!.getString("query")
 
-        Toast.makeText(requireContext(), "검색결과 : $query", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(requireContext(), "검색결과 : $query", Toast.LENGTH_SHORT).show()
 
         // Inflate the layout for this fragment
         binding = FragmentSearchResultsBinding.inflate(layoutInflater)
@@ -40,7 +40,7 @@ class FragmentSearchResults : Fragment() {
 
         val fragmentManager = (activity as FragmentActivity).supportFragmentManager
 
-        val pagerAdapter = SNSFragementAdapter(childFragmentManager)
+        val pagerAdapter = SNSFragementAdapter(childFragmentManager, query)
         val pager = binding.SNSViewPager
         pager.adapter = pagerAdapter
         val tab = binding.SNSTab

@@ -114,10 +114,15 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         holder.commentCnt.text = feedList.get(position).commentCnt.toString()
         holder.feedCardView.setOnClickListener {
             val intent = Intent(holder.itemView?.context, FeedDetail::class.java)
-            intent.putExtra("name", feedList.get(position).uid)
+//            intent.putExtra("사진", feedList.get(position).profileImgUrl)
+            intent.putExtra("userTitle", feedList.get(position).title)
+            intent.putExtra("name", feedList.get(position).strName)
+            intent.putExtra("timeStamp", feedList.get(position).timeStamp)
             intent.putExtra("content", feedList.get(position).content)
             intent.putExtra("hashtag", feedList.get(position).hashtag)
+//            intent.putExtra("isLikeClicked", feedList.get(position).likeCnt)
             intent.putExtra("likeCnt", feedList.get(position).likeCnt)
+            intent.putExtra("commentCnt", feedList.get(position).commentCnt)
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
         }
 
@@ -171,12 +176,10 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         var content = itemView.findViewById<TextView>(R.id.feed_content) //피드 글
         var hashtag = itemView.findViewById<TextView>(R.id.feed_hashtag) //해시태그
         //var feedImgUrl = itemView.findViewById<ImageView>(R.id.iv_image) //피드 이미지
+        var ivLike = itemView.findViewById<ImageView>(R.id.feed_like_img) //좋아요 하트
         var isLikeClicked = itemView.findViewById<ImageView>(R.id.feed_like_img) //좋아요 하트
         var likeCnt = itemView.findViewById<TextView>(R.id.feed_like_cnt) //좋아요 수
         var commentCnt = itemView.findViewById<TextView>(R.id.feed_comment_cnt) //댓글 수
         var feedCardView = itemView.findViewById<CardView>(R.id.feed_cardview) //피드 카드뷰
-        var ivLike = itemView.findViewById<ImageView>(R.id.feed_like_img) //좋아요 하트
-
-
     }
 }

@@ -25,20 +25,34 @@ class FeedDetail : AppCompatActivity() {
         }
 
         //클릭된 피드의 정보로 초기화
-        val uid = intent.getSerializableExtra("uid")
+        val userTitle = intent.getSerializableExtra("userTitle")
+        val name = intent.getSerializableExtra("name")
+        val timeStamp = intent.getSerializableExtra("timeStamp")
         val content = intent.getSerializableExtra("content")
         val hashtag = intent.getSerializableExtra("hashtag")
         val likeCnt = intent.getSerializableExtra("likeCnt")
+        val commentCnt = intent.getSerializableExtra("commentCnt")
 
+        var tv_userTitle = findViewById<TextView>(R.id.feed_title)
         var tv_name = findViewById<TextView>(R.id.feed_name)
+        var tv_timeStamp = findViewById<TextView>(R.id.feed_timestamp)
         var tv_content = findViewById<TextView>(R.id.feed_content)
         var tv_hashtag = findViewById<TextView>(R.id.feed_hashtag)
         var tv_like_cnt = findViewById<TextView>(R.id.feed_like_cnt)
+        var tv_comment_cnt = findViewById<TextView>(R.id.feed_comment_cnt)
 
-        tv_name.setText(uid.toString())
+        when(userTitle) //칭호
+        {
+            0 -> tv_userTitle.setText(R.string.grade1)
+            1 -> tv_userTitle.setText(R.string.grade2)
+        }
+
+        tv_name.setText(name.toString())
+        tv_timeStamp.setText(timeStamp.toString())
         tv_content.setText(content.toString())
         tv_hashtag.setText(hashtag.toString())
         tv_like_cnt.setText(likeCnt.toString())
+        tv_comment_cnt.setText(commentCnt.toString())
 
         //게시 버튼
         tv_uploadComment = findViewById(R.id.feed_comment_upload)

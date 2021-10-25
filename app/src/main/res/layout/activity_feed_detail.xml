@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/iv_arrow"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             app:layout_constraintStart_toStartOf="parent"
