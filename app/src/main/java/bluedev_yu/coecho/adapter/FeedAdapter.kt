@@ -119,13 +119,15 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         holder.commentCnt.text = feedList.get(position).commentCnt.toString()
         holder.feedCardView.setOnClickListener {
             val intent = Intent(holder.itemView?.context, FeedDetail::class.java)
-            intent.putExtra("name", feedList.get(position).strName)
+            intent.putExtra("uid", feedList.get(position).uid)
             intent.putExtra("timeStamp",feedList.get(position).timeStamp)
             intent.putExtra("content", feedList.get(position).content)
             intent.putExtra("hashtag", feedList.get(position).hashtag)
             intent.putExtra("likeCnt", feedList.get(position).likeCnt)
             intent.putExtra("strName", feedList.get(position).strName)
-            intent.putExtra("profileimageUrl",feedList.get(position).imageUrl)
+            intent.putExtra("imageUrl",feedList.get(position).imageUrl)
+            intent.putExtra("title",feedList.get(position).title)
+
             intent.putExtra("contentUid",contentUidList.get(position))
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
         }

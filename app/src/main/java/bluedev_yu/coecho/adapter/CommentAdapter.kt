@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
-import bluedev_yu.coecho.data.model.Comments
 import bluedev_yu.coecho.Fragment.FragmentMyPage
+import bluedev_yu.coecho.data.model.Feeds
 import com.google.firebase.auth.FirebaseAuth
 
-class CommentAdapter(val commentList: ArrayList<Comments>): RecyclerView.Adapter<CommentAdapter.CustomViewHolder>(){
+class CommentAdapter(val commentList: ArrayList<Feeds.Comment>): RecyclerView.Adapter<CommentAdapter.CustomViewHolder>(){
 
     var auth : FirebaseAuth? = null
 
