@@ -1,19 +1,22 @@
 package bluedev_yu.coecho
 
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.Fragment.FragmentMyPage
-import bluedev_yu.coecho.Fragment.FragmentSNS
-import bluedev_yu.coecho.databinding.ActivityMainBinding
 import bluedev_yu.coecho.Fragment.FragmentMap
 import bluedev_yu.coecho.data.model.FollowDTO
+import bluedev_yu.coecho.data.model.userDTO
+import bluedev_yu.coecho.fragment.FragmentMyPage
+import bluedev_yu.coecho.fragment.FragmentSNS
+import bluedev_yu.coecho.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -42,17 +45,17 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         binding.bottomNavBar.setOnItemSelectedListener(this)
 
-
         setDefaultFragment()
 
         binding.bottomNavBar.itemIconTintList = null;
-        
 
-        Toast.makeText(this,auth?.uid.toString(),Toast.LENGTH_LONG).show()
+
+
+        Toast.makeText(this,auth?.uid.toString(), Toast.LENGTH_LONG).show()
         Log.v("User!",auth?.uid.toString())
         //firebase 로그인, 권한
         firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener {
-            doc ->
+                doc ->
             if(doc.exists()){
                 Log.v("Login1","not exist")
             }
@@ -93,6 +96,33 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         //optionbutton.setOnClickListener{
         //    drawerLayout.openDrawer(GravityCompat.END)
         //}
+
+        //권한 요청 코드
+        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
+            Log.d("권한 허용 여부", "***denied***")
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1004
+            )
+        } else if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
+            Log.d("권한 허용 여부", "***granted***")
+        }
+    }
+
+    fun printHash() {
+        //--해시 키 발급--
+        var keyHash = Utility.getKeyHash(this)
+        Log.d("해시 키", keyHash)
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean { //내비게이션바 아이템 선택시 프래그먼트 교체
