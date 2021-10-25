@@ -24,7 +24,7 @@ class CommentAdapter(val commentList: ArrayList<Comments>): RecyclerView.Adapter
     override fun onBindViewHolder(holder: CommentAdapter.CustomViewHolder, position: Int) {
         auth = FirebaseAuth.getInstance()
 
-        holder.userId.text = commentList.get(position).userId
+        holder.userId.text = commentList.get(position).strName
         holder.userId.setOnClickListener (object: View.OnClickListener{
             //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {
