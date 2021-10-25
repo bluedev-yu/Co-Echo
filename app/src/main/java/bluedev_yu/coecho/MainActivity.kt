@@ -88,9 +88,22 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
         }
 
-        //앨범 권한
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1)
-
+        //권한 요청 코드
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION),1)
+        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
+            Log.d("권한 허용 여부", "***denied***")
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION),1)
+        } else if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
+            Log.d("권한 허용 여부", "***granted***")
+        }
         printHash()
         //val optionbutton : ImageView = findViewById(R.id.MyPageOptionButton)
         //val drawerLayout : DrawerLayout = findViewById(R.id.MyPageDrawerLayout)
@@ -99,25 +112,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         //    drawerLayout.openDrawer(GravityCompat.END)
         //}
 
-        //권한 요청 코드
-        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        ) {
-            Log.d("권한 허용 여부", "***denied***")
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1004
-            )
-        } else if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        ) {
-            Log.d("권한 허용 여부", "***granted***")
-        }
     }
 
     fun printHash() {
