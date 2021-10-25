@@ -91,8 +91,6 @@ class MainActivity : AppCompatActivity(),
             }
             R.id.action_map -> {
                 loadFragment(FragmentMap())
-//                val spinner:Spinner = findViewById(R.id.MapSpinner)
-//                spinner.onItemSelectedListener = this
                 return true
             }
             R.id.action_myPage -> {

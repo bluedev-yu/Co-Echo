@@ -8,7 +8,7 @@ import bluedev_yu.coecho.fragment.fragmentMyFeed
 import bluedev_yu.coecho.fragment.fragmentMyReview
 import bluedev_yu.coecho.fragment.fragmentSubscriber
 
-class FragmentAdapter (fm : FragmentManager) : FragmentPagerAdapter(fm){
+open class FragmentAdapter (fm : FragmentManager) : FragmentPagerAdapter(fm){
 
     override fun getItem(position: Int): Fragment {
         val fragment = when(position)
