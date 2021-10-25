@@ -45,9 +45,9 @@ class FragmentResultPeople : Fragment() {
     }
 
     private fun newInstant(): FragmentResultPeople {
-        val args = Bundle()
+        val bundle = Bundle()
         val frag = FragmentResultPeople()
-        frag.arguments = args
+        frag.arguments = bundle
         return frag
     }
 }
