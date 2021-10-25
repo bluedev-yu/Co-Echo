@@ -1,4 +1,4 @@
-package bluedev_yu.coecho.fragment
+package bluedev_yu.coecho.Fragment
 
 import android.Manifest
 import android.content.Context
