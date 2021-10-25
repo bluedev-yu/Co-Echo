@@ -312,7 +312,7 @@ class FragmentMyPage : Fragment() {
 
         storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener{
-                uri->
+                    uri->
                 var userInfo = userDTO()
                 userInfo.imageUrl = uri.toString()
                 firestore?.collection("User")?.document(auth?.uid.toString())?.update("imageUrl",userInfo.imageUrl)

@@ -13,7 +13,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
-    <string name="default_web_client_id">741116606261-4ookp5a3r988dmo817qfqk9ubclt2jos.apps.googleusercontent.com</string>
+<!--    <string name="default_web_client_id">741116606261-4ookp5a3r988dmo817qfqk9ubclt2jos.apps.googleusercontent.com</string>-->
 
     <!-- 로그인 -->
     <string name="signin_email">회원가입 및 이메일</string>
@@ -25,10 +25,20 @@
     <string name="signout_fail">로그아웃 실패</string>
     <string name="signout_fail_null">이메일과 비밀번호를 입력해주세요</string>
 
-    <!--칭호-->
+    <!--에코맵-->
+    <string name="eco_map">에코맵</string>
+    <string-array name="eco_map_sipnner">
+        <item>거리순</item>
+        <item>추천순</item>
+    </string-array>
+    <string name="search">search</string>
+
+    <string-array name="spinner_array">
+        <item>거리순</item>
+        <item>별점순</item>
+    </string-array>
+
+   <!--칭호-->
     <string name="grade1">새싹</string>
     <string name="grade2">숲</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>

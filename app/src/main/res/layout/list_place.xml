@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/place_cardview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="10dp"/>
+
+            <RatingBar
+                android:id="@+id/placeRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/style_ratingbar"
+                android:layout_marginTop="8dp"
+                android:isIndicator="true"
+                app:layout_constraintStart_toStartOf="@id/tv_placeHashtag"
+                app:layout_constraintTop_toBottomOf="@id/tv_placeName" />
+
+            <TextView
+                android:id="@+id/tv_placeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="제로웨이스트샵"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tv_placeHashtag"
+                app:layout_constraintTop_toBottomOf="@id/tv_placeHashtag" />
+
+            <TextView
+                android:id="@+id/tv_placeCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="생활용품점"
+                android:textColor="#555555"
+                app:layout_constraintBottom_toBottomOf="@id/tv_placeName"
+                app:layout_constraintStart_toEndOf="@id/tv_placeName"
+                app:layout_constraintTop_toTopOf="@id/tv_placeName" />
+
+            <TextView
+                android:id="@+id/tv_placeHashtag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/lightGreen"
+                android:text="#해시태그"
+                android:textColor="@color/green"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/tv_placeReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:text="방문자리뷰"
+                android:textColor="#555555"
+                app:layout_constraintStart_toStartOf="@id/tv_placeHashtag"
+                app:layout_constraintTop_toBottomOf="@id/placeRatingBar" />
+
+            <TextView
+                android:id="@+id/tv_placeReviewCnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="30"
+                android:textColor="#555555"
+                app:layout_constraintBottom_toBottomOf="@id/tv_placeReview"
+                app:layout_constraintStart_toEndOf="@id/tv_placeReview"
+                app:layout_constraintTop_toTopOf="@id/tv_placeReview" />
+
+            <TextView
+                android:id="@+id/tv_placeLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="대구 달서구 진천로 114-18"
+                android:textColor="#555555"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_placeHashtag"
+                app:layout_constraintTop_toBottomOf="@id/tv_placeReview" />
+
+            <TextView
+                android:id="@+id/tv_placeDistanceFromMyLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="4.1km"
+                android:textColor="#555555"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_placeLocation"
+                app:layout_constraintStart_toEndOf="@id/tv_placeLocation"
+                app:layout_constraintTop_toTopOf="@id/tv_placeLocation" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
