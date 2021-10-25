@@ -150,17 +150,8 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
             }
 
         }
-        // Inflate the layout for this fragment
-        binding = FragmentMapBinding.inflate(layoutInflater)
-        val view = binding.root
 
-        var button : Button = binding.Test
-        button.setOnClickListener{
-            val intent = Intent(this.context, UploadReview::class.java)
-            startActivity(intent)
-        }
 
-        return view
         return thisFragView
     }
 
