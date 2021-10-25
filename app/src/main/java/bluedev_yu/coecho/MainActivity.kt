@@ -91,6 +91,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         //앨범 권한
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1)
 
+        printHash()
         //val optionbutton : ImageView = findViewById(R.id.MyPageOptionButton)
         //val drawerLayout : DrawerLayout = findViewById(R.id.MyPageDrawerLayout)
         // 햄버거 메뉴 선택시 오른쪽으로 열린다

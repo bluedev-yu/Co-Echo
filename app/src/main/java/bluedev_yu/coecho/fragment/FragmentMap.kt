@@ -342,7 +342,7 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
             mapPoint = MapPoint.mapPointWithGeoCoord(lat, lon)
             markerType = MapPOIItem.MarkerType.CustomImage // 마커타입을 커스텀 마커로 지정.
             customImageResourceId = R.drawable.echo_custom_marker //마커 이미지 설정 -> 나뭇잎 모양
-            isCustomImageAutoscale = true
+            isCustomImageAutoscale = false
             setCustomImageAnchor(0.5f, 1.0f)
         }
         return marker
