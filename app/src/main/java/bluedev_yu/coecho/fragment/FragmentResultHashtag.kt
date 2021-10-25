@@ -1,21 +1,21 @@
 package bluedev_yu.coecho.Fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.adapter.SearchHashtagAdapter
 import bluedev_yu.coecho.data.model.Feeds
 
-class FragmentResultHashtag : Fragment() {
+class FragmentResultHashtag(query: String?) : Fragment() {
 
     lateinit var rv_result_hashtag: RecyclerView
-    private var orderId: String? = null
+    var query: String? = query
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +23,11 @@ class FragmentResultHashtag : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_result_hashtag, container, false)
+
+        val bundle = Bundle()
+        bundle.putString("query", query)
+
+        Toast.makeText(requireContext(), "해시태그 쿼리는 $query", Toast.LENGTH_SHORT).show()
 
         val hashtagList = arrayListOf(
             Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그1", true),
@@ -39,10 +44,13 @@ class FragmentResultHashtag : Fragment() {
         return view
     }
 
-    private fun newInstant() : FragmentResultHashtag {
-        val bundle = Bundle()
-        val frag = FragmentResultHashtag()
-        frag.arguments = bundle
-        return frag
-    }
+//    private fun newInstant(query: String) : FragmentResultHashtag{
+//        val bundle = Bundle()
+//        val frag = FragmentResultHashtag(query)
+//        bundle.getString("query", query)
+//        frag.arguments = bundle
+//
+//        Toast.makeText(requireContext(), "검색결과 : $query", Toast.LENGTH_SHORT).show()
+//        return frag
+//    }
 }

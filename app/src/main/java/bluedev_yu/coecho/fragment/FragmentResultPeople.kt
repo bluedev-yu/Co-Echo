@@ -1,20 +1,21 @@
 package bluedev_yu.coecho.Fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.adapter.SearchPeopleAdapter
 import bluedev_yu.coecho.data.model.userDTO
 
-class FragmentResultPeople : Fragment() {
+class FragmentResultPeople(query: String?) : Fragment() {
 
     lateinit var rv_result_people: RecyclerView
+    var query: String? = query
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,8 +24,10 @@ class FragmentResultPeople : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_result_people, container, false)
 
-        val query = arguments?.getString("query")
-        Toast.makeText(requireContext(), "내 쿼리는 $query", Toast.LENGTH_SHORT).show()
+        val bundle = Bundle()
+        bundle.putString("query", query)
+
+        Toast.makeText(requireContext(), "사용자 쿼리는 $query", Toast.LENGTH_SHORT).show()
 
         //마찬가지
         val userlist = arrayListOf(
@@ -44,10 +47,14 @@ class FragmentResultPeople : Fragment() {
 
     }
 
-    private fun newInstant(): FragmentResultPeople {
-        val bundle = Bundle()
-        val frag = FragmentResultPeople()
-        frag.arguments = bundle
-        return frag
-    }
+//    private fun newInstant(query: String?): FragmentResultPeople {
+//        val bundle = Bundle()
+//        val frag = FragmentResultPeople(query)
+//        bundle.putString("query", query)
+//        frag.arguments = bundle
+//
+//        Toast.makeText(requireContext(), "내 쿼리는 $query", Toast.LENGTH_SHORT).show()
+//
+//        return frag
+//    }
 }

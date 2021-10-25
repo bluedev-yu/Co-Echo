@@ -77,6 +77,7 @@ class FeedDetail : AppCompatActivity() {
         var tv_commentprofile = findViewById<ImageView>(R.id.feed_user_profile) //내 프로필 이미지 -> 내가 댓글 쓰므로
         var tv_title = findViewById<TextView>(R.id.feed_title)
         var tv_name = findViewById<TextView>(R.id.feed_name)
+        var tv_timeStamp = findViewById<TextView>(R.id.feed_timestamp)
         var tv_content = findViewById<TextView>(R.id.feed_content)
         var tv_hashtag = findViewById<TextView>(R.id.feed_hashtag)
         var tv_like_cnt = findViewById<TextView>(R.id.feed_like_cnt)
