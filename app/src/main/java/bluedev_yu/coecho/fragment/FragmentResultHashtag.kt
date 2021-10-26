@@ -10,12 +10,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.adapter.SearchHashtagAdapter
+import bluedev_yu.coecho.adapter.SearchPeopleAdapter
 import bluedev_yu.coecho.data.model.Feeds
+import bluedev_yu.coecho.data.model.userDTO
+import com.google.firebase.firestore.FirebaseFirestore
 
 class FragmentResultHashtag(query: String?) : Fragment() {
 
     lateinit var rv_result_hashtag: RecyclerView
     var query: String? = query
+    var firestore : FirebaseFirestore? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,22 +28,30 @@ class FragmentResultHashtag(query: String?) : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_result_hashtag, container, false)
 
+        firestore = FirebaseFirestore.getInstance()
+
         val bundle = Bundle()
         bundle.putString("query", query)
 
-        Toast.makeText(requireContext(), "해시태그 쿼리는 $query", Toast.LENGTH_SHORT).show()
+        val hashtagList = arrayListOf<Feeds>()
 
-        val hashtagList = arrayListOf(
-            Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그1", true),
-            Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그2", true),
-            Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그3", true),
-            Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그4", true)
-        )
+        firestore?.collection("Feeds")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            hashtagList.clear()
+            if (querySnapshot == null) {
+                return@addSnapshotListener
+            }
+            for (snapshot in querySnapshot!!.documents) {
+                val imsi = snapshot.toObject(Feeds::class.java)
+                if (imsi?.hashtag!!.contains(query!!)) //검색내용 포함시
+                    hashtagList.add(imsi)
+            }
+            rv_result_hashtag.adapter = SearchHashtagAdapter(hashtagList)
+            rv_result_hashtag.adapter!!.notifyDataSetChanged()
+        }
 
         rv_result_hashtag = view.findViewById(R.id.rv_result_hashtag)
         rv_result_hashtag.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_result_hashtag.setHasFixedSize(true)
-        rv_result_hashtag.adapter = SearchHashtagAdapter(hashtagList)
 
         return view
     }

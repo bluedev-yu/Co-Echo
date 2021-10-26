@@ -93,7 +93,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
         //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
         holder.strName.text = feedList.get(position).strName
-        holder.strName.setOnClickListener(object : View.OnClickListener {
+        holder.profileImgUrl.setOnClickListener(object : View.OnClickListener {
             //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {
                 var fragmentUserPage = FragmentMyPage()
