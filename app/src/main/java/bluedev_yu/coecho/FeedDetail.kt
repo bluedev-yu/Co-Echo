@@ -3,6 +3,7 @@ package bluedev_yu.coecho
 import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.activity_feed_detail.*
+import org.w3c.dom.Text
 
 class FeedDetail : AppCompatActivity() {
     lateinit var arrow: ImageView
@@ -72,17 +74,29 @@ class FeedDetail : AppCompatActivity() {
         val likeCnt = intent.getSerializableExtra("likeCnt")
         val ishearted = intent.getSerializableExtra("ishearted")
         val uid = intent.getSerializableExtra("uid") //내가 쓴 글인지 확인 위함
+        var commentCnt : Int =0
 
         var tv_profileimage = findViewById<ImageView>(R.id.feed_profile) //피드 쓴사람 프로필 이미지
         var tv_commentprofile = findViewById<ImageView>(R.id.feed_user_profile) //내 프로필 이미지 -> 내가 댓글 쓰므로
         var tv_title = findViewById<TextView>(R.id.feed_title)
         var tv_name = findViewById<TextView>(R.id.feed_name)
-        var tv_timeStamp = findViewById<TextView>(R.id.feed_timestamp)
         var tv_content = findViewById<TextView>(R.id.feed_content)
         var tv_hashtag = findViewById<TextView>(R.id.feed_hashtag)
+        var tv_commentCnt = findViewById<TextView>(R.id.feed_comment_cnt)
         var tv_like_cnt = findViewById<TextView>(R.id.feed_like_cnt)
         var feed_timeStamp = findViewById<TextView>(R.id.feed_timestamp)
         var feed_like_img = findViewById<ImageView>(R.id.feed_like_img)
+
+        //comment count
+        firestore?.collection("Feeds")?.document(contentUid!!)?.addSnapshotListener{
+                documentSnapshot, FirebaseFirestoreException ->
+
+            val doc = documentSnapshot?.toObject(Feeds::class.java)
+            commentCnt = doc!!.commentCnt
+            tv_commentCnt.setText(commentCnt.toString())
+        }
+
+        //intent.getSerializableExtra("commentCnt")
 
         if(ishearted as Boolean) //좋아요 눌렀을 경우
         {
@@ -145,6 +159,20 @@ class FeedDetail : AppCompatActivity() {
             1 -> tv_title.setText(R.string.grade2)
         }
 
+        var commentList = arrayListOf<Feeds.Comment>()
+        commentSnapshot = firestore?.collection("Feeds")?.document(contentUid!!)?.collection("Comments")?.addSnapshotListener{
+                querySnapshot, firebaseFirestoreException ->
+            commentList.clear()
+            if(querySnapshot == null)
+                return@addSnapshotListener
+            for(snapshot in querySnapshot?.documents)
+            {
+                commentList.add(snapshot.toObject(Feeds.Comment::class.java)!!)
+            }
+            rv_comments.adapter = CommentAdapter(commentList)
+            rv_comments.adapter!!.notifyDataSetChanged()
+        }
+
         //게시 버튼
         tv_uploadComment = findViewById(R.id.feed_comment_upload)
         tv_uploadComment.setOnClickListener {
@@ -156,25 +184,16 @@ class FeedDetail : AppCompatActivity() {
             comment.uid = user!!.uid
             comment.timestamp = System.currentTimeMillis()
 
+            Log.v("commentSize Before", commentList.size.toString())
             firestore?.collection("Feeds")?.document(contentUid!!)?.collection("Comments")?.document()?.set(comment)
+            Log.v("commentSize After", commentList.size.toString())
+            firestore?.collection("Feeds")?.document(contentUid!!)?.update("commentCnt",(commentCnt+1))
+
 
             feed_user_comment.setText("")
 
         }
 
-        var commentList = arrayListOf<Feeds.Comment>()
-        commentSnapshot = firestore?.collection("Feeds")?.document(contentUid!!)?.collection("Comments")?.addSnapshotListener{
-            querySnapshot, firebaseFirestoreException ->
-            commentList.clear()
-            if(querySnapshot == null)
-                return@addSnapshotListener
-            for(snapshot in querySnapshot?.documents)
-            {
-                commentList.add(snapshot.toObject(Feeds.Comment::class.java)!!)
-                rv_comments.adapter = CommentAdapter(commentList)
-                rv_comments.adapter!!.notifyDataSetChanged()
-            }
-        }
 
 
         rv_comments = findViewById(R.id.rv_comments)

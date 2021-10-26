@@ -143,6 +143,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             intent.putExtra("imageUrl",feedList.get(position).imageUrl)
             intent.putExtra("title",feedList.get(position).title)
             intent.putExtra("ishearted",isheared)
+            intent.putExtra("commentCnt",feedList.get(position).commentCnt)
 
             intent.putExtra("contentUid",contentUidList.get(position))
             ContextCompat.startActivity(holder.itemView?.context, intent, null)

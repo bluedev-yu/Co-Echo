@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.animation.core.snap
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -91,13 +92,11 @@ class FragmentFeeds : Fragment() {
                         feedList.clear()
                         contentUidList.clear()
                         if(querySnapshot == null) {
-                            Toast.makeText(this.context,"no!!!!!!!",Toast.LENGTH_LONG).show()
                             return@addSnapshotListener
                         }
                         for(snapshot in querySnapshot!!.documents)
                         {
-                            var item = snapshot.toObject(Feeds::class.java)!!
-                            feedList.add(item)
+                            feedList.add(snapshot.toObject(Feeds::class.java)!!)
                             contentUidList.add(snapshot.id)
                         }
                         if(feedList.size ==0)

@@ -95,6 +95,7 @@ class UploadFeed : AppCompatActivity() {
                 FeedDTO.imageUrl = document?.imageUrl
                 FeedDTO.strName = document?.strName
                 FeedDTO.title = document?.title
+                FeedDTO.commentCnt = 0
 
                 firestore?.collection("Feeds")?.document()?.set(FeedDTO)
                     ?.addOnCompleteListener { task ->
