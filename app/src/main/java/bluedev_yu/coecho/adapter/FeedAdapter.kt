@@ -137,12 +137,10 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             intent.putExtra("timeStamp",feedList.get(position).timeStamp)
             intent.putExtra("content", feedList.get(position).content)
             intent.putExtra("hashtag", feedList.get(position).hashtag)
-//            intent.putExtra("isLikeClicked", feedList.get(position).likeCnt)
             intent.putExtra("likeCnt", feedList.get(position).likeCnt)
             intent.putExtra("strName", feedList.get(position).strName)
             intent.putExtra("imageUrl",feedList.get(position).imageUrl)
             intent.putExtra("title",feedList.get(position).title)
-            intent.putExtra("ishearted",isheared)
             intent.putExtra("commentCnt",feedList.get(position).commentCnt)
 
             intent.putExtra("contentUid",contentUidList.get(position))

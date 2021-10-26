@@ -72,7 +72,6 @@ class FeedDetail : AppCompatActivity() {
         val content = intent.getSerializableExtra("content")
         val hashtag = intent.getSerializableExtra("hashtag")
         val likeCnt = intent.getSerializableExtra("likeCnt")
-        val ishearted = intent.getSerializableExtra("ishearted")
         val uid = intent.getSerializableExtra("uid") //내가 쓴 글인지 확인 위함
         var commentCnt : Int =0
 
@@ -98,13 +97,21 @@ class FeedDetail : AppCompatActivity() {
 
         //intent.getSerializableExtra("commentCnt")
 
-        if(ishearted as Boolean) //좋아요 눌렀을 경우
-        {
-            feed_like_img.setImageResource(R.drawable.like)
-        }
-        else
-        {
-            feed_like_img.setImageResource(R.drawable.blank_like) //안눌렀을 경우
+        //미리 하트가 비었는가 찼는가
+        firestore?.collection("Feeds")?.document(contentUid!!)?.addSnapshotListener{
+            documentSnapshot, FirebaseFirestoreException ->
+
+            var doc = documentSnapshot?.toObject(Feeds::class.java)
+            if(doc?.likes!!.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
+            {
+                feed_like_img.setImageResource(R.drawable.like)
+            }
+            else
+            {
+                feed_like_img.setImageResource(R.drawable.blank_like) //안눌렀을 경우
+            }
+            //좋아요 수 동기화
+            tv_like_cnt.setText(doc.likeCnt.toString())
         }
 
         //피드 프로필사진
@@ -147,6 +154,11 @@ class FeedDetail : AppCompatActivity() {
                 }
             }
         }
+
+        feed_like_img.setOnClickListener {
+            likeEvent()
+        }
+
 
         tv_name.setText(strName.toString())
         tv_content.setText(content.toString())
@@ -194,8 +206,6 @@ class FeedDetail : AppCompatActivity() {
 
         }
 
-
-
         rv_comments = findViewById(R.id.rv_comments)
         rv_comments.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_comments.setHasFixedSize(true)
@@ -205,5 +215,28 @@ class FeedDetail : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         commentSnapshot?.remove()
+    }
+
+    fun likeEvent()
+    {
+        var tsDoc = firestore?.collection("Feeds")?.document(contentUid!!)
+        firestore?.runTransaction{
+                transaction ->
+
+            val uid = auth?.uid.toString()
+            val feedDTO = transaction.get(tsDoc!!).toObject(Feeds::class.java)
+
+            if(feedDTO!!.likes.containsKey(uid)){ //이미 좋아요 한 경우 -> 좋아요 철회
+                feedDTO?.likeCnt = feedDTO.likeCnt-1
+                feedDTO?.likes.remove(uid)
+            }
+            else //좋아요 아직 안함 -> 좋아요 하기
+            {
+                feedDTO.likes[uid] = uid
+                feedDTO.likeCnt = feedDTO.likeCnt+1
+            }
+
+            transaction.set(tsDoc,feedDTO)
+        }
     }
 }

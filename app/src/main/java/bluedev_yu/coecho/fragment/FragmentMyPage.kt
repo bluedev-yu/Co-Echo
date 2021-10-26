@@ -26,6 +26,7 @@ import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.userDTO
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.auth.api.Auth
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -44,11 +45,6 @@ class FragmentMyPage : Fragment() {
     private var viewProfile  : View? = null
     var pickImageFromAlbum =0
     var uriPhoto : Uri?= null
-
-    var fragmentMyFeed : Fragment ?= null
-    var fragmentMyReview : Fragment ?= null
-    var fragmentLikeStores : Fragment ? = null
-    var fragmentSubscriber : Fragment ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
