@@ -124,7 +124,6 @@ class FragmentFeeds : Fragment() {
         swipeRefreshLayout = binding.swipeRefreshLayout
         swipeRefreshLayout.setOnRefreshListener {
             //스와이프 할 때마다 피드 추가
-            Toast.makeText(requireContext(), "하이~~~", Toast.LENGTH_SHORT).show()
             swipeRefreshLayout.isRefreshing = false
         }
 

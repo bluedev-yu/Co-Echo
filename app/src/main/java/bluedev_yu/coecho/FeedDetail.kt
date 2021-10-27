@@ -97,6 +97,7 @@ class FeedDetail : AppCompatActivity() {
 
         //intent.getSerializableExtra("commentCnt")
 
+
         //미리 하트가 비었는가 찼는가
         firestore?.collection("Feeds")?.document(contentUid!!)?.addSnapshotListener{
             documentSnapshot, FirebaseFirestoreException ->

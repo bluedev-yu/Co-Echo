@@ -64,12 +64,15 @@ class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapt
                 holder.followButton.setText("팔로우")
             }
         }
+
+        var uid = userlist.get(position).uid
+
         holder.profileImgUrl.setOnClickListener(object: View.OnClickListener{
             //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {
                 var fragmentUserPage = FragmentMyPage()
                 var bundle = Bundle()
-                bundle.putString("uid", auth?.uid.toString())
+                bundle.putString("uid", uid)
                 fragmentUserPage.arguments = bundle
 
                 val activity = v!!.context as AppCompatActivity
@@ -80,7 +83,6 @@ class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapt
             }
         })
 
-        var uid = userlist.get(position).uid
 
         holder.followButton.setOnClickListener{
             var tsDocFollowing = firestore?.collection("Follow")?.document(auth?.uid.toString())

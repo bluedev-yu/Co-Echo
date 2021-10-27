@@ -1,6 +1,7 @@
 package bluedev_yu.coecho.adapter
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -109,22 +110,32 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             }
         })
 
-        var isheared : Boolean
+        //피드 지우기 내 피드인경우에만 보이기
+        if(feedList[position].uid!!.equals(auth?.uid.toString()))
+        {
+            holder.trash.visibility = View.VISIBLE
+
+        }
+
+        holder.trash.setOnClickListener{
+            firestore?.collection("Feeds")?.document(contentUidList[position])?.delete()
+            feedList.clear()
+            this.notifyDataSetChanged()
+        }
 
         //미리 하트가 비었는가 찼는가
         if(feedList[position].likes.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
         {
             holder.ivLike.setImageResource(R.drawable.like)
-            isheared = true
         }
         else
         {
             holder.ivLike.setImageResource(R.drawable.blank_like) //안눌렀을 경우
-            isheared = false
         }
 
         holder.timeStamp.text = feedList.get(position).timeStamp.toString()
         //애용.... timestamp 부탁해......
+
 
         holder.content.text = feedList.get(position).content
         holder.hashtag.text = "#"+feedList.get(position).hashtag
@@ -192,5 +203,6 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         var likeCnt = itemView.findViewById<TextView>(R.id.feed_like_cnt) //좋아요 수
         var commentCnt = itemView.findViewById<TextView>(R.id.feed_comment_cnt) //댓글 수
         var feedCardView = itemView.findViewById<CardView>(R.id.feed_cardview) //피드 카드뷰
+        var trash = itemView.findViewById<ImageView>(R.id.trash)
     }
 }
