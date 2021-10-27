@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/comment_profileImage"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
@@ -20,9 +20,9 @@
         android:layout_marginStart="8dp"
         android:text="차은우"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintBottom_toBottomOf="@+id/comment_profileImage"
+        app:layout_constraintStart_toEndOf="@+id/comment_profileImage"
+        app:layout_constraintTop_toTopOf="@+id/comment_profileImage" />
 
     <TextView
         android:id="@+id/tv_commentText"

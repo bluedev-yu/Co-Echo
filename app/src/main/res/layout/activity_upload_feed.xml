@@ -96,7 +96,7 @@
             app:layout_constraintTop_toTopOf="@+id/iv_hashtag" />
 
         <ImageView
-            android:id="@+id/iv_privacy"
+            android:id="@+id/iv_star"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="16dp"
@@ -109,9 +109,9 @@
             android:layout_height="wrap_content"
             android:checkedButton="@id/rb_public"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
-            app:layout_constraintStart_toEndOf="@+id/iv_privacy"
-            app:layout_constraintTop_toTopOf="@+id/iv_privacy">
+            app:layout_constraintBottom_toBottomOf="@+id/iv_star"
+            app:layout_constraintStart_toEndOf="@+id/iv_star"
+            app:layout_constraintTop_toTopOf="@+id/iv_star">
 
             <RadioButton
                 android:id="@+id/rb_public"
@@ -120,9 +120,9 @@
                 android:layout_marginStart="8dp"
                 android:onClick="onRadioButtonClicked"
                 android:text="전체보기"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
-                app:layout_constraintStart_toEndOf="@+id/iv_privacy"
-                app:layout_constraintTop_toTopOf="@+id/iv_privacy" />
+                app:layout_constraintBottom_toBottomOf="@+id/iv_star"
+                app:layout_constraintStart_toEndOf="@+id/iv_star"
+                app:layout_constraintTop_toTopOf="@+id/iv_star" />
 
             <RadioButton
                 android:id="@+id/rb_private"
@@ -131,9 +131,9 @@
                 android:layout_marginStart="8dp"
                 android:onClick="onRadioButtonClicked"
                 android:text="나만보기"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_privacy"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_star"
                 app:layout_constraintStart_toEndOf="@+id/rb_public"
-                app:layout_constraintTop_toTopOf="@+id/iv_privacy" />
+                app:layout_constraintTop_toTopOf="@+id/iv_star" />
         </RadioGroup>
 
 

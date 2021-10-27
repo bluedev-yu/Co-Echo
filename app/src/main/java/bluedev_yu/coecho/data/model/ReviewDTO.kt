@@ -1,5 +1,7 @@
 package bluedev_yu.coecho.data.model
 
+import java.sql.Timestamp
+
 data class ReviewDTO(
     var star : Float? = null,
     var pid : String? = null,
@@ -10,3 +12,4 @@ data class ReviewDTO(
     var strName : String? = null,//사용자 이름
     var title : Int?= 0 //칭호
 )
+

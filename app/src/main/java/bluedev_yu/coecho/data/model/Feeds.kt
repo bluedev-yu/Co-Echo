@@ -1,5 +1,6 @@
 package bluedev_yu.coecho.data.model
 
+import java.sql.Timestamp
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -15,5 +16,14 @@ class Feeds(
     var commentCnt: Int =0, //댓글 수
     var hashtag: String? = null, //해시태그
     var privacy: Boolean = false, //공개범위
-    var likes:MutableMap<String, String> = mutableMapOf() //좋아요한 사람
-    ) 
+    var likes:MutableMap<String, String> = mutableMapOf()    )//좋아요한 사람
+
+{
+        data class Comment(
+            var strName : String?= null, //유저 닉네임
+            var timestamp: Long?= null,
+            var uid: String? = null, // uid
+            var comment: String? = null //comment
+        )
+}
+

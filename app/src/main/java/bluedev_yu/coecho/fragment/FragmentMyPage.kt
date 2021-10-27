@@ -26,6 +26,7 @@ import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.userDTO
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.auth.api.Auth
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -44,11 +45,6 @@ class FragmentMyPage : Fragment() {
     private var viewProfile  : View? = null
     var pickImageFromAlbum =0
     var uriPhoto : Uri?= null
-
-    var fragmentMyFeed : Fragment ?= null
-    var fragmentMyReview : Fragment ?= null
-    var fragmentLikeStores : Fragment ? = null
-    var fragmentSubscriber : Fragment ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -156,7 +152,6 @@ class FragmentMyPage : Fragment() {
                 {
                     followButton.setText("팔로우")
                 }
-
             }
 
             firestore?.collection("Follow")?.document(uid)?.addSnapshotListener{ //팔로워 팔로잉 수
@@ -166,7 +161,7 @@ class FragmentMyPage : Fragment() {
                 MyPageFollowing.setText((followDTO?.followingCount!!-1).toString()+" 팔로잉")
             }
 
-
+            //유저정보 가져오기
             firestore?.collection("User")?.document(uid)?.addSnapshotListener{
                     documentSnapshot, firebaseFirestoreException ->
                 var document = documentSnapshot?.toObject(userDTO::class.java)
@@ -208,8 +203,10 @@ class FragmentMyPage : Fragment() {
                     if (followDTO == null) //empty
                     {
                         followDTO = FollowDTO()
-                        followDTO.followingCount = 1
+                        followDTO.followingCount = 2
                         followDTO.followings[uid!!] = uid
+                        followDTO.followings[auth?.uid.toString()] = auth?.uid.toString()
+                        followDTO.followers[auth?.uid.toString()] = auth?.uid.toString()
 
                         if (tsDocFollowing != null) {
                             transaction.set(tsDocFollowing, followDTO)
@@ -241,8 +238,10 @@ class FragmentMyPage : Fragment() {
                     if (followDTO == null) //empty
                     {
                         followDTO = FollowDTO()
-                        followDTO!!.followerCount = 1
+                        followDTO!!.followerCount = 2
                         followDTO!!.followers[auth?.uid.toString()!!] = auth?.uid.toString()
+                        followDTO!!.followers[uid!!]=uid
+                        followDTO!!.followings[uid!!]=uid
 
                         if (tsDocFollower != null) {
                             transaction.set(tsDocFollower, followDTO!!)
@@ -312,7 +311,7 @@ class FragmentMyPage : Fragment() {
 
         storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener{
-                uri->
+                    uri->
                 var userInfo = userDTO()
                 userInfo.imageUrl = uri.toString()
                 firestore?.collection("User")?.document(auth?.uid.toString())?.update("imageUrl",userInfo.imageUrl)

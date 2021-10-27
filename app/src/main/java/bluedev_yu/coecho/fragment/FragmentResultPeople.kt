@@ -9,13 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
+import bluedev_yu.coecho.adapter.FeedAdapter
 import bluedev_yu.coecho.adapter.SearchPeopleAdapter
+import bluedev_yu.coecho.data.model.Feeds
+import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.userDTO
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class FragmentResultPeople(query: String?) : Fragment() {
 
     lateinit var rv_result_people: RecyclerView
     var query: String? = query
+    var firestore : FirebaseFirestore? = null
+    var auth : FirebaseAuth?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,24 +31,35 @@ class FragmentResultPeople(query: String?) : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_result_people, container, false)
 
+        firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+
         val bundle = Bundle()
         bundle.putString("query", query)
 
-        Toast.makeText(requireContext(), "사용자 쿼리는 $query", Toast.LENGTH_SHORT).show()
+        //검색
+        val userlist = arrayListOf<userDTO>()
 
-        //마찬가지
-        val userlist = arrayListOf(
-            userDTO("윤혜영", null, "윤혜영", 0),
-            userDTO("윤혜돌", null, "윤혜영", 0),
-            userDTO("윤혜명", null, "윤혜영", 0),
-            userDTO("윤혜석", null, "윤혜영", 0),
-            userDTO("윤혜준", null, "윤혜영", 0),
-            )
+        firestore?.collection("User")?.addSnapshotListener{
+                querySnapshot, firebaseFirestoreException ->
+            userlist.clear()
+            if(querySnapshot == null) {
+                return@addSnapshotListener
+            }
+            for(snapshot in querySnapshot!!.documents)
+            {
+                val imsi = snapshot.toObject(userDTO::class.java)
+                if(imsi?.strName!!.contains(query!!) && !imsi.uid!!.equals(auth?.uid.toString())) //검색내용 포함시
+                    userlist.add(imsi)
+            }
+
+            rv_result_people.adapter = SearchPeopleAdapter(userlist)
+            rv_result_people.adapter!!.notifyDataSetChanged()
+        }
 
         rv_result_people = view.findViewById(R.id.rv_result_people)
         rv_result_people.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_result_people.setHasFixedSize(true)
-        rv_result_people.adapter = SearchPeopleAdapter(userlist)
 
         return view
 

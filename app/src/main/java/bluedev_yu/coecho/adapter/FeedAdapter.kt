@@ -76,10 +76,15 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         var feeduid = feedList.get(position).uid
 
         holder.strName.text = feedList.get(position).strName //유저 이름
-//        Glide.with(holder.itemView.context).load(feedList.get(position).imageUrl!!.toUri()).apply(
-//            RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
-//여기에 프로필 이미지가 null인 경우 기본이미지로 설정하는 코드 추가해야함
-
+        //프로필사진
+        if(feedList.get(position).imageUrl == null) //기본 이미지
+            Glide.with(holder.itemView.context).load(R.drawable.default_profilephoto).apply(
+                RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
+        else
+        {
+            Glide.with(holder.itemView.context).load(feedList.get(position).imageUrl!!.toUri()).apply(
+                RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
+        }
         when(feedList.get(position).title) //칭호
         {
             0 -> holder.userTitle.setText(R.string.grade1)
@@ -88,7 +93,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
         //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
         holder.strName.text = feedList.get(position).strName
-        holder.strName.setOnClickListener(object : View.OnClickListener {
+        holder.profileImgUrl.setOnClickListener(object : View.OnClickListener {
             //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {
                 var fragmentUserPage = FragmentMyPage()
@@ -104,36 +109,42 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             }
         })
 
-        holder.timeStamp.text = feedList.get(position).timeStamp.toString()
-        //애용.... timestamp 부탁해......
-
-        holder.content.text = feedList.get(position).content
-        holder.hashtag.text = feedList.get(position).hashtag
-        //holder.feedImgUrl.setImageResource(feedList.get(position).feedImgUrl)
-        holder.likeCnt.text = feedList.get(position).likeCnt.toString()
-        holder.commentCnt.text = feedList.get(position).commentCnt.toString()
-        holder.feedCardView.setOnClickListener {
-            val intent = Intent(holder.itemView?.context, FeedDetail::class.java)
-//            intent.putExtra("사진", feedList.get(position).profileImgUrl)
-            intent.putExtra("userTitle", feedList.get(position).title)
-            intent.putExtra("name", feedList.get(position).strName)
-            intent.putExtra("timeStamp", feedList.get(position).timeStamp)
-            intent.putExtra("content", feedList.get(position).content)
-            intent.putExtra("hashtag", feedList.get(position).hashtag)
-//            intent.putExtra("isLikeClicked", feedList.get(position).likeCnt)
-            intent.putExtra("likeCnt", feedList.get(position).likeCnt)
-            intent.putExtra("commentCnt", feedList.get(position).commentCnt)
-            ContextCompat.startActivity(holder.itemView?.context, intent, null)
-        }
+        var isheared : Boolean
 
         //미리 하트가 비었는가 찼는가
         if(feedList[position].likes.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
         {
             holder.ivLike.setImageResource(R.drawable.like)
+            isheared = true
         }
         else
         {
             holder.ivLike.setImageResource(R.drawable.blank_like) //안눌렀을 경우
+            isheared = false
+        }
+
+        holder.timeStamp.text = feedList.get(position).timeStamp.toString()
+        //애용.... timestamp 부탁해......
+
+        holder.content.text = feedList.get(position).content
+        holder.hashtag.text = "#"+feedList.get(position).hashtag
+        //holder.feedImgUrl.setImageResource(feedList.get(position).feedImgUrl)
+        holder.likeCnt.text = feedList.get(position).likeCnt.toString()
+        holder.commentCnt.text = feedList.get(position).commentCnt.toString()
+        holder.feedCardView.setOnClickListener {
+            val intent = Intent(holder.itemView?.context, FeedDetail::class.java)
+            intent.putExtra("uid", feedList.get(position).uid)
+            intent.putExtra("timeStamp",feedList.get(position).timeStamp)
+            intent.putExtra("content", feedList.get(position).content)
+            intent.putExtra("hashtag", feedList.get(position).hashtag)
+            intent.putExtra("likeCnt", feedList.get(position).likeCnt)
+            intent.putExtra("strName", feedList.get(position).strName)
+            intent.putExtra("imageUrl",feedList.get(position).imageUrl)
+            intent.putExtra("title",feedList.get(position).title)
+            intent.putExtra("commentCnt",feedList.get(position).commentCnt)
+
+            intent.putExtra("contentUid",contentUidList.get(position))
+            ContextCompat.startActivity(holder.itemView?.context, intent, null)
         }
 
         holder.isLikeClicked.setOnClickListener {
