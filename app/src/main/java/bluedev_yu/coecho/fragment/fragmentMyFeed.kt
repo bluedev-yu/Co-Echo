@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
@@ -14,8 +15,9 @@ import bluedev_yu.coecho.databinding.FragmentMyFeedBinding
 
 private lateinit var binding: FragmentMyFeedBinding
 
-class fragmentMyFeed : Fragment() {
+class fragmentMyFeed(uid: String?) : Fragment() {
     private lateinit var rv_feeds: RecyclerView
+    var uid: String? = uid
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +25,11 @@ class fragmentMyFeed : Fragment() {
     ): View? {
         binding = FragmentMyFeedBinding.inflate(layoutInflater)
         val view = binding.root
+
+        val bundle = Bundle()
+        bundle.putString("uid", uid)
+
+        Toast.makeText(requireContext(), "피드/클릭한 사람의 uid : $uid", Toast.LENGTH_SHORT).show()
 
         // Inflate the layout for this fragment
         val feedList = arrayListOf(
@@ -39,15 +46,16 @@ class fragmentMyFeed : Fragment() {
 
         rv_feeds.adapter = FeedAdapter(feedList, contentUidList)
 
+
         return view
     }
 
-    fun newInstant() : fragmentMyFeed
-    {
-        val args = Bundle()
-        val frag = fragmentMyFeed()
-        frag.arguments = args
-        return frag
-    }
+//    fun newInstant() : fragmentMyFeed
+//    {
+//        val args = Bundle()
+//        val frag = fragmentMyFeed()
+//        frag.arguments = args
+//        return frag
+//    }
 
 }

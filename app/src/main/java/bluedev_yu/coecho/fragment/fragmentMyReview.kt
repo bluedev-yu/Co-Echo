@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,9 +13,10 @@ import bluedev_yu.coecho.adapter.ReviewAdapter
 import bluedev_yu.coecho.data.model.ReviewDTO
 import bluedev_yu.coecho.databinding.FragmentMyReviewBinding
 
-class fragmentMyReview : Fragment() {
+class fragmentMyReview(uid: String?): Fragment() {
     private lateinit var rv_review: RecyclerView
     private lateinit var binding: FragmentMyReviewBinding
+    var uid: String? = uid
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,6 +24,11 @@ class fragmentMyReview : Fragment() {
     ): View? {
         binding = FragmentMyReviewBinding.inflate(layoutInflater)
         val view = binding.root
+
+        val bundle = Bundle()
+        bundle.putString("uid", uid)
+
+        Toast.makeText(requireContext(), "리뷰/클릭한 사람의 uid : $uid", Toast.LENGTH_SHORT).show()
 
         // Inflate the layout for this fragment
         val reviewList = arrayListOf(
@@ -43,10 +50,10 @@ class fragmentMyReview : Fragment() {
         return view
     }
 
-    fun newInstant(): fragmentMyReview {
-        val args = Bundle()
-        val frag = fragmentMyReview()
-        frag.arguments = args
-        return frag
-    }
+//    fun newInstant(): fragmentMyReview {
+//        val args = Bundle()
+//        val frag = fragmentMyReview()
+//        frag.arguments = args
+//        return frag
+//    }
 }
