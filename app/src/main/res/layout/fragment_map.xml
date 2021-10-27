@@ -64,13 +64,15 @@
             app:layout_constraintTop_toBottomOf="@+id/TextView_ecomap" />
 
         <FrameLayout
-            android:id="@+id/MapView"
-            android:layout_width="392dp"
-            android:layout_height="601dp"
+            android:id="@+id/MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/MapSearchBar">
+            app:layout_constraintTop_toBottomOf="@+id/MapSearchBar"
+            app:layout_constraintVertical_bias="0.0">
 
             <!--            <include-->
             <!--                layout="@layout/fragment_show_map"-->
@@ -81,8 +83,6 @@
             <!--                app:layout_constraintTop_toBottomOf="@+id/MapSearchBar" />-->
 
         </FrameLayout>
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

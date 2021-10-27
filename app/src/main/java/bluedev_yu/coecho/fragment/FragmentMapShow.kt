@@ -57,7 +57,7 @@ class FragmentMapShow : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val thisFragView = inflater.inflate(R.layout.fragment_map, container, false)
+        val thisFragView = inflater.inflate(R.layout.fragment_map_show, container, false)
 
         if (activity == null || requireActivity() == null) {
             Log.i("error", "프래그먼트에서 액티비티 null임")
