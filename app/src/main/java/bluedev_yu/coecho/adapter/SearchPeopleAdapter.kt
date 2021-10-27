@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.Fragment.FragmentMyPage
+import bluedev_yu.coecho.fragment.FragmentMyPage
 import com.google.firebase.auth.FirebaseAuth
 
 class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapter<SearchPeopleAdapter.CustomViewHolder>(){
