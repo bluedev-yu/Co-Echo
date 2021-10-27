@@ -2,6 +2,7 @@ package bluedev_yu.coecho.Fragment
 
 import android.Manifest
 import android.content.Context
+import kotlinx.coroutines.*
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.*
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.GlobalScope
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -33,6 +35,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.coroutines.CoroutineContext
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,24 +47,28 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MapMainFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener {
+class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener{
     // TODO: Rename and change types of parameters
 
 
     private var param1: String? = null
     private var param2: String? = null
 
-    var auth : FirebaseAuth? = null
-    var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
-    var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
+    var auth: FirebaseAuth? = null
+    var firestore: FirebaseFirestore? = null //String 등 자료형 데이터베이스
+    var firestorage: FirebaseStorage? = null //사진, GIF 등의 파일 데이터베이스
     private lateinit var binding: FragmentMapBinding
-    //디폴트 위치 진천동
-    var UserLati:Double =35.81//x
-    var UserLong:Double =128.52//y
 
+    //디폴트 위치 진천동
+    var UserLati: Double = 35.81//x
+    var UserLong: Double = 128.52//y
+
+    lateinit var mapView : MapView
+    lateinit var t_rv_places : RecyclerView
 
     //네비게이션뷰에 들어가는 데이터
     val placeList = arrayListOf<Place>()
+
     //마커 표시하는 데이터 배열
     val markerList = arrayListOf<MapPOIItem>()
 
@@ -78,17 +85,14 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val thisFragView=inflater.inflate(R.layout.fragment_map, container, false)
-        if(activity==null||requireActivity()==null)
-        {
-            Log.i("error","프래그먼트에서 액티비티 null임")
-        }
-        else
-        {
+        val thisFragView = inflater.inflate(R.layout.fragment_map, container, false)
+        if (activity == null || requireActivity() == null) {
+            Log.i("error", "프래그먼트에서 액티비티 null임")
+        } else {
 
-            Log.i("fragmentactivity","not null")
+            Log.i("fragmentactivity", "not null")
 
-            val mapView=MapView(activity)
+            mapView = MapView(activity)
             val mapViewContainer = thisFragView.findViewById<MapView>(R.id.map_view) as ViewGroup
             mapViewContainer.addView(mapView)
 
@@ -97,13 +101,10 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
 //            dbinst.insert_data("레레레","12.34","56.78","대구 동구")
 //            dbinst.read_data()
 
-            if(mapView==null)
-            {
-                Log.i("mapView nullcheck","맵뷰가 널이다")
-            }
-            else
-            {
-                Log.i("mapView nullcheck","맵뷰 널 아님")
+            if (mapView == null) {
+                Log.i("mapView nullcheck", "맵뷰가 널이다")
+            } else {
+                Log.i("mapView nullcheck", "맵뷰 널 아님")
             }
 
             //API키 인증 성공 확인 코드(아래 로그가 뜨지 않을 경우 김예현에게 문의)
@@ -112,40 +113,42 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
             }
 
             //스피너안의 목록
-            val spinnerItems= resources.getStringArray(R.array.spinner_array)
-            thisFragView.findViewById<Spinner>(R.id.spinner_map_recom).adapter= ArrayAdapter(requireActivity(),R.layout.spinner_item,spinnerItems)
+            val spinnerItems = resources.getStringArray(R.array.spinner_array)
+            thisFragView.findViewById<Spinner>(R.id.spinner_map_recom).adapter =
+                ArrayAdapter(requireActivity(), R.layout.spinner_item, spinnerItems)
 
             // 햄버거 메뉴 선택시 오른쪽으로 열린다
-            thisFragView.findViewById<View>(R.id.hambuger_menu).setOnClickListener{
-                thisFragView.findViewById<DrawerLayout>(R.id.layout_drawer).openDrawer(GravityCompat.END)
+            thisFragView.findViewById<View>(R.id.hambuger_menu).setOnClickListener {
+                thisFragView.findViewById<DrawerLayout>(R.id.layout_drawer)
+                    .openDrawer(GravityCompat.END)
             }
             // 네비게이션 드로워 아이템 클릭 속성 부여
-            thisFragView.findViewById<NavigationView>(R.id.hambuger_navigation_view).setNavigationItemSelectedListener(this)
+            thisFragView.findViewById<NavigationView>(R.id.hambuger_navigation_view)
+                .setNavigationItemSelectedListener(this)
 
             //맵뷰에 현재 위치 리스너 적용
             mapView.setCurrentLocationEventListener(mCurrentLocationEventListener)
 
             //트래킹 버튼을 누를 경우 현재 위치 변환
-            thisFragView.findViewById<ImageButton>(R.id.btnTracking).setOnClickListener(View.OnClickListener {
-                if(mapView.currentLocationTrackingMode==MapView.CurrentLocationTrackingMode.TrackingModeOff) {
-                    //현재 위치를 중심으로 맵 보여주기
-                    mapView.currentLocationTrackingMode =
-                        MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
-                    loadRecommendationP(mapView,thisFragView.findViewById<RecyclerView>(R.id.rv_places))
-                }
-                else
-                {
-                    mapView.currentLocationTrackingMode =
-                        MapView.CurrentLocationTrackingMode.TrackingModeOff
-                }
-            })
-            val t_rv_places=thisFragView.findViewById<RecyclerView>(R.id.rv_places)
-            t_rv_places.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            thisFragView.findViewById<ImageButton>(R.id.btnTracking)
+                .setOnClickListener(View.OnClickListener {
+                    if (mapView.currentLocationTrackingMode == MapView.CurrentLocationTrackingMode.TrackingModeOff) {
+                        //현재 위치를 중심으로 맵 보여주기
+                        Toast.makeText(activity,"장소 추천 중! 잠시만 기다려주세요",Toast.LENGTH_LONG).show()
+                        mapView.currentLocationTrackingMode =
+                            MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
+                    } else {
+                        mapView.currentLocationTrackingMode =
+                            MapView.CurrentLocationTrackingMode.TrackingModeOff
+                    }
+                })
+            t_rv_places = thisFragView.findViewById<RecyclerView>(R.id.rv_places)
+            t_rv_places.layoutManager =
+                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             t_rv_places.setHasFixedSize(true)
-            loadRecommendationP(mapView,t_rv_places)
 
             // 검색버튼 선택시 프래그먼트 실행
-            thisFragView.findViewById<ImageView>(R.id.search_button).setOnClickListener{
+            thisFragView.findViewById<ImageView>(R.id.search_button).setOnClickListener {
                 //setFrag(0)
             }
 
@@ -170,75 +173,109 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
                 }
             }
     }
+
     //주변 검색 데이터 타입
-    private fun searchKeyword(mapView: MapView, keyword: String)
-    {
+    private suspend fun searchKeyword(mapView: MapView, keyword: String) {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        val interFace=retrofit.create(KAKAO_Place.KAKAOSearch::class.java)
-        val call=interFace.getSearchKeyword(API_KEY,keyword,UserLong.toString(),UserLati.toString(),3000)
-        call.enqueue(object: Callback<KAKAO_Place.ResultSearchKeyword> {
-            override fun onResponse(call: retrofit2.Call<KAKAO_Place.ResultSearchKeyword>, response: Response<KAKAO_Place.ResultSearchKeyword>) {
-                Log.d("카카오 검색 성공", "Raw: ${response.raw()}")
-                Log.d("카카오 검색 성공", "Body: ${response.body()}")
-                if(response.body()!=null) {
-                    var len=Math.min(10,response.body()!!.meta.pageable_count)
-                    placeList.clear()
-                    markerList.clear()
-                    for(i in 0 until len-1)
-                    {
-                        val tmp=response.body()!!.documents[i]
-                        //Toast.makeText(this@MapActivity,tmp.place_name+" "+tmp.address_name,Toast.LENGTH_SHORT).show()
-                        placeList.add(Place(null,tmp.place_name,tmp.category_name,tmp.phone,0,
-                            tmp.address_name,tmp.place_url,tmp.distance,tmp.x.toDouble(),tmp.y.toDouble()))
-                        markerList.add(newCustomMapPoiItem(tmp.place_name,tmp.y.toDouble(),tmp.x.toDouble(),i))
+        val interFace = retrofit.create(KAKAO_Place.KAKAOSearch::class.java)
+        val call = interFace.getSearchKeyword(
+            API_KEY,
+            keyword,
+            UserLong.toString(),
+            UserLati.toString(),
+            3000
+        )
+        GlobalScope.launch {
+            call.enqueue(object : Callback<KAKAO_Place.ResultSearchKeyword> {
+                override fun onResponse(
+                    call: retrofit2.Call<KAKAO_Place.ResultSearchKeyword>,
+                    response: Response<KAKAO_Place.ResultSearchKeyword>
+                ) {
+                    Log.d("카카오 검색 성공", "Raw: ${response.raw()}")
+                    Log.d("카카오 검색 성공", "Body: ${response.body()}")
+                    if (response.body() != null) {
+                        var len = Math.min(10, response.body()!!.meta.pageable_count)
+                        placeList.clear()
+                        markerList.clear()
+                        for (i in 0 until len) {
+                            val tmp = response.body()!!.documents[i]
+                            //Toast.makeText(this@MapActivity,tmp.place_name+" "+tmp.address_name,Toast.LENGTH_SHORT).show()
+                            placeList.add(
+                                Place(
+                                    null,
+                                    tmp.place_name,
+                                    tmp.category_name,
+                                    tmp.phone,
+                                    0,
+                                    tmp.address_name,
+                                    tmp.place_url,
+                                    tmp.distance,
+                                    tmp.x.toDouble(),
+                                    tmp.y.toDouble()
+                                )
+                            )
+                            markerList.add(
+                                newCustomMapPoiItem(
+                                    tmp.place_name,
+                                    tmp.y.toDouble(),
+                                    tmp.x.toDouble(),
+                                    i
+                                )
+                            )
+                        }
                     }
+
                 }
 
-            }
-            override fun onFailure(call: retrofit2.Call<KAKAO_Place.ResultSearchKeyword>, t: Throwable) {
-                Log.d("카카오 검색 실패", "통신 실패: ${t.message}")
-            }
-        })
-
+                override fun onFailure(
+                    call: retrofit2.Call<KAKAO_Place.ResultSearchKeyword>,
+                    t: Throwable
+                ) {
+                    Log.d("카카오 검색 실패", "통신 실패: ${t.message}")
+                }
+            })
+        }.join()
     }
+
     //근처 장소 추천 코드
-    private fun loadRecommendationP(mapView: MapView,t_rv_places:RecyclerView)
-    {
-        if(false)//db 안을 검색해서 이 근처에 리뷰장소가 있는지 확인해야함
+    private fun loadRecommendationP(mapView: MapView, t_rv_places: RecyclerView) {
+        if (false)//db 안을 검색해서 이 근처에 리뷰장소가 있는지 확인해야함
         {
-            Log.i("loadP","a 진입")
+            Log.i("loadP", "a 진입")
+        } else {
+            Log.i("loadP", "b 진입")
+            runBlocking {
+
+                CoroutineScope(Dispatchers.Default).launch {
+                    searchKeyword(mapView, "환경")
+                }.join()
+            }
         }
-        else
-        {
-            Log.i("loadP","b 진입")
-            searchKeyword(mapView,"에코")
-        }
-        Log.i("loadP",placeList.size.toString())
+        Log.i("loadP", placeList.size.toString())
         mapView.removeAllPOIItems()
-        for(i in 0 until markerList.size)
-        {
+        for (i in 0 until markerList.size) {
             mapView.addPOIItem(markerList.get(i))
         }
-        mapView.fitMapViewAreaToShowAllPOIItems()
         t_rv_places.getRecycledViewPool().clear()
         t_rv_places.adapter = PlaceAdapter(placeList)
         PlaceAdapter(placeList).notifyDataSetChanged()
     }
+
     //현재 위치로 맵 조정했을 때 사용자 위경도 저장(+이후 추천순 검색 기능 추가)
-    val mCurrentLocationEventListener= object:MapView.CurrentLocationEventListener{
+    val mCurrentLocationEventListener = object : MapView.CurrentLocationEventListener {
         override fun onCurrentLocationUpdate(p0: MapView?, p1: MapPoint?, p2: Float) {
-            Log.i("사용자 경위도","로케이션 업데이트됨")
-            if(p1!=null) {
-                var tempLong:Double=p1.mapPointGeoCoord.longitude
-                var tempLati:Double=p1.mapPointGeoCoord.latitude
-                if(tempLong!=UserLong||tempLati!=UserLati)
-                {
+            Log.i("사용자 경위도", "로케이션 업데이트됨")
+            if (p1 != null) {
+                var tempLong: Double = p1.mapPointGeoCoord.longitude
+                var tempLati: Double = p1.mapPointGeoCoord.latitude
+                if (tempLong!=UserLong||tempLati!=UserLati) {
                     UserLong = p1.mapPointGeoCoord.longitude
                     UserLati = p1.mapPointGeoCoord.latitude
-                    Log.i("사용자 경위도",UserLati.toString()+" "+UserLong.toString())
+                    Log.i("사용자 경위도", UserLati.toString() + " " + UserLong.toString())
+                    loadRecommendationP(mapView,t_rv_places)
                 }
             }
         }
@@ -300,7 +337,7 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
         }
     }
 
-    class MarkerEventListener(val context: Context) : MapView.POIItemEventListener{
+    class MarkerEventListener(val context: Context) : MapView.POIItemEventListener {
         override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
             //마커 클릭 이벤트
         }
@@ -348,7 +385,7 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
     }
 
     //커스텀 마커
-    fun newCustomMapPoiItem(iName: String, lat:Double, lon:Double,tagN:Int): MapPOIItem {
+    fun newCustomMapPoiItem(iName: String, lat: Double, lon: Double, tagN: Int): MapPOIItem {
         val marker = MapPOIItem();
         marker.apply {
             itemName = iName

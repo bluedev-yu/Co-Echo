@@ -50,7 +50,7 @@ class PlaceAdapter (val placeList: ArrayList<Place>): RecyclerView.Adapter<Place
         holder.placeCategory.text = placeList.get(position).placeCategory
         holder.placeReviewCnt.text = placeList.get(position).placeReviewCnt.toString()
         holder.placeLocation.text = placeList.get(position).placeAdress
-        holder.placeDistanceFromMyLocation.text = placeList.get(position).placeDistanceFromMyLocation
+        holder.placeDistanceFromMyLocation.text = placeList.get(position).placeDistanceFromMyLocation+"m"
     }
 
     override fun getItemCount(): Int {
