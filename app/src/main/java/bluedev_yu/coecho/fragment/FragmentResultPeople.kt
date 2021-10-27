@@ -55,6 +55,7 @@ class FragmentResultPeople(query: String?) : Fragment() {
 
             rv_result_people.adapter = SearchPeopleAdapter(userlist)
             rv_result_people.adapter!!.notifyDataSetChanged()
+
         }
 
         rv_result_people = view.findViewById(R.id.rv_result_people)

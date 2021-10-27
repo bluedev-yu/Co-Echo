@@ -47,6 +47,7 @@ class FragmentResultHashtag(query: String?) : Fragment() {
             }
             rv_result_hashtag.adapter = SearchHashtagAdapter(hashtagList)
             rv_result_hashtag.adapter!!.notifyDataSetChanged()
+
         }
 
         rv_result_hashtag = view.findViewById(R.id.rv_result_hashtag)

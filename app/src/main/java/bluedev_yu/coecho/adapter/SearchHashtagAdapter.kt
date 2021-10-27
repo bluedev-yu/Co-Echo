@@ -12,14 +12,8 @@ import bluedev_yu.coecho.data.model.Feeds
 class SearchHashtagAdapter(val hashtagList: ArrayList<Feeds>): RecyclerView.Adapter<SearchHashtagAdapter.CustomViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_search_hashtag, parent, false)
-        return CustomViewHolder(view).apply {
-            itemView.setOnClickListener {
-                val curPos: Int = adapterPosition
-                val feed: Feeds = hashtagList.get(curPos)
-                Toast.makeText(parent.context, "해시태그 : ${feed.hashtag}", Toast.LENGTH_SHORT).show()
-            }
-        }
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
+        return CustomViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
@@ -32,7 +26,7 @@ class SearchHashtagAdapter(val hashtagList: ArrayList<Feeds>): RecyclerView.Adap
     }
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var hashtag = itemView.findViewById<TextView>(R.id.tv_search_hashtag) //해시태그
+        var hashtag = itemView.findViewById<TextView>(R.id.feed_hashtag) //해시태그
     }
 
 
