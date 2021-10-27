@@ -56,11 +56,6 @@ class FeedDetail : AppCompatActivity() {
         /*
         * 수정사항
         * 1. timestamp 출력
-        * 2. 좋아요 여부도 같이 가져와야함
-        * 3. comment
-        * 4. title도 가져와야 함
-        * 5. 해시태그 앞에 # 달건가?
-        * 7. 좋아요 버튼이랑 다시 구현해야 함.
         * */
 
 
@@ -86,17 +81,27 @@ class FeedDetail : AppCompatActivity() {
         var feed_timeStamp = findViewById<TextView>(R.id.feed_timestamp)
         var feed_like_img = findViewById<ImageView>(R.id.feed_like_img)
 
+        var commentList = arrayListOf<Feeds.Comment>()
+
         //comment count
         firestore?.collection("Feeds")?.document(contentUid!!)?.addSnapshotListener{
                 documentSnapshot, FirebaseFirestoreException ->
 
             val doc = documentSnapshot?.toObject(Feeds::class.java)
-            commentCnt = doc!!.commentCnt
-            tv_commentCnt.setText(commentCnt.toString())
+
+            Log.v("doc",doc.toString())
+
+            if(doc == null) //피드가 지워지거나 없음
+            {
+                commentList.clear()
+                rv_comments.adapter!!.notifyDataSetChanged()
+            }
+            else
+            {
+                commentCnt = doc!!.commentCnt
+                tv_commentCnt.setText(commentCnt.toString())
+            }
         }
-
-        //intent.getSerializableExtra("commentCnt")
-
 
         //미리 하트가 비었는가 찼는가
         firestore?.collection("Feeds")?.document(contentUid!!)?.addSnapshotListener{
@@ -172,19 +177,6 @@ class FeedDetail : AppCompatActivity() {
             1 -> tv_title.setText(R.string.grade2)
         }
 
-        var commentList = arrayListOf<Feeds.Comment>()
-        commentSnapshot = firestore?.collection("Feeds")?.document(contentUid!!)?.collection("Comments")?.addSnapshotListener{
-                querySnapshot, firebaseFirestoreException ->
-            commentList.clear()
-            if(querySnapshot == null)
-                return@addSnapshotListener
-            for(snapshot in querySnapshot?.documents)
-            {
-                commentList.add(snapshot.toObject(Feeds.Comment::class.java)!!)
-            }
-            rv_comments.adapter = CommentAdapter(commentList)
-            rv_comments.adapter!!.notifyDataSetChanged()
-        }
 
         //게시 버튼
         tv_uploadComment = findViewById(R.id.feed_comment_upload)
@@ -205,6 +197,19 @@ class FeedDetail : AppCompatActivity() {
 
             feed_user_comment.setText("")
 
+        }
+
+        commentSnapshot = firestore?.collection("Feeds")?.document(contentUid!!)?.collection("Comments")?.addSnapshotListener{
+                querySnapshot, firebaseFirestoreException ->
+            commentList.clear()
+            if(querySnapshot == null)
+                return@addSnapshotListener
+            for(snapshot in querySnapshot?.documents)
+            {
+                commentList.add(snapshot.toObject(Feeds.Comment::class.java)!!)
+            }
+            rv_comments.adapter = CommentAdapter(commentList)
+            rv_comments.adapter!!.notifyDataSetChanged()
         }
 
         rv_comments = findViewById(R.id.rv_comments)
