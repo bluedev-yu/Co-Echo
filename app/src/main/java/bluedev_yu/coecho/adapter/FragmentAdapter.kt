@@ -8,13 +8,14 @@ import bluedev_yu.coecho.Fragment.fragmentMyFeed
 import bluedev_yu.coecho.Fragment.fragmentMyReview
 import bluedev_yu.coecho.Fragment.fragmentSubscriber
 
-class FragmentAdapter (fm : FragmentManager) : FragmentPagerAdapter(fm){
+class FragmentAdapter (fm : FragmentManager, uid: String?) : FragmentPagerAdapter(fm){
+    private val uid: String? = uid
 
     override fun getItem(position: Int): Fragment {
         val fragment = when(position)
         {
-            0 -> fragmentMyFeed().newInstant()
-            1 -> fragmentMyReview().newInstant()
+            0 -> fragmentMyFeed(uid)
+            1 -> fragmentMyReview(uid)
             2 -> fragmentLikeStores().newInstant()
             3 -> fragmentSubscriber().newInstant()
 

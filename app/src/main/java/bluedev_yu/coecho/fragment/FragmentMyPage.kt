@@ -60,6 +60,7 @@ class FragmentMyPage : Fragment() {
         //uid 받아오기 - uid가 null이 아니면 다른 사람 페이지
         //MYPAGE, 나의에코, 톱니바퀴 버튼, 설정 총 4개 안보이도록 만들어야함
         val uid = arguments?.getString("uid")
+
         val MypageFollower : TextView = viewProfile!!.findViewById(R.id.MyPageFollower) //팔로워 수
         val MyPageFollowing : TextView = viewProfile!!.findViewById(R.id.MyPageFollowing) //팔로잉수
 
@@ -276,8 +277,9 @@ class FragmentMyPage : Fragment() {
         //탭레이아웃
         val fragmentManager = (activity as FragmentActivity).supportFragmentManager
 
+        Toast.makeText(requireContext(), "페이지/클릭한 사람의 uid : $uid", Toast.LENGTH_SHORT).show()
 
-        val pagerAdapter = FragmentAdapter(fragmentManager)
+        val pagerAdapter = FragmentAdapter(fragmentManager, uid)
         val pager = viewProfile!!.findViewById<ViewPager>(R.id.viewPager)
         pager.adapter = pagerAdapter
         val tab = viewProfile!!.findViewById<TabLayout>(R.id.MyPageTabs)
