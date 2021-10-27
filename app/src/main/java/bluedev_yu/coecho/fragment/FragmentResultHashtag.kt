@@ -47,6 +47,10 @@ class FragmentResultHashtag(query: String?) : Fragment() {
             }
             rv_result_hashtag.adapter = SearchHashtagAdapter(hashtagList)
             rv_result_hashtag.adapter!!.notifyDataSetChanged()
+
+            if(hashtagList.size == 0){
+                Toast.makeText(requireContext(), "해시태그 검색 결과 없음", Toast.LENGTH_SHORT).show()
+            }
         }
 
         rv_result_hashtag = view.findViewById(R.id.rv_result_hashtag)
