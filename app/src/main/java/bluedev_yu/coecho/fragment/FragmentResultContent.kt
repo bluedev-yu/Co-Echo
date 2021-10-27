@@ -17,9 +17,9 @@ import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.data.model.userDTO
 import com.google.firebase.firestore.FirebaseFirestore
 
-class FragmentResultHashtag(query: String?) : Fragment() {
+class FragmentResultContent(query: String?) : Fragment() {
 
-    lateinit var rv_result_hashtag: RecyclerView
+    lateinit var rv_result_content: RecyclerView
     var query: String? = query
     var firestore : FirebaseFirestore? = null
 
@@ -28,7 +28,7 @@ class FragmentResultHashtag(query: String?) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_result_hashtag, container, false)
+        val view =  inflater.inflate(R.layout.fragment_result_content, container, false)
 
         firestore = FirebaseFirestore.getInstance()
 
@@ -46,20 +46,20 @@ class FragmentResultHashtag(query: String?) : Fragment() {
             }
             for (snapshot in querySnapshot!!.documents) {
                 val imsi = snapshot.toObject(Feeds::class.java)
-                if (imsi?.hashtag!!.contains(query!!)) //검색내용 포함시
+                if (imsi?.content!!.contains(query!!)) //검색내용 포함시
                 {
                     hashtagList.add(imsi)
                     contentUidList.add(snapshot.id)
                 }
             }
-            rv_result_hashtag.adapter = FeedAdapter(hashtagList,contentUidList)
-            rv_result_hashtag.adapter!!.notifyDataSetChanged()
+            rv_result_content.adapter = FeedAdapter(hashtagList,contentUidList)
+            rv_result_content.adapter!!.notifyDataSetChanged()
 
         }
 
-        rv_result_hashtag = view.findViewById(R.id.rv_result_hashtag)
-        rv_result_hashtag.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        rv_result_hashtag.setHasFixedSize(true)
+        rv_result_content = view.findViewById(R.id.rv_result_content)
+        rv_result_content.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        rv_result_content.setHasFixedSize(true)
 
         return view
     }
