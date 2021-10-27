@@ -29,8 +29,8 @@ class FragmentAdapter (fm : FragmentManager) : FragmentPagerAdapter(fm){
     override fun getPageTitle(position: Int): CharSequence? {
         val title = when(position)
         {
-            0 -> "내 피드"
-            1 -> "나의 리뷰"
+            0 -> "피드"
+            1 -> "리뷰"
             2 -> "찜한 가게"
             3 -> "구독"
 

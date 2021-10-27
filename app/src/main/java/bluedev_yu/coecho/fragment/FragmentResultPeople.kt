@@ -56,9 +56,6 @@ class FragmentResultPeople(query: String?) : Fragment() {
             rv_result_people.adapter = SearchPeopleAdapter(userlist)
             rv_result_people.adapter!!.notifyDataSetChanged()
 
-            if(userlist.size == 0){
-                Toast.makeText(requireContext(), "사용자 검색 결과 없음", Toast.LENGTH_SHORT).show()
-            }
         }
 
         rv_result_people = view.findViewById(R.id.rv_result_people)
