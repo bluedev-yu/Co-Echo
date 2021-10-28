@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,16 +20,16 @@ import bluedev_yu.coecho.adapter.FragmentAdapter
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.userDTO
+import bluedev_yu.coecho.Fragment.*
+import bluedev_yu.coecho.MyPageBackground
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.gms.auth.api.Auth
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import java.sql.DatabaseMetaData
+import kotlinx.android.synthetic.main.fragment_my_page.*
 
 class FragmentMyPage : Fragment() {
     private var _binding: FragmentMyPage? = null
@@ -112,20 +111,24 @@ class FragmentMyPage : Fragment() {
                 bottomSheetDialog.setContentView(bottomSheetView)
                 bottomSheetDialog.show()
 
-                val changeProfile: TextView = bottomSheetView.findViewById(R.id.mypage_change_profile)
+                val changeProfile: TextView =
+                    bottomSheetView.findViewById(R.id.mypage_change_profile)
                 changeProfile.setOnClickListener {
 //                    Toast.makeText(requireContext(), "프로필 바꾸기 선택됨", Toast.LENGTH_SHORT).show()
                     var photoPickerIntent = Intent(Intent.ACTION_PICK)
                     photoPickerIntent.type = "image/*"
                     startActivityForResult(photoPickerIntent, pickImageFromAlbum)
                 }
-                val changeBackGround: TextView = bottomSheetView.findViewById(R.id.mypage_change_background)
+                val changeBackGround: TextView =
+                    bottomSheetView.findViewById(R.id.mypage_change_background)
                 changeBackGround.setOnClickListener {
-                    Toast.makeText(requireContext(), "배경꾸미기 선택됨", Toast.LENGTH_SHORT).show()
+                    //fragment mypage -> activity my page background
+                    val intent = Intent(this.context, MyPageBackground::class.java)
+                    startActivity(intent)
                 }
-
-
             }
+
+
 
             //로그아웃
             val LogoutButton: Button = viewProfile!!.findViewById(R.id.FollowButton)
@@ -295,7 +298,7 @@ class FragmentMyPage : Fragment() {
 
         Toast.makeText(requireContext(), "페이지/클릭한 사람의 uid : $uid", Toast.LENGTH_SHORT).show()
 
-        val pagerAdapter = FragmentAdapter(fragmentManager, uid)
+        val pagerAdapter = FragmentAdapter(childFragmentManager, uid)
         val pager = viewProfile!!.findViewById<ViewPager>(R.id.viewPager)
         pager.adapter = pagerAdapter
         val tab = viewProfile!!.findViewById<TabLayout>(R.id.MyPageTabs)

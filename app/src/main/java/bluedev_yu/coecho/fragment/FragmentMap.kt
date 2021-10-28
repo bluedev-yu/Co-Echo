@@ -1,8 +1,6 @@
 package bluedev_yu.coecho.Fragment
 
-import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,12 +8,8 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import bluedev_yu.coecho.LoginActivity
 import bluedev_yu.coecho.R
-import bluedev_yu.coecho.UploadReview
 import bluedev_yu.coecho.databinding.FragmentMapBinding
-import bluedev_yu.coecho.databinding.FragmentSnsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage

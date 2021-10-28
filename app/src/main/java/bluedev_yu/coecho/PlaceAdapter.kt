@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import bluedev_yu.coecho.fragment.PlaceDetailFragment
+import bluedev_yu.coecho.Fragment.PlaceDetailFragment
 
 class PlaceAdapter (val placeList: ArrayList<Place>): RecyclerView.Adapter<PlaceAdapter.CustomViewHolder>(){
 
