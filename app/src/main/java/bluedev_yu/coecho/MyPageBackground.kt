@@ -19,17 +19,17 @@ class MyPageBackground : AppCompatActivity() {
 
         val stickerView: StickerView = findViewById(R.id.stickerView)
         //BitmapStickerIcon(아이콘이미지 drawable,아이콘 위치)
-//아이콘위치중에 RIGHT_BOTOM은 만드신분이 오타를 수정안하신듯하다!
+        //아이콘위치중에 RIGHT_BOTOM은 만드신분이 오타를 수정안하신듯하다!
         val deleteIcon = BitmapStickerIcon(
-            ContextCompat.getDrawable(this, R.drawable.sticker_ic_close_white_18dp),
+            ContextCompat.getDrawable(this, R.drawable.sticker_ic_close_green_30dp),
             BitmapStickerIcon.LEFT_TOP
         )
         val flipIcon = BitmapStickerIcon(
-            ContextCompat.getDrawable(this, R.drawable.sticker_ic_flip_white_18dp),
+            ContextCompat.getDrawable(this, R.drawable.sticker_ic_flip_green_30dp),
             BitmapStickerIcon.RIGHT_BOTOM
         )
         val scaleIcon = BitmapStickerIcon(
-            ContextCompat.getDrawable(this, R.drawable.sticker_ic_scale_white_18dp),
+            ContextCompat.getDrawable(this, R.drawable.sticker_ic_scale_green_30dp),
             BitmapStickerIcon.LEFT_BOTTOM
         )
 
