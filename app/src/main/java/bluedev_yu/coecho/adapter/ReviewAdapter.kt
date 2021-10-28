@@ -36,6 +36,7 @@ class ReviewAdapter(val reviewList: ArrayList<ReviewDTO>): RecyclerView.Adapter<
         holder.strName.text = reviewList.get(position).strName
         holder.timeStamp.text = reviewList.get(position).timestamp.toString()
         holder.content.text = reviewList.get(position).content
+        Glide.with(holder.itemView.context).load(reviewList.get(position).reviewImage!!).into(holder.reviewImage) //피드 이미지
 
         //프로필사진
         if(reviewList.get(position).imageUrl == null) //기본 이미지
@@ -59,5 +60,6 @@ class ReviewAdapter(val reviewList: ArrayList<ReviewDTO>): RecyclerView.Adapter<
         val timeStamp = itemView.findViewById<TextView>(R.id.review_timestamp) //리뷰 타임스탬프
         val content = itemView.findViewById<TextView>(R.id.review_content) //리뷰 내용
         val profileImage = itemView.findViewById<ImageView>(R.id.review_profileImage)
+        val reviewImage = itemView.findViewById<ImageView>(R.id.reviewImage)
     }
 }

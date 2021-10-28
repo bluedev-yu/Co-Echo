@@ -60,9 +60,7 @@ class UploadFeed : AppCompatActivity() {
             onBackPressed()
         }
 
-//        tvPhoto = findViewById(R.id.tv_photo)
-
-        //프로필이미지 바꾸기
+        //피드 사진 업로드
         val FeedPhotoUploadButton : TextView = findViewById(R.id.feedImageUploadButton)
         FeedPhotoUploadButton.setOnClickListener{
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
@@ -87,7 +85,6 @@ class UploadFeed : AppCompatActivity() {
             )
             CoroutineScope(Dispatchers.Main).launch {
                 FeedDTO.feedImgUrl = funImageUpLoad()
-                Log.v("feedimageurl",FeedDTO.feedImgUrl.toString())
 
                 FeedDTO.privacy = privacy
                 FeedDTO.uid = auth?.uid

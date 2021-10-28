@@ -11,6 +11,7 @@ data class ReviewDTO(
     var hashtag: String? = null,
     var strName : String? = null,//사용자 이름
     var imageUrl : String?= null, //프로필사진
+    var reviewImage : String ?= null, //리뷰 사진
     var title : Int?= 0 //칭호
 )
 
