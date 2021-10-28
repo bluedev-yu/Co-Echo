@@ -22,6 +22,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
@@ -122,8 +123,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             isheared = false
         }
 
-        holder.timeStamp.text = getData(feedList.get(position).timeStamp)
-
+        holder.timeStamp.text = feedList.get(position).timeStamp?.convertBoardTime()
 
         holder.content.text = feedList.get(position).content
         holder.hashtag.text = "#"+feedList.get(position).hashtag
@@ -151,15 +151,6 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         }
     }
 
-    private fun getData(timestamp: Long?): String{
-        val calendar = Calendar.getInstance(Locale.ENGLISH)
-        if (timestamp != null) {
-            calendar.timeInMillis = timestamp * 1000L
-        }
-        val date = DateFormat.format("dd-MM-yyyy",calendar).toString()
-        return date
-    }
-
     fun Long.convertBoardTime(): String {
         val now = Calendar.getInstance(Locale.KOREA)
         val diffInMillis = now.timeInMillis - this //현재와의 밀리초 차이
@@ -185,6 +176,15 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             }
         }
     }
+
+//    fun currentTimeToLong(): Long? {
+//        return System.currentTimeMillis()
+//    }
+//
+//    fun convertDateToLong(date: String): Long? {
+//        val df = SimpleDateFormat("yyyy.MM.dd HH:mm")
+//        return df.parse(date).time
+//    }
 
     //타임스탬프 -> 시간:분 (08:23)
     fun Long.convertHourMinute(): String = DateFormat.format("HH:mm", this).toString()
