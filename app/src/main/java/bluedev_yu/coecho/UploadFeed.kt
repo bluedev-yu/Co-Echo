@@ -148,7 +148,6 @@ class UploadFeed : AppCompatActivity() {
 //        }
     }
 
-    fun onRadioButtonClicked(view: View) {
         fun onRadioButtonClicked(view: View) {
             if (view is RadioButton) {
                 val checked = view.isChecked
@@ -158,14 +157,15 @@ class UploadFeed : AppCompatActivity() {
                         if (checked) {
                             //나만보기로 올리기
                             privacy = true
+                            Log.v("privacy","true")
                         }
                     R.id.rb_public ->
                         if (checked) {
                             //전체공개로 올리기
                             privacy = false
+                            Log.v("privacy","false")
                         }
                 }
             }
         }
-    }
 }

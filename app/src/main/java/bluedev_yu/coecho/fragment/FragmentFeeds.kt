@@ -96,8 +96,12 @@ class FragmentFeeds : Fragment() {
                         }
                         for(snapshot in querySnapshot!!.documents)
                         {
-                            feedList.add(snapshot.toObject(Feeds::class.java)!!)
-                            contentUidList.add(snapshot.id)
+                            var now = snapshot.toObject(Feeds::class.java)
+                            if(now?.uid!!.equals(auth?.uid.toString()) || (now?.uid!!.equals(auth?.uid.toString())==false && now.privacy == false)) //내것이거나, 남것이지만 public인 경우
+                            {
+                                feedList.add(now!!)
+                                contentUidList.add(snapshot.id)
+                            }
                         }
                         if(feedList.size ==0)
                         {
