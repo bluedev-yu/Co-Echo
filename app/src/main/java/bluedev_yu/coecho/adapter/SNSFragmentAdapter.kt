@@ -3,9 +3,9 @@ package bluedev_yu.coecho
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import bluedev_yu.coecho.Fragment.FragmentResultContent
-import bluedev_yu.coecho.Fragment.FragmentResultHashtag
-import bluedev_yu.coecho.Fragment.FragmentResultPeople
+import bluedev_yu.coecho.fragment.FragmentResultContent
+import bluedev_yu.coecho.fragment.FragmentResultHashtag
+import bluedev_yu.coecho.fragment.FragmentResultPeople
 
 class SNSFragementAdapter(fm : FragmentManager, query: String?) : FragmentPagerAdapter(fm){
     private val query: String? = query

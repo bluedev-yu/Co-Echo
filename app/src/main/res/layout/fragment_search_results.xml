@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.FragmentSearchResults"
+    tools:context=".fragment.FragmentSearchResults"
     android:background="@color/CoEcho_mainBackground">
 
     <LinearLayout

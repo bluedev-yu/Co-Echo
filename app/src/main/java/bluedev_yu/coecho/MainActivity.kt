@@ -6,16 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import bluedev_yu.coecho.Fragment.FragmentMap
+import bluedev_yu.coecho.fragment.FragmentMap
 import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.Fragment.FragmentMyPage
-import bluedev_yu.coecho.Fragment.FragmentSNS
+import bluedev_yu.coecho.fragment.FragmentMyPage
+import bluedev_yu.coecho.fragment.FragmentSNS
 import bluedev_yu.coecho.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
@@ -88,9 +87,22 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
         }
 
-        //앨범 권한
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1)
-
+        //권한 요청 코드
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION),1)
+        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
+            Log.d("권한 허용 여부", "***denied***")
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION),1)
+        } else if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
+            Log.d("권한 허용 여부", "***granted***")
+        }
         printHash()
         //val optionbutton : ImageView = findViewById(R.id.MyPageOptionButton)
         //val drawerLayout : DrawerLayout = findViewById(R.id.MyPageDrawerLayout)
@@ -99,25 +111,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         //    drawerLayout.openDrawer(GravityCompat.END)
         //}
 
-        //권한 요청 코드
-        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        ) {
-            Log.d("권한 허용 여부", "***denied***")
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1004
-            )
-        } else if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        ) {
-            Log.d("권한 허용 여부", "***granted***")
-        }
     }
 
     fun printHash() {

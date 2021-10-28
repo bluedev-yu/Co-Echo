@@ -1,4 +1,4 @@
-package bluedev_yu.coecho.Fragment
+package bluedev_yu.coecho.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

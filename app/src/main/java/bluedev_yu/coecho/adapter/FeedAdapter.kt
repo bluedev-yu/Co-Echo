@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.FeedDetail
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.Feeds
-import bluedev_yu.coecho.Fragment.FragmentMyPage
+import bluedev_yu.coecho.fragment.FragmentMyPage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
