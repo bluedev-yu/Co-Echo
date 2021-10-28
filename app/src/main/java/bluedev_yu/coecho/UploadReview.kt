@@ -77,6 +77,7 @@ class UploadReview : AppCompatActivity() {
                 var document = task?.toObject(userDTO::class.java)
                 ReviewDTO.strName = document?.strName
                 ReviewDTO.title = document?.title
+                ReviewDTO.imageUrl = document?.imageUrl
 
                 firestore?.collection("Reviews")?.document()?.set(ReviewDTO)
                     ?.addOnCompleteListener { task ->

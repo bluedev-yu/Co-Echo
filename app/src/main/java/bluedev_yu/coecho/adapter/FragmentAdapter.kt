@@ -16,8 +16,7 @@ class FragmentAdapter (fm : FragmentManager, uid: String?) : FragmentPagerAdapte
         {
             0 -> fragmentMyFeed(uid)
             1 -> fragmentMyReview(uid)
-            2 -> fragmentLikeStores().newInstant()
-            3 -> fragmentSubscriber().newInstant()
+            //2 -> fragmentSubscriber(uid)
 
             else -> throw AssertionError()
         }
@@ -25,15 +24,14 @@ class FragmentAdapter (fm : FragmentManager, uid: String?) : FragmentPagerAdapte
     }
 
     //tab 개수
-    override fun getCount(): Int = 4
+    override fun getCount(): Int = 2
 
     override fun getPageTitle(position: Int): CharSequence? {
         val title = when(position)
         {
             0 -> "피드"
             1 -> "리뷰"
-            2 -> "찜한 가게"
-            3 -> "구독"
+            //2 -> "팔로잉"
 
             else -> throw AssertionError()
         }

@@ -54,7 +54,6 @@ class FragmentResultContent(query: String?) : Fragment() {
             }
             rv_result_content.adapter = FeedAdapter(hashtagList,contentUidList)
             rv_result_content.adapter!!.notifyDataSetChanged()
-
         }
 
         rv_result_content = view.findViewById(R.id.rv_result_content)

@@ -5,11 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/review_profileImage"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/woman1" />
+
     <RatingBar
         android:id="@+id/review_star"
+        style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/review_title"
+        app:layout_constraintStart_toEndOf="@+id/review_name"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -19,9 +33,9 @@
         android:layout_marginStart="8dp"
         android:text="칭호"
         android:textColor="@color/green"
-        app:layout_constraintBottom_toBottomOf="@+id/review_star"
-        app:layout_constraintStart_toEndOf="@+id/review_star"
-        app:layout_constraintTop_toTopOf="@+id/review_star" />
+        app:layout_constraintBottom_toBottomOf="@+id/review_profileImage"
+        app:layout_constraintStart_toEndOf="@+id/review_profileImage"
+        app:layout_constraintTop_toTopOf="@+id/review_profileImage" />
 
     <TextView
         android:id="@+id/review_name"
@@ -30,9 +44,9 @@
         android:layout_marginStart="8dp"
         android:text="이름"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/review_star"
+        app:layout_constraintBottom_toBottomOf="@+id/review_title"
         app:layout_constraintStart_toEndOf="@+id/review_title"
-        app:layout_constraintTop_toTopOf="@+id/review_star" />
+        app:layout_constraintTop_toTopOf="@+id/review_title" />
 
     <TextView
         android:id="@+id/review_timestamp"
@@ -45,13 +59,22 @@
         app:layout_constraintTop_toTopOf="@+id/review_star" />
 
     <TextView
+        android:id="@+id/review_placeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="리뷰 내용"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/review_content"
+        app:layout_constraintTop_toBottomOf="@+id/review_content" />
+
+    <TextView
         android:id="@+id/review_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="리뷰 내용"
+        android:layout_marginTop="4dp"
+        android:text="가게 이름"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/review_star"
-        app:layout_constraintTop_toBottomOf="@+id/review_star" />
+        app:layout_constraintStart_toStartOf="@+id/review_title"
+        app:layout_constraintTop_toBottomOf="@+id/review_title" />
 </androidx.constraintlayout.widget.ConstraintLayout>
