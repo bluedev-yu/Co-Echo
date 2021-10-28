@@ -1,6 +1,7 @@
 package bluedev_yu.coecho.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,11 +54,26 @@ class fragmentMyFeed(uid: String?) : Fragment() {
                 return@addSnapshotListener
             }
             for (snapshot in querySnapshot!!.documents) {
-                val imsi = snapshot.toObject(Feeds::class.java)
-                if (imsi?.uid!!.equals(uid!!)) //검색내용 포함시
+                val now = snapshot.toObject(Feeds::class.java)
+                //내피드인 경우 -> 전부 보이기
+                //남피드인 경우 -> 공개한것만 보이기
+                Log.v("uidnow",now?.uid.toString())
+                Log.v("uid",uid!!)
+                if(uid.equals(auth?.uid.toString())) //내가 내 마이페이지
                 {
-                    feedList.add(imsi)
-                    contentUidList.add(snapshot.id)
+                    if(now?.uid.toString().equals(uid)) //내피드
+                    {
+                        feedList.add(now!!)
+                        contentUidList.add(snapshot.id)
+                    }
+                }
+                else //남이 내페이지, 내가 남페이지
+                {
+                    if ((now?.uid!!.equals(uid) && now.privacy == false)) //남페이지이고 공개된 경우
+                    {
+                        feedList.add(now)
+                        contentUidList.add(snapshot.id)
+                    }
                 }
             }
             rv_feeds.adapter = FeedAdapter(feedList,contentUidList)

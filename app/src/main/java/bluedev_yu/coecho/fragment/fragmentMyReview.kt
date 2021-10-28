@@ -1,6 +1,7 @@
 package bluedev_yu.coecho.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import bluedev_yu.coecho.adapter.ReviewAdapter
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.data.model.ReviewDTO
 import bluedev_yu.coecho.databinding.FragmentMyReviewBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class fragmentMyReview(uid: String?): Fragment() {
@@ -21,6 +23,7 @@ class fragmentMyReview(uid: String?): Fragment() {
     private lateinit var binding: FragmentMyReviewBinding
     var uid: String? = uid
     var firestore : FirebaseFirestore? = null
+    var auth : FirebaseAuth?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +32,7 @@ class fragmentMyReview(uid: String?): Fragment() {
         binding = FragmentMyReviewBinding.inflate(layoutInflater)
         val view = binding.root
         firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
 
         val bundle = Bundle()
         bundle.putString("uid", uid)
@@ -45,7 +49,7 @@ class fragmentMyReview(uid: String?): Fragment() {
             }
             for (snapshot in querySnapshot!!.documents) {
                 val imsi = snapshot.toObject(ReviewDTO::class.java)
-                if (imsi?.content!!.contains(uid!!)) //검색내용 포함시
+                if (imsi?.uid!!.equals(auth?.uid.toString())) //내가 썼을 시
                 {
                     reviewList.add(imsi)
                     //contentUidList.add(snapshot.id)
