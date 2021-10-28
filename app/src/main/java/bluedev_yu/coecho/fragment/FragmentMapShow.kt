@@ -79,7 +79,7 @@ class FragmentMapShow : Fragment() {
             } else {
                 Log.i("mapView nullcheck", "맵뷰 널 아님")
             }
-
+            mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOff
             //API키 인증 성공 확인 코드(아래 로그가 뜨지 않을 경우 김예현에게 문의)
             mapView.setOpenAPIKeyAuthenticationResultListener { mapView, i, s ->
                 Log.d("카카오맵 인증 로그", "성공")
@@ -207,6 +207,7 @@ class FragmentMapShow : Fragment() {
         for (i in 0 until markerList.size) {
             mapView.addPOIItem(markerList.get(i))
         }
+        mapView.fitMapViewAreaToShowAllPOIItems()
         t_rv_places.getRecycledViewPool().clear()
         t_rv_places.adapter = PlaceAdapter(placeList)
         PlaceAdapter(placeList).notifyDataSetChanged()
@@ -223,8 +224,8 @@ class FragmentMapShow : Fragment() {
                     UserLong = p1.mapPointGeoCoord.longitude
                     UserLati = p1.mapPointGeoCoord.latitude
                     Log.i("사용자 경위도", UserLati.toString() + " " + UserLong.toString())
-                    loadRecommendationP(mapView,t_rv_places)
                 }
+                loadRecommendationP(mapView,t_rv_places)
             }
         }
 

@@ -12,7 +12,7 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.Fragment.FragmentMyPage
+import bluedev_yu.coecho.fragment.FragmentMyPage
 import bluedev_yu.coecho.data.model.FollowDTO
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
