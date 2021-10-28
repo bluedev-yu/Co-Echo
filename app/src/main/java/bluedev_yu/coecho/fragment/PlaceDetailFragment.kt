@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.*
 import bluedev_yu.coecho.adapter.ReviewAdapter
+import bluedev_yu.coecho.data.model.Place
 import bluedev_yu.coecho.data.model.ReviewDTO
 import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_place_detail.*
 import kotlinx.android.synthetic.main.fragment_place_detail.view.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
@@ -60,7 +62,7 @@ class PlaceDetailFragment : Fragment() {
         t_rv_review.setHasFixedSize(true)
         t_rv_review.getRecycledViewPool().clear()
 
-
+        var tempRes: Pair<String, String>?
         CoroutineScope(Dispatchers.Main).launch {
             pid = DB_Place().search_data(
                 pName!!, pAddress!!
@@ -72,8 +74,22 @@ class PlaceDetailFragment : Fragment() {
                 Toast.makeText(activity, "리뷰가 아직 없습니다", Toast.LENGTH_LONG).show()
             } else {
                 CoroutineScope(Dispatchers.Main).launch {
+                    tempRes = DB_Review().getHashtag(pid)
+                    if (tempRes != null) {
+                        if (tempRes!!.first != "") {
+                            layout_hashtag1.visibility = View.VISIBLE
+                            hashtag1_1.text = tempRes!!.first
+                        }
+                        if (tempRes!!.second != "") {
+                            layout_hashtag2.visibility = View.VISIBLE
+                            hashtag1_2.text = tempRes!!.second
+                        }
+                    } else {
+                        layout_hashtag1.visibility = View.INVISIBLE
+                        layout_hashtag2.visibility = View.INVISIBLE
+                    }
                     loadPlaceReview(pid, reviewList)
-                    Log.i("로드되었다",reviewList.size.toString())
+                    Log.i("로드되었다", reviewList.size.toString())
                     val tvCount = thisFragView.findViewById<TextView>(R.id.tv_review_cnt)
                     tvCount.setText("방문자리뷰 " + reviewList.size)
                     t_rv_review.adapter = ReviewAdapter(reviewList)
@@ -84,37 +100,46 @@ class PlaceDetailFragment : Fragment() {
 
 
 
-
         thisFragView.findViewById<Button>(R.id.btn_write_review).setOnClickListener {
             if (pid == "false")
                 Toast.makeText(activity, "pid 로드 오류 발생", Toast.LENGTH_LONG).show()
             else {
                 if (pid == "none") {
                     //Log.i("널 췍",pName+pCategory+pPhone+pAddress+pAddress+pUrl+pX+pY)
-                    DB_Place().insert_data(
-                        Place(
-                            "",
-                            pName!!,
-                            pCategory!!,
-                            pPhone!!,
-                            0,
-                            pAddress!!,
-                            pUrl!!,
-                            "",
-                            pX!!,
-                            pY!!
+                    CoroutineScope(Dispatchers.Main).launch {
+                        DB_Place().insert_data(
+                            Place(
+                                null,
+                                pName!!,
+                                pCategory!!,
+                                pPhone!!,
+                                0,
+                                pAddress!!,
+                                pUrl!!,
+                                "",
+                                pX!!,
+                                pY!!
+                            )
                         )
-                    )
+                        pid = DB_Place().search_data(
+                            pName!!, pAddress!!
+                        )
+                        Log.i("넘어가는placeId", "앙영" + pid)
+                        val intent = Intent(requireContext(), UploadReview::class.java)
+                        intent.putExtra("pid", pid)
+                        requireContext().startActivity(intent)
+                    }
+                } else {
                     CoroutineScope(Dispatchers.Main).launch {
                         pid = DB_Place().search_data(
                             pName!!, pAddress!!
                         )
+                        Log.i("넘어가는placeId", "앙영" + pid)
+                        val intent = Intent(requireContext(), UploadReview::class.java)
+                        intent.putExtra("pid", pid)
+                        requireContext().startActivity(intent)
                     }
                 }
-                Log.i("넘어가는placeId", "앙영" + pid)
-                val intent = Intent(requireContext(), UploadReview::class.java)
-                intent.putExtra("pid", pid)
-                requireContext().startActivity(intent)
             }
         }
 

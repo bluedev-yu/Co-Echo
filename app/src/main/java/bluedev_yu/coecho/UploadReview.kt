@@ -58,7 +58,15 @@ class UploadReview : AppCompatActivity() {
         tvUpload.setOnClickListener {
             //해시태그, 글, 공개범위 등록
             var ReviewDTO = ReviewDTO()
-            ReviewDTO.hashtag = etHashtag.text.toString() //해시태그 문자열
+            var tempHash= etHashtag.text.toString()
+            if(!tempHash.startsWith("#")){
+                Log.i("구간 첵","a")
+                ReviewDTO.hashtag="#"+tempHash //해시태그 문자열
+                }
+            else{
+                Log.i("구간 첵","b")
+                ReviewDTO.hashtag=tempHash
+            }
             ReviewDTO.content = etText.text.toString() //글 문자열
             ReviewDTO.uid = auth?.uid
             ReviewDTO.star = ratingBar.rating
