@@ -53,14 +53,10 @@ class FeedDetail : AppCompatActivity() {
             onBackPressed()
         }
 
-        /*
-        * 수정사항
-        * 1. timestamp 출력
-        * */
-
 
         //클릭된 피드의 정보로 초기화
         val imageUrl = intent.getSerializableExtra("imageUrl")
+        val feedImage = intent.getSerializableExtra("feedImage")
         val title = intent.getSerializableExtra("title")
         val strName = intent.getSerializableExtra("strName")
         val timeStamp = intent.getSerializableExtra("timeStamp")
@@ -80,9 +76,12 @@ class FeedDetail : AppCompatActivity() {
         var tv_like_cnt = findViewById<TextView>(R.id.feed_like_cnt)
         var feed_timeStamp = findViewById<TextView>(R.id.feed_timestamp)
         var feed_like_img = findViewById<ImageView>(R.id.feed_like_img)
+        var feed_image = findViewById<ImageView>(R.id.feedImageInDetail)
 
         var commentList = arrayListOf<Feeds.Comment>()
 
+
+        Glide.with(this).load(feedImage).into(feed_image) //피드 이미지
         //comment count
         firestore?.collection("Feeds")?.document(contentUid!!)?.addSnapshotListener{
                 documentSnapshot, FirebaseFirestoreException ->

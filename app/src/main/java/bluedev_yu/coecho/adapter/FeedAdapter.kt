@@ -97,7 +97,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         else
             holder.userTitle.setText(R.string.grade3)
 
-        //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
+        Glide.with(holder.itemView.context).load(feedList.get(position).feedImgUrl!!).into(holder.feedImgUrl) //피드 이미지
         holder.strName.text = feedList.get(position).strName
         holder.profileImgUrl.setOnClickListener(object : View.OnClickListener {
             //해당 유저의 마이페이지를 띄우기
@@ -144,7 +144,6 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
         holder.content.text = feedList.get(position).content
         holder.hashtag.text = "#"+feedList.get(position).hashtag
-        //holder.feedImgUrl.setImageResource(feedList.get(position).feedImgUrl)
         holder.likeCnt.text = feedList.get(position).likeCnt.toString()
         holder.commentCnt.text = feedList.get(position).commentCnt.toString()
         holder.feedCardView.setOnClickListener {
@@ -158,6 +157,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             intent.putExtra("imageUrl",feedList.get(position).imageUrl)
             intent.putExtra("title",feedList.get(position).title)
             intent.putExtra("commentCnt",feedList.get(position).commentCnt)
+            intent.putExtra("feedImage",feedList.get(position).feedImgUrl)
 
             intent.putExtra("contentUid",contentUidList.get(position))
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
@@ -244,7 +244,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         var timeStamp = itemView.findViewById<TextView>(R.id.feed_timestamp) //타임스탬프
         var content = itemView.findViewById<TextView>(R.id.feed_content) //피드 글
         var hashtag = itemView.findViewById<TextView>(R.id.feed_hashtag) //해시태그
-        //var feedImgUrl = itemView.findViewById<ImageView>(R.id.iv_image) //피드 이미지
+        var feedImgUrl = itemView.findViewById<ImageView>(R.id.feed_image) //피드 이미지
         var ivLike = itemView.findViewById<ImageView>(R.id.feed_like_img) //좋아요 하트
         var isLikeClicked = itemView.findViewById<ImageView>(R.id.feed_like_img) //좋아요 하트
         var likeCnt = itemView.findViewById<TextView>(R.id.feed_like_cnt) //좋아요 수

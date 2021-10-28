@@ -64,7 +64,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="209dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:paddingTop="8dp"
@@ -140,14 +140,14 @@
                     app:layout_constraintStart_toStartOf="@+id/feed_timestamp"
                     app:layout_constraintTop_toBottomOf="@+id/feed_timestamp" />
 
-                <!--                <ImageView-->
-                <!--                    android:id="@+id/feed_image"-->
-                <!--                    android:layout_width="100dp"-->
-                <!--                    android:layout_height="100dp"-->
-                <!--                    android:layout_marginTop="8dp"-->
-                <!--                    app:layout_constraintStart_toStartOf="@+id/feed_content"-->
-                <!--                    app:layout_constraintTop_toBottomOf="@+id/feed_hashtag"-->
-                <!--                    app:srcCompat="@drawable/feedimg2" />-->
+                                <ImageView
+                                    android:id="@+id/feed_image"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:layout_marginTop="8dp"
+                                    app:layout_constraintStart_toStartOf="@+id/feed_content"
+                                    app:layout_constraintTop_toBottomOf="@+id/feed_hashtag"
+                                    app:srcCompat="@drawable/feedimg2" />
 
                 <TextView
                     android:id="@+id/feed_hashtag"
@@ -164,10 +164,10 @@
                     android:id="@+id/trash"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/feed_comment_img"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="invisible"
                     app:srcCompat="@drawable/trashboxbutton" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

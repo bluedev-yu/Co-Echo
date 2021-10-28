@@ -15,11 +15,17 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.data.model.FollowDTO
+import bluedev_yu.coecho.data.model.ReviewDTO
 import bluedev_yu.coecho.data.model.userDTO
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -57,7 +63,7 @@ class UploadFeed : AppCompatActivity() {
 //        tvPhoto = findViewById(R.id.tv_photo)
 
         //프로필이미지 바꾸기
-        val FeedPhotoUploadButton : TextView = findViewById(R.id.tv_uploadFeed)
+        val FeedPhotoUploadButton : TextView = findViewById(R.id.feedImageUploadButton)
         FeedPhotoUploadButton.setOnClickListener{
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type = "image/*"
@@ -79,36 +85,37 @@ class UploadFeed : AppCompatActivity() {
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED
             )
-            //CoroutineScope(Dispatchers.IO).launch {
-            //uriString = funImageUpLoad()
-//                FeedDTO.feedImgUrl = null
+            CoroutineScope(Dispatchers.Main).launch {
+                FeedDTO.feedImgUrl = funImageUpLoad()
+                Log.v("feedimageurl",FeedDTO.feedImgUrl.toString())
 
-            FeedDTO.privacy = privacy
-            FeedDTO.uid = auth?.uid
-            FeedDTO.likes = HashMap()
-            FeedDTO.timeStamp = System.currentTimeMillis()
+                FeedDTO.privacy = privacy
+                FeedDTO.uid = auth?.uid
+                FeedDTO.likes = HashMap()
+                FeedDTO.timeStamp = System.currentTimeMillis()
 
-            //피드에서 나의 정보 가져오기
-            firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener{
-                    task ->
-                var document = task?.toObject(userDTO::class.java)
-                FeedDTO.imageUrl = document?.imageUrl
-                FeedDTO.strName = document?.strName
-                FeedDTO.title = document?.title
-                FeedDTO.commentCnt = 0
+                //피드에서 나의 정보 가져오기
+                firestore?.collection("User")?.document(auth?.uid.toString())?.get()
+                    ?.addOnSuccessListener { task ->
+                        var document = task?.toObject(userDTO::class.java)
+                        FeedDTO.imageUrl = document?.imageUrl
+                        FeedDTO.strName = document?.strName
+                        FeedDTO.title = document?.title
+                        FeedDTO.commentCnt = 0
 
-                //피드 정보 업로드
-                firestore?.collection("Feeds")?.document()?.set(FeedDTO)
-                    ?.addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Toast.makeText(this, "게시 완료!", Toast.LENGTH_SHORT).show()
-                            Toast.makeText(this,"환경을 위해 "+(FeedDTO.title!!+1)+"만큼 노력하셨네요!",Toast.LENGTH_LONG).show()
-                            val nextIntent = Intent(this, MainActivity::class.java)
-                            startActivity(nextIntent)
-                        }
+                        //피드 정보 업로드
+                        firestore?.collection("Feeds")?.document()?.set(FeedDTO)
+                            ?.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    makeToast(task.isSuccessful,"게시 완료!")
+                                    makeToast(task.isSuccessful,"환경을 위해 " + (FeedDTO.title!! + 1) + "만큼 노력하셨네요!")
+                                    startActivity(Intent(this@UploadFeed,MainActivity::class.java))
+                                }
+                            }
+
+                        firestore?.collection("User")?.document(auth?.uid.toString())
+                            ?.update("title", FeedDTO.title!! + 1)
                     }
-
-                firestore?.collection("User")?.document(auth?.uid.toString())?.update("title",FeedDTO.title!!+1)
             }
         }
     }
@@ -116,36 +123,31 @@ class UploadFeed : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-//        if (requestCode == pickImageFromAlbum) {
-//            if (resultCode == Activity.RESULT_OK) {
-//                uriPhoto = data?.data
-//                val ImagePreview: ImageView = findViewById(R.id.ImagePreview)
-//                ImagePreview.setImageURI(uriPhoto)
-//                ImagePreview.visibility = View.VISIBLE
-//            }
-//        }
+        if (requestCode == pickImageFromAlbum) {
+            if (resultCode == Activity.RESULT_OK) {
+                uriPhoto = data?.data
+                val ImagePreview: ImageView = findViewById(R.id.ImagePreview)
+                ImagePreview.setImageURI(uriPhoto)
+                ImagePreview.visibility = View.VISIBLE
+            }
+        }
 
-//        suspend fun funImageUpLoad(): String? {
-//            var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-//            var user = auth?.currentUser?.uid.toString()
-//            var imgFileName = "Feed" + user + timestamp + ".png"
-//            var storageRef = firestorage?.reference?.child("Feed")?.child(imgFileName)
-//            var FeedDTO: Feeds? = null
-//
-//            storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
-//                storageRef.downloadUrl.addOnSuccessListener { uri ->
-//                    FeedDTO = Feeds()
-//                    FeedDTO!!.feedImgUrl = uri.toString()
-//                    firestore?.collection("Feeds")?.document(auth?.uid.toString())
-//                        ?.update("feedImgUrl", FeedDTO)
-//                }
-//            }
-//            Looper.prepare()
-//            Toast.makeText(this, "피드", Toast.LENGTH_LONG)
-//            delay(5000)
-//            Toast.makeText(this, FeedDTO?.feedImgUrl.toString(), Toast.LENGTH_LONG)
-//            return FeedDTO!!.feedImgUrl.toString()
-//        }
+    }
+
+    suspend fun funImageUpLoad(): String? {
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var user = auth?.currentUser?.uid.toString()
+        var imgFileName = "Feed" + user + timestamp + ".png"
+        var storageRef = firestorage?.reference?.child("Feed")?.child(imgFileName)
+
+        try {
+            storageRef?.putFile(uriPhoto!!)?.await()
+            val url = storageRef?.downloadUrl?.await().toString()
+            return url
+        } catch (e: Exception) {
+            Log.e("error:", "error:" + e.message.toString())
+            return null
+        }
     }
 
         fun onRadioButtonClicked(view: View) {
@@ -168,4 +170,10 @@ class UploadFeed : AppCompatActivity() {
                 }
             }
         }
+
+    fun makeToast(success: Boolean,text : String){
+        if (success){
+            Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+        }
+    }
 }
