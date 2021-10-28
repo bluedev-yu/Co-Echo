@@ -49,7 +49,7 @@ class fragmentMyReview(uid: String?): Fragment() {
             }
             for (snapshot in querySnapshot!!.documents) {
                 val imsi = snapshot.toObject(ReviewDTO::class.java)
-                if (imsi?.uid!!.equals(auth?.uid.toString())) //내가 썼을 시
+                if (imsi?.uid!!.equals(uid)) //내가 썼을 시
                 {
                     reviewList.add(imsi)
                     //contentUidList.add(snapshot.id)

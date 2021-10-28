@@ -57,8 +57,6 @@ class fragmentMyFeed(uid: String?) : Fragment() {
                 val now = snapshot.toObject(Feeds::class.java)
                 //내피드인 경우 -> 전부 보이기
                 //남피드인 경우 -> 공개한것만 보이기
-                Log.v("uidnow",now?.uid.toString())
-                Log.v("uid",uid!!)
                 if(uid.equals(auth?.uid.toString())) //내가 내 마이페이지
                 {
                     if(now?.uid.toString().equals(uid)) //내피드
