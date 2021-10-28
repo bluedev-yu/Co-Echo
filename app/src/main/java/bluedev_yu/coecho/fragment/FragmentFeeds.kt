@@ -1,4 +1,4 @@
-package bluedev_yu.coecho.Fragment
+package bluedev_yu.coecho.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,7 +17,6 @@ import bluedev_yu.coecho.UploadFeed
 import bluedev_yu.coecho.adapter.FeedAdapter
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.data.model.FollowDTO
-import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.databinding.FragmentFeedsBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth

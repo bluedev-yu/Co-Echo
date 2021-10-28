@@ -1,19 +1,12 @@
-package bluedev_yu.coecho.Fragment
+package bluedev_yu.coecho.fragment
 
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import android.widget.Toast
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.databinding.FragmentSnsBinding
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import androidx.fragment.app.Fragment
 
 class FragmentSNS : Fragment() {

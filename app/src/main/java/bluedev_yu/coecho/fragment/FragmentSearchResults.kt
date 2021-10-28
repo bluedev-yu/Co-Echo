@@ -1,4 +1,4 @@
-package bluedev_yu.coecho.Fragment
+package bluedev_yu.coecho.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,11 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentTransaction
-import bluedev_yu.coecho.R
 import bluedev_yu.coecho.SNSFragementAdapter
 import bluedev_yu.coecho.databinding.FragmentSearchResultsBinding
-import com.google.android.material.tabs.TabLayout
 
 class FragmentSearchResults : Fragment() {
 

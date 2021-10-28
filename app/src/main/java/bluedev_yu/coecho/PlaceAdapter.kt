@@ -44,7 +44,7 @@ class PlaceAdapter (val placeList: ArrayList<Place>): RecyclerView.Adapter<Place
             }
 
         })
-        if(placeList.get(position).placeHashtag!="")
+        if(placeList.get(position).placeHashtag!=null)
         {
             holder.placeHashtag.text = placeList.get(position).placeHashtag
         }
@@ -54,7 +54,7 @@ class PlaceAdapter (val placeList: ArrayList<Place>): RecyclerView.Adapter<Place
         holder.placeLocation.text = placeList.get(position).placeAdress
         if(placeList.get(position).placeDistanceFromMyLocation!="")
         {
-            holder.placeDistanceFromMyLocation.text = placeList.get(position).placeDistanceFromMyLocation
+            holder.placeDistanceFromMyLocation.text = placeList.get(position).placeDistanceFromMyLocation+"m"
         }
     }
 
