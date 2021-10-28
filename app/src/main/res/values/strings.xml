@@ -40,5 +40,6 @@
 
    <!--칭호-->
     <string name="grade1">새싹</string>
-    <string name="grade2">숲</string>
+    <string name="grade2">나무</string>
+    <string name="grade3">숲</string>
 </resources>

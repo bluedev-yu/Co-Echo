@@ -18,11 +18,16 @@ class ReviewAdapter(val reviewList: ArrayList<ReviewDTO>): RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.star.rating = reviewList.get(position).star!!
-        when(reviewList.get(position).title) //칭호
+        if(reviewList.get(position).title!! <20) //칭호
         {
-            0 -> holder.title.setText(R.string.grade1)
-            1 -> holder.title.setText(R.string.grade2)
+            holder.title.setText(R.string.grade1)
         }
+        else if(reviewList.get(position).title!! <40) //칭호
+        {
+            holder.title.setText(R.string.grade2)
+        }
+        else
+            holder.title.setText(R.string.grade3)
         holder.strName.text = reviewList.get(position).strName
         holder.timeStamp.text = reviewList.get(position).timestamp.toString()
         holder.content.text = reviewList.get(position).content

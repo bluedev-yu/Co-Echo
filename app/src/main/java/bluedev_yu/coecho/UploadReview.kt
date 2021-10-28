@@ -82,10 +82,12 @@ class UploadReview : AppCompatActivity() {
                     ?.addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             Toast.makeText(this, "게시 완료", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this,"환경을 위해 "+(ReviewDTO.title!!+1)+"만큼 노력하셨네요!",Toast.LENGTH_LONG).show()
                             val nextIntent = Intent(this, MainActivity::class.java)
                             startActivity(nextIntent)
                         }
                     }
+                firestore?.collection("User")?.document(auth?.uid.toString())?.update("title",ReviewDTO.title!!+1)
             }
 
         }

@@ -37,11 +37,16 @@ class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapt
         //닉네임
         holder.strName.text = userlist.get(position).strName
 
-        when(userlist.get(position).title) //칭호
+        if(userlist.get(position).title!! <20) //칭호
         {
-            0 -> holder.title.setText(R.string.grade1)
-            1 -> holder.title.setText(R.string.grade2)
+            holder.title.setText(R.string.grade1)
         }
+        else if(userlist.get(position).title!! <40) //칭호
+        {
+            holder.title.setText(R.string.grade2)
+        }
+        else
+            holder.title.setText(R.string.grade3)
         //프로필사진
         if(userlist.get(position).imageUrl == null) //기본 이미지
             Glide.with(holder.itemView.context).load(R.drawable.default_profilephoto).apply(

@@ -85,11 +85,17 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             Glide.with(holder.itemView.context).load(feedList.get(position).imageUrl!!.toUri()).apply(
                 RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
         }
-        when(feedList.get(position).title) //칭호
+
+        if(feedList.get(position).title!! <20) //칭호
         {
-            0 -> holder.userTitle.setText(R.string.grade1)
-            1 -> holder.userTitle.setText(R.string.grade2)
+            holder.userTitle.setText(R.string.grade1)
         }
+        else if(feedList.get(position).title!! <40) //칭호
+        {
+            holder.userTitle.setText(R.string.grade2)
+        }
+        else
+            holder.userTitle.setText(R.string.grade3)
 
         //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
         holder.strName.text = feedList.get(position).strName
