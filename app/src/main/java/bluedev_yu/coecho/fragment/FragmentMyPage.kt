@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -278,7 +279,7 @@ class FragmentMyPage : Fragment() {
 
         Toast.makeText(requireContext(), "페이지/클릭한 사람의 uid : $uid", Toast.LENGTH_SHORT).show()
 
-        val pagerAdapter = FragmentAdapter(fragmentManager, uid)
+        val pagerAdapter = FragmentAdapter(childFragmentManager, uid)
         val pager = viewProfile!!.findViewById<ViewPager>(R.id.viewPager)
         pager.adapter = pagerAdapter
         val tab = viewProfile!!.findViewById<TabLayout>(R.id.MyPageTabs)
