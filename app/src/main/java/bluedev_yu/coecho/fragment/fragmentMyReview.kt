@@ -34,11 +34,17 @@ class fragmentMyReview(uid: String?): Fragment() {
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
+        if(uid == null) //마이페이지
+        {
+            uid = auth?.uid!!.toString()
+            Toast.makeText(this.context,"마이페이지!",Toast.LENGTH_SHORT).show()
+        }
+
         val bundle = Bundle()
         bundle.putString("uid", uid)
+        
 
         val reviewList = arrayListOf<ReviewDTO>()
-        val contentUidList = arrayListOf<String>()
 
         firestore?.collection("Reviews")?.addSnapshotListener {
                 querySnapshot, firebaseFirestoreException ->

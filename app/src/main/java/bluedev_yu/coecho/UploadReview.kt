@@ -133,7 +133,9 @@ class UploadReview : AppCompatActivity() {
         var imgFileName = "Review" + user + timestamp + ".png"
         var storageRef = firestorage?.reference?.child("Review")?.child(imgFileName)
 
+        makeToast(true,"업로드중입니다. 잠시 기다려주세요")
         try {
+            Log.v("in!!!!","하는중..")
             storageRef?.putFile(uriPhoto!!)?.await()
             val url = storageRef?.downloadUrl?.await().toString()
             return url

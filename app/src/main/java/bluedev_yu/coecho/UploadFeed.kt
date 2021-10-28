@@ -137,6 +137,7 @@ class UploadFeed : AppCompatActivity() {
         var imgFileName = "Feed" + user + timestamp + ".png"
         var storageRef = firestorage?.reference?.child("Feed")?.child(imgFileName)
 
+        makeToast(true,"업로드중입니다. 잠시 기다려주세요")
         try {
             storageRef?.putFile(uriPhoto!!)?.await()
             val url = storageRef?.downloadUrl?.await().toString()
