@@ -177,15 +177,6 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         }
     }
 
-//    fun currentTimeToLong(): Long? {
-//        return System.currentTimeMillis()
-//    }
-//
-//    fun convertDateToLong(date: String): Long? {
-//        val df = SimpleDateFormat("yyyy.MM.dd HH:mm")
-//        return df.parse(date).time
-//    }
-
     //타임스탬프 -> 시간:분 (08:23)
     fun Long.convertHourMinute(): String = DateFormat.format("HH:mm", this).toString()
 

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        android:text="코에코와 공유하기"
+        android:text="마이페이지 꾸미기"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -29,40 +29,53 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/mypage_change_profile"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginStart="16dp"
             android:gravity="center_vertical"
-            android:text="카카오톡으로 공유하기"
+            android:text="프로필 사진 바꾸기"
             android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/mypage_change_background"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginStart="16dp"
             android:gravity="center_vertical"
-            android:text="페이스북으로 공유하기"
+            android:text="도장 관리"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintStart_toStartOf="@+id/mypage_change_profile"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_change_profile" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginStart="16dp"
-            android:gravity="center_vertical"
-            android:text="인스타그램에 공유하기"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/mypage_change_profile"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_change_background"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_change_background"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_change_background"
+            tools:srcCompat="@tools:sample/avatars" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

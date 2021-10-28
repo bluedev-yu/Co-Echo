@@ -11,10 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.ViewPager
@@ -27,6 +24,7 @@ import bluedev_yu.coecho.data.model.userDTO
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.auth.api.Auth
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -38,174 +36,192 @@ class FragmentMyPage : Fragment() {
     private var _binding: FragmentMyPage? = null
     private val binding get() = _binding!!
 
-    var auth : FirebaseAuth? = null
-    var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
-    var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
+    var auth: FirebaseAuth? = null
+    var firestore: FirebaseFirestore? = null //String 등 자료형 데이터베이스
+    var firestorage: FirebaseStorage? = null //사진, GIF 등의 파일 데이터베이스
 
-    private var viewProfile  : View? = null
-    var pickImageFromAlbum =0
-    var uriPhoto : Uri?= null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var viewProfile: View? = null
+    var pickImageFromAlbum = 0
+    var uriPhoto: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        viewProfile =  inflater.inflate(R.layout.fragment_my_page, container, false)
+        viewProfile = inflater.inflate(R.layout.fragment_my_page, container, false)
 
         //uid 받아오기 - uid가 null이 아니면 다른 사람 페이지
         //MYPAGE, 나의에코, 톱니바퀴 버튼, 설정 총 4개 안보이도록 만들어야함
         val uid = arguments?.getString("uid")
 
-        val MypageFollower : TextView = viewProfile!!.findViewById(R.id.MyPageFollower) //팔로워 수
-        val MyPageFollowing : TextView = viewProfile!!.findViewById(R.id.MyPageFollowing) //팔로잉수
+        val MypageFollower: TextView = viewProfile!!.findViewById(R.id.MyPageFollower) //팔로워 수
+        val MyPageFollowing: TextView = viewProfile!!.findViewById(R.id.MyPageFollowing) //팔로잉수
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         firestorage = FirebaseStorage.getInstance()
 
-        if(uid == null || uid == auth?.uid.toString()) //마이페이지
+        if (uid == null || uid == auth?.uid.toString()) //마이페이지
         {
 
-            firestore?.collection("User")?.document(auth?.uid.toString())?.addSnapshotListener{
-                    documentSnapshot, firebaseFirestoreException ->
-                var document = documentSnapshot?.toObject(userDTO::class.java)
-                val ProfileImage : ImageView = viewProfile!!.findViewById(R.id.MypageProfileImage)
+            firestore?.collection("User")?.document(auth?.uid.toString())
+                ?.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                    var document = documentSnapshot?.toObject(userDTO::class.java)
+                    val ProfileImage: ImageView =
+                        viewProfile!!.findViewById(R.id.MypageProfileImage)
 
-                //칭호
-                val MypageTitle : TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
-                if(document?.title ==0)
-                {
-                    MypageTitle.setText(R.string.grade1)
-                }
-                else
-                {
-                    MypageTitle.setText(R.string.grade2)
-                }
+                    //칭호
+                    val MypageTitle: TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
+                    if (document?.title == 0) {
+                        MypageTitle.setText(R.string.grade1)
+                    } else {
+                        MypageTitle.setText(R.string.grade2)
+                    }
 
-                //사람이름
-                val MypageUsername : TextView = viewProfile!!.findViewById(R.id.MyPageUserName)
-                MypageUsername.setText(document?.strName)
+                    //사람이름
+                    val MypageUsername: TextView = viewProfile!!.findViewById(R.id.MyPageUserName)
+                    MypageUsername.text = document?.strName
 
-                //프로필사진
-                if(document?.imageUrl == null)
-                    ProfileImage.setImageResource(R.drawable.default_profilephoto)
-                else
-                {
-                    activity?.let {
-                        Glide.with(it)
-                            .load(document?.imageUrl)
-                            .apply(RequestOptions().circleCrop()).into(viewProfile!!.findViewById(R.id.MypageProfileImage))
+                    //프로필사진
+                    if (document?.imageUrl == null)
+                        ProfileImage.setImageResource(R.drawable.default_profilephoto)
+                    else {
+                        activity?.let {
+                            Glide.with(it)
+                                .load(document.imageUrl)
+                                .apply(RequestOptions().circleCrop())
+                                .into(viewProfile!!.findViewById(R.id.MypageProfileImage))
+                        }
                     }
                 }
-            }
 
             //프로필이미지 바꾸기
-            val MypageProfileOptionButton : Button = viewProfile!!.findViewById(R.id.MyPageProfileOptionButton)
-            MypageProfileOptionButton.setOnClickListener{
-                var photoPickerIntent = Intent(Intent.ACTION_PICK)
-                photoPickerIntent.type = "image/*"
-                startActivityForResult(photoPickerIntent,pickImageFromAlbum)
+            val MypageProfileOptionButton: Button =
+                viewProfile!!.findViewById(R.id.MyPageProfileOptionButton)
+            MypageProfileOptionButton.setOnClickListener {
+                val bottomSheetDialog = BottomSheetDialog(
+                    requireContext(), R.style.BottomSheetDialogTheme
+                )
+
+                val bottomSheetView = LayoutInflater.from(requireContext()).inflate(
+                    R.layout.layout_bottom_sheet,
+                    viewProfile!!.findViewById(R.id.bottomSheet) as LinearLayout?
+                )
+
+                bottomSheetDialog.setContentView(bottomSheetView)
+                bottomSheetDialog.show()
+
+                val changeProfile: TextView = bottomSheetView.findViewById(R.id.mypage_change_profile)
+                changeProfile.setOnClickListener {
+//                    Toast.makeText(requireContext(), "프로필 바꾸기 선택됨", Toast.LENGTH_SHORT).show()
+                    var photoPickerIntent = Intent(Intent.ACTION_PICK)
+                    photoPickerIntent.type = "image/*"
+                    startActivityForResult(photoPickerIntent, pickImageFromAlbum)
+                }
+                val changeBackGround: TextView = bottomSheetView.findViewById(R.id.mypage_change_background)
+                changeBackGround.setOnClickListener {
+                    Toast.makeText(requireContext(), "배경꾸미기 선택됨", Toast.LENGTH_SHORT).show()
+                }
+
+
             }
 
             //로그아웃
-            val LogoutButton : Button = viewProfile!!.findViewById(R.id.FollowButton)
-            LogoutButton.setOnClickListener{
+            val LogoutButton: Button = viewProfile!!.findViewById(R.id.FollowButton)
+            LogoutButton.setOnClickListener {
                 auth!!.signOut()
-                Toast.makeText(this.context,"로그아웃 되었습니다.",Toast.LENGTH_LONG).show()
+                Toast.makeText(this.context, "로그아웃 되었습니다.", Toast.LENGTH_LONG).show()
                 val intent = Intent(this.context, LoginActivity::class.java)
                 startActivity(intent)
             }
 
-            firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{ //팔로워 팔로잉 수
-                    documentSnapshot, firebaseFirestoreException ->
-                var followDTO = documentSnapshot?.toObject(FollowDTO::class.java)
-                MypageFollower.setText((followDTO?.followerCount!!-1).toString()+" 팔로워") //한명은 자기 자신
-                MyPageFollowing.setText((followDTO?.followingCount!!-1).toString()+" 팔로잉")
-            }
-        }
-
-        else //남의 페이지
+            firestore?.collection("Follow")?.document(auth?.uid.toString())
+                ?.addSnapshotListener { //팔로워 팔로잉 수
+                        documentSnapshot, firebaseFirestoreException ->
+                    var followDTO = documentSnapshot?.toObject(FollowDTO::class.java)
+                    MypageFollower.text =
+                        (followDTO?.followerCount!! - 1).toString() + " 팔로워" //한명은 자기 자신
+                    MyPageFollowing.text = (followDTO.followingCount - 1).toString() + " 팔로잉"
+                }
+        } else //남의 페이지
         {
             //각종 버튼 숨기기, 보이기
-            val mypageText : TextView = viewProfile!!.findViewById(R.id.MypageText) //MYPAGE TEXT
+            val mypageText: TextView = viewProfile!!.findViewById(R.id.MypageText) //MYPAGE TEXT
             mypageText.visibility = View.INVISIBLE
-            val myEchoText : TextView = viewProfile!!.findViewById(R.id.MyEchoText) //나의에코 TEXT
+            val myEchoText: TextView = viewProfile!!.findViewById(R.id.MyEchoText) //나의에코 TEXT
             myEchoText.visibility = View.INVISIBLE
-            val MyPageOptionButton : ImageView = viewProfile!!.findViewById(R.id.MyPageOptionButton) //옵션 네비게이션 드로워
+            val MyPageOptionButton: ImageView =
+                viewProfile!!.findViewById(R.id.MyPageOptionButton) //옵션 네비게이션 드로워
             MyPageOptionButton.visibility = View.INVISIBLE
-            val MypageProfileOptionButton : Button = viewProfile!!.findViewById(R.id.MyPageProfileOptionButton) //마이페이지 배경변경 버튼
+            val MypageProfileOptionButton: Button =
+                viewProfile!!.findViewById(R.id.MyPageProfileOptionButton) //마이페이지 배경변경 버튼
             MypageProfileOptionButton.visibility = View.INVISIBLE
-            val followButton : Button = viewProfile!!.findViewById(R.id.FollowButton) //팔로우 버튼 팔로우/언팔로우로 보이기
+            val followButton: Button =
+                viewProfile!!.findViewById(R.id.FollowButton) //팔로우 버튼 팔로우/언팔로우로 보이기
 
-            firestore?.collection("Follow")?.document(auth?.uid.toString())?.addSnapshotListener{
+            firestore?.collection("Follow")?.document(auth?.uid.toString())
+                ?.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                    var followDTO = documentSnapshot?.toObject(FollowDTO::class.java)
+                    if (followDTO?.followings!!.containsKey(uid.toString())) //follow하고 있을 경우
+                    {
+                        followButton.text = "팔로우 취소"
+                    } else {
+                        followButton.text = "팔로우"
+                    }
+                }
+
+            firestore?.collection("Follow")?.document(uid)?.addSnapshotListener { //팔로워 팔로잉 수
                     documentSnapshot, firebaseFirestoreException ->
                 var followDTO = documentSnapshot?.toObject(FollowDTO::class.java)
-                if(followDTO?.followings!!.containsKey(uid.toString())) //follow하고 있을 경우
-                {
-                    followButton.setText("팔로우 취소")
-                }
-                else
-                {
-                    followButton.setText("팔로우")
-                }
-            }
-
-            firestore?.collection("Follow")?.document(uid)?.addSnapshotListener{ //팔로워 팔로잉 수
-                    documentSnapshot, firebaseFirestoreException ->
-                var followDTO = documentSnapshot?.toObject(FollowDTO::class.java)
-                MypageFollower.setText((followDTO?.followerCount!!-1).toString()+" 팔로워") //한명은 자기 자신
-                MyPageFollowing.setText((followDTO?.followingCount!!-1).toString()+" 팔로잉")
+                MypageFollower.text =
+                    (followDTO?.followerCount!! - 1).toString() + " 팔로워" //한명은 자기 자신
+                MyPageFollowing.text = (followDTO.followingCount - 1).toString() + " 팔로잉"
             }
 
             //유저정보 가져오기
-            firestore?.collection("User")?.document(uid)?.addSnapshotListener{
-                    documentSnapshot, firebaseFirestoreException ->
-                var document = documentSnapshot?.toObject(userDTO::class.java)
-                val ProfileImage : ImageView = viewProfile!!.findViewById(R.id.MypageProfileImage)
+            firestore?.collection("User")?.document(uid)
+                ?.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                    var document = documentSnapshot?.toObject(userDTO::class.java)
+                    val ProfileImage: ImageView =
+                        viewProfile!!.findViewById(R.id.MypageProfileImage)
 
-                //칭호
-                val MypageTitle : TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
-                if(document?.title ==0)
-                {
-                    MypageTitle.setText(R.string.grade1)
-                }
-                else
-                {
-                    MypageTitle.setText(R.string.grade2)
-                }
+                    //칭호
+                    val MypageTitle: TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
+                    if (document?.title == 0) {
+                        MypageTitle.setText(R.string.grade1)
+                    } else {
+                        MypageTitle.setText(R.string.grade2)
+                    }
 
-                //사람이름
-                val MypageUsername : TextView = viewProfile!!.findViewById(R.id.MyPageUserName)
-                MypageUsername.setText(document?.strName)
+                    //사람이름
+                    val MypageUsername: TextView = viewProfile!!.findViewById(R.id.MyPageUserName)
+                    MypageUsername.text = document?.strName
 
-                //프로필사진
-                if(document?.imageUrl == null)
-                    ProfileImage.setImageResource(R.drawable.default_profilephoto)
-                else
-                {
-                    activity?.let {
-                        Glide.with(it)
-                            .load(document?.imageUrl)
-                            .apply(RequestOptions().circleCrop()).into(viewProfile!!.findViewById(R.id.MypageProfileImage))
+                    //프로필사진
+                    if (document?.imageUrl == null)
+                        ProfileImage.setImageResource(R.drawable.default_profilephoto)
+                    else {
+                        activity?.let {
+                            Glide.with(it)
+                                .load(document.imageUrl)
+                                .apply(RequestOptions().circleCrop())
+                                .into(viewProfile!!.findViewById(R.id.MypageProfileImage))
+                        }
                     }
                 }
-            }
 
-            followButton.setOnClickListener{
+            followButton.setOnClickListener {
                 var tsDocFollowing = firestore?.collection("Follow")?.document(auth?.uid.toString())
                 firestore?.runTransaction { //내 팔로우 데이터 가져오기
                         transaction ->
-                    var followDTO = transaction.get(tsDocFollowing!!).toObject(FollowDTO::class.java)
+                    var followDTO =
+                        transaction.get(tsDocFollowing!!).toObject(FollowDTO::class.java)
                     if (followDTO == null) //empty
                     {
                         followDTO = FollowDTO()
                         followDTO.followingCount = 2
-                        followDTO.followings[uid!!] = uid
+                        followDTO.followings[uid] = uid
                         followDTO.followings[auth?.uid.toString()] = auth?.uid.toString()
                         followDTO.followers[auth?.uid.toString()] = auth?.uid.toString()
 
@@ -215,13 +231,13 @@ class FragmentMyPage : Fragment() {
                         return@runTransaction
                     }
 
-                    if (followDTO?.followings?.containsKey(uid)) { //이미 팔로우하고 있을 경우 -> 언팔로우
-                        followDTO?.followingCount = followDTO?.followingCount - 1
-                        followDTO?.followings.remove(uid)
+                    if (followDTO.followings.containsKey(uid)) { //이미 팔로우하고 있을 경우 -> 언팔로우
+                        followDTO.followingCount = followDTO.followingCount - 1
+                        followDTO.followings.remove(uid)
                     } else //팔로우하기
                     {
-                        followDTO?.followingCount = followDTO?.followingCount + 1
-                        followDTO?.followings[uid] = uid
+                        followDTO.followingCount = followDTO.followingCount + 1
+                        followDTO.followings[uid] = uid
                     }
 
                     if (tsDocFollowing != null) {
@@ -240,9 +256,9 @@ class FragmentMyPage : Fragment() {
                     {
                         followDTO = FollowDTO()
                         followDTO!!.followerCount = 2
-                        followDTO!!.followers[auth?.uid.toString()!!] = auth?.uid.toString()
-                        followDTO!!.followers[uid!!]=uid
-                        followDTO!!.followings[uid!!]=uid
+                        followDTO!!.followers[auth?.uid.toString()] = auth?.uid.toString()
+                        followDTO!!.followers[uid] = uid
+                        followDTO!!.followings[uid] = uid
 
                         if (tsDocFollower != null) {
                             transaction.set(tsDocFollower, followDTO!!)
@@ -292,31 +308,36 @@ class FragmentMyPage : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == pickImageFromAlbum){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == pickImageFromAlbum) {
+            if (resultCode == Activity.RESULT_OK) {
                 uriPhoto = data?.data
-                val MypageProfileImage : ImageView = viewProfile!!.findViewById(R.id.MypageProfileImage)
+                val MypageProfileImage: ImageView =
+                    viewProfile!!.findViewById(R.id.MypageProfileImage)
                 MypageProfileImage.setImageURI(uriPhoto)
 
-                if(ContextCompat.checkSelfPermission(viewProfile!!.context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                if (ContextCompat.checkSelfPermission(
+                        viewProfile!!.context,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
                     funImageUpLoad(viewProfile!!)
                 }
             }
         }
     }
 
-    private fun funImageUpLoad(view : View){
+    private fun funImageUpLoad(view: View) {
         //var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var user = auth?.currentUser?.uid.toString()
-        var imgFileName = "PROFILE"+user+".png"
+        var imgFileName = "PROFILE" + user + ".png"
         var storageRef = firestorage?.reference?.child("ProfileImages")?.child(imgFileName)
 
         storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
-            storageRef.downloadUrl.addOnSuccessListener{
-                    uri->
+            storageRef.downloadUrl.addOnSuccessListener { uri ->
                 var userInfo = userDTO()
                 userInfo.imageUrl = uri.toString()
-                firestore?.collection("User")?.document(auth?.uid.toString())?.update("imageUrl",userInfo.imageUrl)
+                firestore?.collection("User")?.document(auth?.uid.toString())
+                    ?.update("imageUrl", userInfo.imageUrl)
             }
         }
 
