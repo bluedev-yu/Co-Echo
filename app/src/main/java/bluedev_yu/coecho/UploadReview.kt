@@ -63,13 +63,7 @@ class UploadReview : AppCompatActivity() {
             ReviewDTO.uid = auth?.uid
             ReviewDTO.star = ratingBar.rating
             ReviewDTO.timestamp = System.currentTimeMillis()
-
-
-
-
-
-            //ReviewDTO.pid 빤수야 부탁해~~~~~~~~~
-
+            ReviewDTO.pid=intent.getStringExtra("pid")
 
 
             firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener{

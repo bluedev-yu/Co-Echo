@@ -191,7 +191,7 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener 
                     {
                         val tmp=response.body()!!.documents[i]
                         //Toast.makeText(this@MapActivity,tmp.place_name+" "+tmp.address_name,Toast.LENGTH_SHORT).show()
-                        placeList.add(Place(null,tmp.place_name,tmp.category_name,tmp.phone,0,
+                        placeList.add(Place("",tmp.place_name,tmp.category_name,tmp.phone,0,
                             tmp.address_name,tmp.place_url,tmp.distance,tmp.x.toDouble(),tmp.y.toDouble()))
                         markerList.add(newCustomMapPoiItem(tmp.place_name,tmp.y.toDouble(),tmp.x.toDouble(),i))
                     }
