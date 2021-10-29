@@ -16,6 +16,8 @@ class FragmentResultPeople : Fragment() {
 
     lateinit var rv_result_people: RecyclerView
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.KAKAO_Place
 import bluedev_yu.coecho.Place
-import bluedev_yu.coecho.PlaceAdapter
+import bluedev_yu.coecho.adapter.PlaceAdapter
 import bluedev_yu.coecho.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

@@ -27,6 +27,8 @@ class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapt
 
         //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
         holder.strName.text = userlist.get(position).strName
+
+
         holder.strName.setOnClickListener(object: View.OnClickListener{
             //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {
@@ -40,6 +42,8 @@ class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapt
                     .replace(R.id.snsLayout, fragmentUserPage)
                     .addToBackStack(null)
                     .commit()
+
+
             }
         })
     }
