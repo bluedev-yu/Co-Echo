@@ -1,22 +1,30 @@
-package bluedev_yu.coecho.Fragment
+package bluedev_yu.coecho.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
+import bluedev_yu.coecho.adapter.FeedAdapter
 import bluedev_yu.coecho.adapter.ReviewAdapter
+import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.data.model.ReviewDTO
 import bluedev_yu.coecho.databinding.FragmentMyReviewBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class fragmentMyReview(uid: String?): Fragment() {
     private lateinit var rv_review: RecyclerView
     private lateinit var binding: FragmentMyReviewBinding
     var uid: String? = uid
+    var firestore : FirebaseFirestore? = null
+    var auth : FirebaseAuth?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,20 +32,46 @@ class fragmentMyReview(uid: String?): Fragment() {
     ): View? {
         binding = FragmentMyReviewBinding.inflate(layoutInflater)
         val view = binding.root
+        firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+
+        if(uid == null) //마이페이지
+        {
+            uid = auth?.uid!!.toString()
+        }
 
         val bundle = Bundle()
         bundle.putString("uid", uid)
 
-        Toast.makeText(requireContext(), "리뷰/클릭한 사람의 uid : $uid", Toast.LENGTH_SHORT).show()
+
+        val reviewList = arrayListOf<ReviewDTO>()
+        val nofeed = view.findViewById<TextView>(R.id.nofeed_myreview)
+
+        firestore?.collection("Reviews")?.addSnapshotListener {
+                querySnapshot, firebaseFirestoreException ->
+            reviewList.clear()
+            //contentUidList.clear()
+            if (querySnapshot == null) {
+                return@addSnapshotListener
+            }
+            for (snapshot in querySnapshot!!.documents) {
+                val imsi = snapshot.toObject(ReviewDTO::class.java)
+                if (imsi?.uid!!.equals(uid)) //내가 썼을 시
+                {
+                    reviewList.add(imsi)
+                    //contentUidList.add(snapshot.id)
+                }
+            }
+            if(reviewList.size ==0)
+            {
+                nofeed.visibility = View.VISIBLE
+            }
+            else {
+            rv_review.adapter = ReviewAdapter(reviewList)
+            rv_review.adapter!!.notifyDataSetChanged()}
+        }
 
         // Inflate the layout for this fragment
-        val reviewList = arrayListOf(
-            ReviewDTO(3.5f, null, null, 100, "리뷰1", null, "윤혜영", 0),
-            ReviewDTO(4.5f, null, null, 200, "리뷰2", null, "강미주", 0),
-            ReviewDTO(1.5f, null, null, 300, "리뷰3", null, "길혜주", 1),
-            ReviewDTO(3.5f, null, null, 100, "리뷰4", null, "김예현", 0),
-            ReviewDTO(4.5f, null, null, 200, "리뷰5", null, "강미주", 0),
-        )
 
         rv_review = view.findViewById(R.id.rv_reviews)
 
@@ -45,7 +79,6 @@ class fragmentMyReview(uid: String?): Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_review.setHasFixedSize(true)
 
-        rv_review.adapter = ReviewAdapter(reviewList)
 
         return view
     }

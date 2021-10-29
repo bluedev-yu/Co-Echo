@@ -5,7 +5,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class Feeds(
-    // var feedImgUrl: String? = null, //피드 사진
+     var feedImgUrl: String? = null, //피드 사진
     var uid: String? = null,
     var strName : String? = null,//사용자 이름
     var imageUrl : String?= null, //프로필사진

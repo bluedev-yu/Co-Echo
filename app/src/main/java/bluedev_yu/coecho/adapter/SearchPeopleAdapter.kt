@@ -12,7 +12,7 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.Fragment.FragmentMyPage
+import bluedev_yu.coecho.fragment.FragmentMyPage
 import bluedev_yu.coecho.data.model.FollowDTO
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -37,11 +37,16 @@ class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapt
         //닉네임
         holder.strName.text = userlist.get(position).strName
 
-        when(userlist.get(position).title) //칭호
+        if(userlist.get(position).title!! <20) //칭호
         {
-            0 -> holder.title.setText(R.string.grade1)
-            1 -> holder.title.setText(R.string.grade2)
+            holder.title.setText(R.string.grade1)
         }
+        else if(userlist.get(position).title!! <40) //칭호
+        {
+            holder.title.setText(R.string.grade2)
+        }
+        else
+            holder.title.setText(R.string.grade3)
         //프로필사진
         if(userlist.get(position).imageUrl == null) //기본 이미지
             Glide.with(holder.itemView.context).load(R.drawable.default_profilephoto).apply(
@@ -64,12 +69,15 @@ class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapt
                 holder.followButton.setText("팔로우")
             }
         }
+
+        var uid = userlist.get(position).uid
+
         holder.profileImgUrl.setOnClickListener(object: View.OnClickListener{
             //해당 유저의 마이페이지를 띄우기
             override fun onClick(v: View?) {
                 var fragmentUserPage = FragmentMyPage()
                 var bundle = Bundle()
-                bundle.putString("uid", auth?.uid.toString())
+                bundle.putString("uid", uid)
                 fragmentUserPage.arguments = bundle
 
                 val activity = v!!.context as AppCompatActivity
@@ -80,7 +88,6 @@ class SearchPeopleAdapter(val userlist: ArrayList<userDTO>) : RecyclerView.Adapt
             }
         })
 
-        var uid = userlist.get(position).uid
 
         holder.followButton.setOnClickListener{
             var tsDocFollowing = firestore?.collection("Follow")?.document(auth?.uid.toString())

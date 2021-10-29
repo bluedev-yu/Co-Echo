@@ -2,122 +2,94 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_drawer"
+    android:id="@+id/MapDrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f8ffe0"
-    tools:context=".Fragment.FragmentMap">>
+    tools:context=".fragment.FragmentMap">>
 
-    <FrameLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:focusableInTouchMode="true">
 
-        <RelativeLayout
-            android:id="@+id/map_view"
-            android:layout_width="match_parent"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="110dp"
+        <TextView
+            android:id="@+id/TextView_map"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible">
-        </RelativeLayout>
+            android:layout_marginLeft="20dp"
+            android:text="@string/MAP"
+            android:textColor="@color/green"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/TextView_ecomap"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="10dp"
-            android:background="#f8ffe0">
+            android:layout_marginLeft="20dp"
+            android:text="@string/eco_map"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TextView_map" />
 
-            <ImageView
-                android:id="@+id/search_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_baseline_search_50"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/hambuger_menu" />
-
-            <ImageView
-                android:id="@+id/hambuger_menu"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_baseline_menu_50"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_ecomap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_map"
-                android:text="@string/eco_map"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_map" />
-
-            <TextView
-                android:id="@+id/tv_map"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MAP"
-                android:textColor="#00B06A"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/search_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/search_button"
-                tools:ignore="MissingConstraints" />
+        <ImageView
+            android:id="@+id/MapOptionButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_baseline_menu_50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_recommendation"
+        <SearchView
+            android:id="@+id/MapSearchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="vertical">
-            <Spinner
-                android:id="@+id/spinner_map_recom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/choose"
-                tools:listitem=""
-                app:layout_constraintLeft_toLeftOf="@id/rv_places"
-                app:layout_constraintBottom_toTopOf="@id/rv_places"/>
+            android:iconifiedByDefault="false"
+            android:queryBackground="@null"
+            android:queryHint="검색어를 입력하세요"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TextView_ecomap" />
 
-            <ImageButton
-                android:id="@+id/btnTracking"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/traking_button"
-                app:layout_constraintTop_toTopOf="@id/spinner_map_recom"
-                app:layout_constraintEnd_toEndOf="parent" />
+        <FrameLayout
+            android:id="@+id/MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/MapSearchBar"
+            app:layout_constraintVertical_bias="0.0">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_places"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginBottom="80dp"
-                android:layout_marginHorizontal="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--            <include-->
+            <!--                layout="@layout/fragment_show_map"-->
+            <!--                android:layout_width="400dp"-->
+            <!--                android:layout_height="600dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/MapSearchBar" />-->
 
-    </FrameLayout>
+        </FrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/hambuger_navigation_view"
+        android:id="@+id/MapNavigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="right"

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/CoEcho_mainBackground"
-    tools:context=".Fragment.FragmentMyPage">
+    tools:context=".fragment.FragmentMyPage">
 
 
     <!-- 상단 -->
@@ -152,6 +152,7 @@
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/MypageText"
             app:layout_constraintStart_toStartOf="@+id/MypageText"
             app:layout_constraintTop_toBottomOf="@+id/MypageText" />
 

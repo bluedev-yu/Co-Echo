@@ -1,8 +1,10 @@
 package bluedev_yu.coecho.adapter
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.FeedDetail
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.Feeds
-import bluedev_yu.coecho.Fragment.FragmentMyPage
+import bluedev_yu.coecho.fragment.FragmentMyPage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -84,13 +86,19 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             Glide.with(holder.itemView.context).load(feedList.get(position).imageUrl!!.toUri()).apply(
                 RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
         }
-        when(feedList.get(position).title) //칭호
-        {
-            0 -> holder.userTitle.setText(R.string.grade1)
-            1 -> holder.userTitle.setText(R.string.grade2)
-        }
 
-        //holder.profileImgUrl.setImageResource(feedList.get(position).profileImgUrl)
+        if(feedList.get(position).title!! <20) //칭호
+        {
+            holder.userTitle.setText(R.string.grade1)
+        }
+        else if(feedList.get(position).title!! <40) //칭호
+        {
+            holder.userTitle.setText(R.string.grade2)
+        }
+        else
+            holder.userTitle.setText(R.string.grade3)
+
+        Glide.with(holder.itemView.context).load(feedList.get(position).feedImgUrl!!).into(holder.feedImgUrl) //피드 이미지
         holder.strName.text = feedList.get(position).strName
         holder.profileImgUrl.setOnClickListener(object : View.OnClickListener {
             //해당 유저의 마이페이지를 띄우기
@@ -108,25 +116,34 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             }
         })
 
-        var isheared : Boolean
+        //피드 지우기 내 피드인경우에만 보이기
+        if(feedList[position].uid!!.equals(auth?.uid.toString()))
+        {
+            holder.trash.visibility = View.VISIBLE
+
+        }
+
+        holder.trash.setOnClickListener{
+            firestore?.collection("Feeds")?.document(contentUidList[position])?.delete()
+            feedList.clear()
+            this.notifyDataSetChanged()
+        }
 
         //미리 하트가 비었는가 찼는가
         if(feedList[position].likes.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
         {
             holder.ivLike.setImageResource(R.drawable.like)
-            isheared = true
         }
         else
         {
             holder.ivLike.setImageResource(R.drawable.blank_like) //안눌렀을 경우
-            isheared = false
         }
 
         holder.timeStamp.text = feedList.get(position).timeStamp?.convertBoardTime()
 
+
         holder.content.text = feedList.get(position).content
         holder.hashtag.text = "#"+feedList.get(position).hashtag
-        //holder.feedImgUrl.setImageResource(feedList.get(position).feedImgUrl)
         holder.likeCnt.text = feedList.get(position).likeCnt.toString()
         holder.commentCnt.text = feedList.get(position).commentCnt.toString()
         holder.feedCardView.setOnClickListener {
@@ -140,6 +157,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             intent.putExtra("imageUrl",feedList.get(position).imageUrl)
             intent.putExtra("title",feedList.get(position).title)
             intent.putExtra("commentCnt",feedList.get(position).commentCnt)
+            intent.putExtra("feedImage",feedList.get(position).feedImgUrl)
 
             intent.putExtra("contentUid",contentUidList.get(position))
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
@@ -217,11 +235,12 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         var timeStamp = itemView.findViewById<TextView>(R.id.feed_timestamp) //타임스탬프
         var content = itemView.findViewById<TextView>(R.id.feed_content) //피드 글
         var hashtag = itemView.findViewById<TextView>(R.id.feed_hashtag) //해시태그
-        //var feedImgUrl = itemView.findViewById<ImageView>(R.id.iv_image) //피드 이미지
+        var feedImgUrl = itemView.findViewById<ImageView>(R.id.feed_image) //피드 이미지
         var ivLike = itemView.findViewById<ImageView>(R.id.feed_like_img) //좋아요 하트
         var isLikeClicked = itemView.findViewById<ImageView>(R.id.feed_like_img) //좋아요 하트
         var likeCnt = itemView.findViewById<TextView>(R.id.feed_like_cnt) //좋아요 수
         var commentCnt = itemView.findViewById<TextView>(R.id.feed_comment_cnt) //댓글 수
         var feedCardView = itemView.findViewById<CardView>(R.id.feed_cardview) //피드 카드뷰
+        var trash = itemView.findViewById<ImageView>(R.id.trash)
     }
 }

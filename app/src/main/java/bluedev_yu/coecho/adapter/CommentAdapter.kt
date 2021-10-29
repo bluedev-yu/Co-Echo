@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
-import bluedev_yu.coecho.Fragment.FragmentMyPage
+import bluedev_yu.coecho.fragment.FragmentMyPage
 import bluedev_yu.coecho.data.model.Feeds
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions

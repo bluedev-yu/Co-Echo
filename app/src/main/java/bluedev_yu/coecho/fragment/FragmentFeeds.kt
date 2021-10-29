@@ -1,4 +1,4 @@
-package bluedev_yu.coecho.Fragment
+package bluedev_yu.coecho.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -57,6 +58,7 @@ class FragmentFeeds : Fragment() {
 
         //리사이클러뷰 추가하기
         rv_feed = view.findViewById(R.id.rv_feed)
+        val nofeed = view.findViewById<TextView>(R.id.nofeed)
 
         rv_feed.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -85,6 +87,7 @@ class FragmentFeeds : Fragment() {
                 if(followings.isNotEmpty()) //팔로우 하는사람 있을 때
                 {
                     Log.v("FeedSize",feedList.size.toString())
+
                     firestore?.collection("Feeds")?.whereIn("uid", followings.values.toList())?.addSnapshotListener{
                             querySnapshot, firebaseFirestoreException ->
                         feedList.clear()
@@ -94,15 +97,20 @@ class FragmentFeeds : Fragment() {
                         }
                         for(snapshot in querySnapshot!!.documents)
                         {
-                            feedList.add(snapshot.toObject(Feeds::class.java)!!)
-                            contentUidList.add(snapshot.id)
+                            var now = snapshot.toObject(Feeds::class.java)
+                            if(now?.uid!!.equals(auth?.uid.toString()) || (now?.uid!!.equals(auth?.uid.toString())==false && now.privacy == false)) //내것이거나, 남것이지만 public인 경우
+                            {
+                                feedList.add(now!!)
+                                contentUidList.add(snapshot.id)
+                            }
                         }
                         if(feedList.size ==0)
                         {
-
+                            nofeed.visibility = View.VISIBLE
                         }
                         else
                         {
+                            nofeed.visibility = View.INVISIBLE
                             rv_feed.adapter = FeedAdapter(feedList,contentUidList)
                             rv_feed.adapter!!.notifyDataSetChanged()
                         }
@@ -122,7 +130,6 @@ class FragmentFeeds : Fragment() {
         swipeRefreshLayout = binding.swipeRefreshLayout
         swipeRefreshLayout.setOnRefreshListener {
             //스와이프 할 때마다 피드 추가
-            Toast.makeText(requireContext(), "하이~~~", Toast.LENGTH_SHORT).show()
             swipeRefreshLayout.isRefreshing = false
         }
 

@@ -1,4 +1,4 @@
-package bluedev_yu.coecho.Fragment
+package bluedev_yu.coecho.fragment
 
 import android.Manifest
 import android.app.Activity
@@ -63,20 +63,24 @@ class FragmentMyPage : Fragment() {
 
         if (uid == null || uid == auth?.uid.toString()) //마이페이지
         {
+            firestore?.collection("User")?.document(auth?.uid.toString())?.addSnapshotListener{
+                    documentSnapshot, firebaseFirestoreException ->
+                var document = documentSnapshot?.toObject(userDTO::class.java)
+                val ProfileImage : ImageView = viewProfile!!.findViewById(R.id.MypageProfileImage)
 
-            firestore?.collection("User")?.document(auth?.uid.toString())
-                ?.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
-                    var document = documentSnapshot?.toObject(userDTO::class.java)
-                    val ProfileImage: ImageView =
-                        viewProfile!!.findViewById(R.id.MypageProfileImage)
-
-                    //칭호
-                    val MypageTitle: TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
-                    if (document?.title == 0) {
-                        MypageTitle.setText(R.string.grade1)
-                    } else {
-                        MypageTitle.setText(R.string.grade2)
-                    }
+                //칭호
+                val MypageTitle : TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
+                Log.v("title?",document?.title.toString())
+                if(document?.title!! <20) //칭호
+                {
+                    MypageTitle.setText(R.string.grade1)
+                }
+                else if(document?.title!!  <40) //칭호
+                {
+                    MypageTitle.setText(R.string.grade2)
+                }
+                else
+                    MypageTitle.setText(R.string.grade3)
 
                     //사람이름
                     val MypageUsername: TextView = viewProfile!!.findViewById(R.id.MyPageUserName)
@@ -295,8 +299,6 @@ class FragmentMyPage : Fragment() {
 
         //탭레이아웃
         val fragmentManager = (activity as FragmentActivity).supportFragmentManager
-
-        Toast.makeText(requireContext(), "페이지/클릭한 사람의 uid : $uid", Toast.LENGTH_SHORT).show()
 
         val pagerAdapter = FragmentAdapter(childFragmentManager, uid)
         val pager = viewProfile!!.findViewById<ViewPager>(R.id.viewPager)

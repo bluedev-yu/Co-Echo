@@ -3,10 +3,10 @@ package bluedev_yu.coecho.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import bluedev_yu.coecho.Fragment.fragmentLikeStores
-import bluedev_yu.coecho.Fragment.fragmentMyFeed
-import bluedev_yu.coecho.Fragment.fragmentMyReview
-import bluedev_yu.coecho.Fragment.fragmentSubscriber
+import bluedev_yu.coecho.fragment.fragmentLikeStores
+import bluedev_yu.coecho.fragment.fragmentMyFeed
+import bluedev_yu.coecho.fragment.fragmentMyReview
+import bluedev_yu.coecho.fragment.fragmentSubscriber
 
 class FragmentAdapter (fm : FragmentManager, uid: String?) : FragmentPagerAdapter(fm){
     private val uid: String? = uid
@@ -16,8 +16,7 @@ class FragmentAdapter (fm : FragmentManager, uid: String?) : FragmentPagerAdapte
         {
             0 -> fragmentMyFeed(uid)
             1 -> fragmentMyReview(uid)
-            2 -> fragmentLikeStores().newInstant()
-            3 -> fragmentSubscriber().newInstant()
+            //2 -> fragmentSubscriber(uid)
 
             else -> throw AssertionError()
         }
@@ -25,15 +24,14 @@ class FragmentAdapter (fm : FragmentManager, uid: String?) : FragmentPagerAdapte
     }
 
     //tab 개수
-    override fun getCount(): Int = 4
+    override fun getCount(): Int = 2
 
     override fun getPageTitle(position: Int): CharSequence? {
         val title = when(position)
         {
             0 -> "피드"
             1 -> "리뷰"
-            2 -> "찜한 가게"
-            3 -> "구독"
+            //2 -> "팔로잉"
 
             else -> throw AssertionError()
         }

@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,19 +57,10 @@ class FeedDetail : AppCompatActivity() {
             onBackPressed()
         }
 
-        /*
-        * 수정사항
-        * 1. timestamp 출력
-        * 2. 좋아요 여부도 같이 가져와야함
-        * 3. comment
-        * 4. title도 가져와야 함
-        * 5. 해시태그 앞에 # 달건가?
-        * 7. 좋아요 버튼이랑 다시 구현해야 함.
-        * */
-
 
         //클릭된 피드의 정보로 초기화
         val imageUrl = intent.getSerializableExtra("imageUrl")
+        val feedImage = intent.getSerializableExtra("feedImage")
         val title = intent.getSerializableExtra("title")
         val strName = intent.getSerializableExtra("strName")
         val timeStamp = intent.getLongExtra("timeStamp", 0)
@@ -88,33 +80,55 @@ class FeedDetail : AppCompatActivity() {
         var tv_like_cnt = findViewById<TextView>(R.id.feed_like_cnt)
         var feed_timeStamp = findViewById<TextView>(R.id.feed_timestamp)
         var feed_like_img = findViewById<ImageView>(R.id.feed_like_img)
+        var feed_image = findViewById<ImageView>(R.id.feedImageInDetail)
 
+        var commentList = arrayListOf<Feeds.Comment>()
+
+
+        Glide.with(this).load(feedImage).into(feed_image) //피드 이미지
         //comment count
         firestore?.collection("Feeds")?.document(contentUid!!)?.addSnapshotListener{
                 documentSnapshot, FirebaseFirestoreException ->
 
             val doc = documentSnapshot?.toObject(Feeds::class.java)
-            commentCnt = doc!!.commentCnt
-            tv_commentCnt.setText(commentCnt.toString())
-        }
 
-        //intent.getSerializableExtra("commentCnt")
+            Log.v("doc",doc.toString())
+
+            if(doc == null) //피드가 지워지거나 없음
+            {
+                commentList.clear()
+                rv_comments.adapter!!.notifyDataSetChanged()
+            }
+            else
+            {
+                commentCnt = doc!!.commentCnt
+                tv_commentCnt.setText(commentCnt.toString())
+            }
+        }
 
         //미리 하트가 비었는가 찼는가
         firestore?.collection("Feeds")?.document(contentUid!!)?.addSnapshotListener{
             documentSnapshot, FirebaseFirestoreException ->
 
             var doc = documentSnapshot?.toObject(Feeds::class.java)
-            if(doc?.likes!!.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
+
+            if(doc == null)
             {
-                feed_like_img.setImageResource(R.drawable.like)
+
             }
             else
             {
-                feed_like_img.setImageResource(R.drawable.blank_like) //안눌렀을 경우
+                if(doc?.likes!!.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
+                {
+                    feed_like_img.setImageResource(R.drawable.like)
+                }
+                else
+                {
+                    feed_like_img.setImageResource(R.drawable.blank_like) //안눌렀을 경우
+                }
+                //좋아요 수 동기화
+                tv_like_cnt.setText(doc.likeCnt.toString())
             }
-            //좋아요 수 동기화
-            tv_like_cnt.setText(doc.likeCnt.toString())
         }
 
         //피드 프로필사진
@@ -204,12 +218,49 @@ class FeedDetail : AppCompatActivity() {
         feed_timeStamp.setText(timeStamp.convertBoardTime())
 
         when(title) //칭호
+        feed_timeStamp.setText(timeStamp.toString())
+
+        if(title!!.toString().toInt() <20) //칭호
         {
-            0 -> tv_title.setText(R.string.grade1)
-            1 -> tv_title.setText(R.string.grade2)
+            tv_title.setText(R.string.grade1)
+        }
+        else if(title!!.toString().toInt() <40) //칭호
+        {
+            tv_title.setText(R.string.grade2)
+        }
+        else
+            tv_title.setText(R.string.grade3)
+
+
+        //게시 버튼
+        tv_uploadComment = findViewById(R.id.feed_comment_upload)
+        tv_uploadComment.setOnClickListener {
+            //댓글 게시 눌렀을 때 데이터 올리기
+            val comment = Feeds.Comment()
+
+            comment.strName = user!!.displayName
+            if(feed_user_comment.text.toString().equals(""))
+            {
+                Toast.makeText(this,"내용을 입력해 주세요!",Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                Log.v("Comment",feed_user_comment.toString())
+                comment.comment = feed_user_comment.text.toString()
+                comment.uid = user!!.uid
+                comment.timestamp = System.currentTimeMillis()
+
+                Log.v("commentSize Before", commentList.size.toString())
+                firestore?.collection("Feeds")?.document(contentUid!!)?.collection("Comments")?.document()?.set(comment)
+                Log.v("commentSize After", commentList.size.toString())
+                firestore?.collection("Feeds")?.document(contentUid!!)?.update("commentCnt",(commentCnt+1))
+
+
+                feed_user_comment.setText("")
+            }
+
         }
 
-        var commentList = arrayListOf<Feeds.Comment>()
         commentSnapshot = firestore?.collection("Feeds")?.document(contentUid!!)?.collection("Comments")?.addSnapshotListener{
                 querySnapshot, firebaseFirestoreException ->
             commentList.clear()
@@ -221,27 +272,6 @@ class FeedDetail : AppCompatActivity() {
             }
             rv_comments.adapter = CommentAdapter(commentList)
             rv_comments.adapter!!.notifyDataSetChanged()
-        }
-
-        //게시 버튼
-        tv_uploadComment = findViewById(R.id.feed_comment_upload)
-        tv_uploadComment.setOnClickListener {
-            //댓글 게시 눌렀을 때 데이터 올리기
-            val comment = Feeds.Comment()
-
-            comment.strName = user!!.displayName
-            comment.comment = feed_user_comment.text.toString()
-            comment.uid = user!!.uid
-            comment.timestamp = System.currentTimeMillis()
-
-            Log.v("commentSize Before", commentList.size.toString())
-            firestore?.collection("Feeds")?.document(contentUid!!)?.collection("Comments")?.document()?.set(comment)
-            Log.v("commentSize After", commentList.size.toString())
-            firestore?.collection("Feeds")?.document(contentUid!!)?.update("commentCnt",(commentCnt+1))
-
-
-            feed_user_comment.setText("")
-
         }
 
         rv_comments = findViewById(R.id.rv_comments)

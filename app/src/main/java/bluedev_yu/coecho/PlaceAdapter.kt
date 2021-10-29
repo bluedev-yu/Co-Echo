@@ -32,6 +32,8 @@ class PlaceAdapter (val placeList: ArrayList<Place>): RecyclerView.Adapter<Place
                 bundle.putString("category",temp.placeCategory)
                 bundle.putString("phone",temp.placePhone)
                 bundle.putString("url",temp.placeURL)
+                bundle.putDouble("x",temp.placeX)
+                bundle.putDouble("y",temp.placeY)
                 fragmentPlaceDetail.arguments=bundle
                 val activity = v!!.context as AppCompatActivity
                 activity.supportFragmentManager.beginTransaction()
@@ -49,7 +51,10 @@ class PlaceAdapter (val placeList: ArrayList<Place>): RecyclerView.Adapter<Place
         holder.placeCategory.text = placeList.get(position).placeCategory
         holder.placeReviewCnt.text = placeList.get(position).placeReviewCnt.toString()
         holder.placeLocation.text = placeList.get(position).placeAdress
-        holder.placeDistanceFromMyLocation.text = placeList.get(position).placeDistanceFromMyLocation
+        if(placeList.get(position).placeDistanceFromMyLocation!="")
+        {
+            holder.placeDistanceFromMyLocation.text = placeList.get(position).placeDistanceFromMyLocation+"m"
+        }
     }
 
     override fun getItemCount(): Int {
