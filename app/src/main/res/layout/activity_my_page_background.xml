@@ -7,89 +7,94 @@
     tools:context=".MyPageBackground"
     android:background="@color/CoEcho_mainBackground">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/MyEchoText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layoutDirection="rtl"
-            android:text="나의 에코"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/MypageText"
-            app:layout_constraintTop_toBottomOf="@+id/MypageText" />
-
-        <TextView
-            android:id="@+id/MypageText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-            android:text="MYPAGE"
-            android:textColor="#00B06A"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="배경을 예쁘게 꾸며주세요!"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="@+id/MyEchoText"
-            app:layout_constraintTop_toBottomOf="@+id/MyEchoText" />
-
-
-        <bluedev_yu.coecho.sticker.StickerView
-            android:id="@+id/stickerView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:showBorder="true"
-            app:showIcons="true" />
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btn_getSticker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="503dp"
-            android:text="스티커 가져오기"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/stickerView" />
+            <TextView
+                android:id="@+id/MyEchoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:text="나의 에코"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/MypageText"
+                app:layout_constraintTop_toBottomOf="@+id/MypageText" />
+
+            <TextView
+                android:id="@+id/MypageText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:text="MYPAGE"
+                android:textColor="#00B06A"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="배경을 예쁘게 꾸며주세요!"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/MyEchoText" />
 
 
-        <TextView
-            android:id="@+id/tv_cancle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="취소"
-            app:layout_constraintBottom_toTopOf="@+id/btn_getSticker"
-            app:layout_constraintEnd_toEndOf="@+id/btn_getSticker"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            <TextView
+                android:id="@+id/background_cancle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="취소"
+                android:textColor="@color/red"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/background_save"
+                app:layout_constraintEnd_toStartOf="@+id/background_save"
+                app:layout_constraintTop_toTopOf="@+id/background_save" />
 
-        <TextView
-            android:id="@+id/tv_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="저장"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_cancle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_cancle"
-            app:layout_constraintTop_toTopOf="@+id/tv_cancle" />
+            <TextView
+                android:id="@+id/background_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:text="저장"
+                android:textColor="@color/red"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_background"
+            android:layout_width="match_parent"
+            android:layout_height="500dp">
+
+            <bluedev_yu.coecho.sticker.StickerView
+                android:id="@+id/stickerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:showBorder="true"
+                app:showIcons="true" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
 
     <FrameLayout
         android:id="@+id/layout_background_bottomsheet"

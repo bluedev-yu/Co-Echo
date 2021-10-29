@@ -1,21 +1,40 @@
 package bluedev_yu.coecho
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
+import android.util.Base64
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import bluedev_yu.coecho.databinding.ActivityMyPageBackgroundBinding
 import bluedev_yu.coecho.sticker.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_my_page_background.*
+import java.io.ByteArrayOutputStream
+import java.util.*
+import java.util.Base64.getDecoder
 
 class MyPageBackground : AppCompatActivity() {
+    private lateinit var binding: ActivityMyPageBackgroundBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_my_page_background)
+
+        binding = ActivityMyPageBackgroundBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+//        val view: View = this.window.decorView.findViewById(android.R.id.content)
+        if(view == null){
+            Toast.makeText(this, "view가 널임", Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(this, "view가 널이 아님", Toast.LENGTH_SHORT).show()
+        }
 
         val stickerView: StickerView = findViewById(R.id.stickerView)
         //BitmapStickerIcon(아이콘이미지 drawable,아이콘 위치)
@@ -91,11 +110,57 @@ class MyPageBackground : AppCompatActivity() {
         stamp6.setOnClickListener(StampListener())
 
 
-        val cancle: TextView = findViewById(R.id.tv_cancle)
-        cancle.setOnClickListener {
+        val backgroundCancle: TextView = findViewById(R.id.background_cancle)
+        backgroundCancle.setOnClickListener {
             this.finish()
         }
+
+
+//        val testimg: ImageView = findViewById(R.id.testimg)
+        val testlayout: ConstraintLayout = findViewById(R.id.layout_background)
+
+        val backgroundSave: TextView = findViewById(R.id.background_save)
+        backgroundSave.setOnClickListener {
+//            Toast.makeText(this, "클릭됐음", Toast.LENGTH_SHORT).show()
+
+            //save layout as an image
+            val bmp: Bitmap = getBitmapFromView(testlayout)
+//            val backgroundImgStr: String? = BitmapToString(bmp) //백그라운드 이미지
+            val backgroundImg = bmp as ImageView
+
+            
+
+        }
+
     }
 
+//    private fun BitmapToString(bitmap: Bitmap): String? {
+////        Toast.makeText(this, "비트맵 스트링으로 바꾸는듕", Toast.LENGTH_SHORT).show()
+//        val baos = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 70, baos)
+//        val bytes = baos.toByteArray()
+//        return Base64.encodeToString(bytes, Base64.DEFAULT)
+//    }
+
+    private fun getBitmapFromView(view: View): Bitmap {
+//        Toast.makeText(this, "비트맵 이미지 저장", Toast.LENGTH_SHORT).show()
+
+        //Define a bitmap with the same size as the view
+        val returnedBitmap: Bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888)
+        //Bind a canvas to it
+        val canvas: Canvas = Canvas(returnedBitmap)
+        //Get the view's background
+//        val bgDrawable: Drawable =view.background
+//        if (bgDrawable!=null)
+//        //has background drawable, then draw it on the canvas
+//            bgDrawable.draw(canvas)
+//        else
+//        //does not have background drawable, then draw white background on the canvas
+//            canvas.drawColor(Color.WHITE)
+//        // draw the view on the canvas
+        view.draw(canvas)
+        //return the bitmap
+        return returnedBitmap
+    }
 
 }
