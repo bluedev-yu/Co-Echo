@@ -21,7 +21,7 @@ import bluedev_yu.coecho.adapter.FragmentAdapter
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.userDTO
-import bluedev_yu.coecho.Fragment.*
+import bluedev_yu.coecho.fragment.*
 import bluedev_yu.coecho.MyPageBackground
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions

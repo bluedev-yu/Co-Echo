@@ -2,9 +2,12 @@ package bluedev_yu.coecho
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.pm.Signature
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
@@ -25,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.kakao.util.maps.helper.Utility
+import java.security.MessageDigest
 
 interface onBack{
 
@@ -152,5 +156,21 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .commit()
     }
 
-
+    private fun printReleaseKey()
+    {
+        var packageInfo: PackageInfo? = null
+        try{
+            packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+            packageInfo.signatures
+            for(signature: Signature in packageInfo.signatures) {
+                var md: MessageDigest = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                var smt =String(Base64.encode(md.digest(),0))
+                Toast.makeText(this,smt,Toast.LENGTH_LONG).show()
+            }
+        }catch (e:Exception)
+        {
+            Log.e("name not found",e.toString())
+        }
+    }
 }

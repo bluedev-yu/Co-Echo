@@ -1,4 +1,4 @@
-package bluedev_yu.coecho.Fragment
+package bluedev_yu.coecho.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -89,7 +89,7 @@ class PlaceDetailFragment : Fragment() {
                         layout_hashtag2.visibility = View.INVISIBLE
                     }
                     loadPlaceReview(pid, reviewList)
-                    Log.i("로드되었다", reviewList.size.toString())
+                    Log.i("로드되었다", reviewList.toString())
                     val tvCount = thisFragView.findViewById<TextView>(R.id.tv_review_cnt)
                     tvCount.setText("방문자리뷰 " + reviewList.size)
                     t_rv_review.adapter = ReviewAdapter(reviewList)
