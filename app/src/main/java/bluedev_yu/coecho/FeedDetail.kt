@@ -108,16 +108,24 @@ class FeedDetail : AppCompatActivity() {
             documentSnapshot, FirebaseFirestoreException ->
 
             var doc = documentSnapshot?.toObject(Feeds::class.java)
-            if(doc?.likes!!.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
+
+            if(doc == null)
             {
-                feed_like_img.setImageResource(R.drawable.like)
+
             }
             else
             {
-                feed_like_img.setImageResource(R.drawable.blank_like) //안눌렀을 경우
+                if(doc?.likes!!.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
+                {
+                    feed_like_img.setImageResource(R.drawable.like)
+                }
+                else
+                {
+                    feed_like_img.setImageResource(R.drawable.blank_like) //안눌렀을 경우
+                }
+                //좋아요 수 동기화
+                tv_like_cnt.setText(doc.likeCnt.toString())
             }
-            //좋아요 수 동기화
-            tv_like_cnt.setText(doc.likeCnt.toString())
         }
 
         //피드 프로필사진
