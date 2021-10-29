@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.databinding.FragmentMyFeedBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import org.w3c.dom.Text
 
 private lateinit var binding: FragmentMyFeedBinding
 
@@ -45,6 +47,7 @@ class fragmentMyFeed(uid: String?) : Fragment() {
         // Inflate the layout for this fragment
         val feedList = arrayListOf<Feeds>()
         val contentUidList = arrayListOf<String>()
+        val nofeed = view.findViewById<TextView>(R.id.nofeed_myfeed)
 
         firestore?.collection("Feeds")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             feedList.clear()
@@ -73,8 +76,15 @@ class fragmentMyFeed(uid: String?) : Fragment() {
                     }
                 }
             }
-            rv_feeds.adapter = FeedAdapter(feedList,contentUidList)
-            rv_feeds.adapter!!.notifyDataSetChanged()
+
+            if(feedList.size ==0)
+            {
+                nofeed.visibility = View.VISIBLE
+            }
+            else {
+                rv_feeds.adapter = FeedAdapter(feedList, contentUidList)
+                rv_feeds.adapter!!.notifyDataSetChanged()
+            }
         }
 
         rv_feeds = view.findViewById(R.id.rv_page_feeds)

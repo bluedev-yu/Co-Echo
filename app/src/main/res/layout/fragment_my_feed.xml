@@ -8,5 +8,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_page_feeds"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
+
+    <TextView
+        android:id="@+id/nofeed_myfeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="피드가 없습니다. \n피드를 적어보세요!"
+        android:textAlignment="center"
+        android:layout_marginBottom="30dp"
+        android:visibility="invisible" />
 </FrameLayout>

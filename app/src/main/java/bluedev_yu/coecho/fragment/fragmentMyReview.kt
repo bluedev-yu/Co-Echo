@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,6 +45,7 @@ class fragmentMyReview(uid: String?): Fragment() {
 
 
         val reviewList = arrayListOf<ReviewDTO>()
+        val nofeed = view.findViewById<TextView>(R.id.nofeed_myreview)
 
         firestore?.collection("Reviews")?.addSnapshotListener {
                 querySnapshot, firebaseFirestoreException ->
@@ -60,8 +62,13 @@ class fragmentMyReview(uid: String?): Fragment() {
                     //contentUidList.add(snapshot.id)
                 }
             }
+            if(reviewList.size ==0)
+            {
+                nofeed.visibility = View.VISIBLE
+            }
+            else {
             rv_review.adapter = ReviewAdapter(reviewList)
-            rv_review.adapter!!.notifyDataSetChanged()
+            rv_review.adapter!!.notifyDataSetChanged()}
         }
 
         // Inflate the layout for this fragment

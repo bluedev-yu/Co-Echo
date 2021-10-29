@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.compose.animation.core.snap
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,6 +59,7 @@ class FragmentFeeds : Fragment() {
 
         //리사이클러뷰 추가하기
         rv_feed = view.findViewById(R.id.rv_feed)
+        val nofeed = view.findViewById<TextView>(R.id.nofeed)
 
         rv_feed.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -86,6 +88,7 @@ class FragmentFeeds : Fragment() {
                 if(followings.isNotEmpty()) //팔로우 하는사람 있을 때
                 {
                     Log.v("FeedSize",feedList.size.toString())
+
                     firestore?.collection("Feeds")?.whereIn("uid", followings.values.toList())?.addSnapshotListener{
                             querySnapshot, firebaseFirestoreException ->
                         feedList.clear()
@@ -104,10 +107,11 @@ class FragmentFeeds : Fragment() {
                         }
                         if(feedList.size ==0)
                         {
-
+                            nofeed.visibility = View.VISIBLE
                         }
                         else
                         {
+                            nofeed.visibility = View.INVISIBLE
                             rv_feed.adapter = FeedAdapter(feedList,contentUidList)
                             rv_feed.adapter!!.notifyDataSetChanged()
                         }
