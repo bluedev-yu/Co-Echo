@@ -16,7 +16,7 @@ import bluedev_yu.coecho.databinding.FragmentMapSearchBinding
 
 class FragmentMapHashtag(query:String?) : Fragment() {
 
-    lateinit var recyclerView: RecyclerView
+//    lateinit var recyclerView: RecyclerView
     private lateinit var binding: FragmentMapHashtagBinding
 
     override fun onCreateView(
@@ -27,17 +27,17 @@ class FragmentMapHashtag(query:String?) : Fragment() {
         binding = FragmentMapHashtagBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val hashtagList = arrayListOf(
-            Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그1", true),
-            Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그2", true),
-            Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그3", true),
-            Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그4", true)
-        )
+//        val hashtagList = arrayListOf(
+//            Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그1", true),
+//            Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그2", true),
+//            Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그3", true),
+//            Feeds(null, null, null, 0, null, 0, 0, 0, "해시태그4", true)
+//        )
 
-        recyclerView = binding.MapHashtagRecylerView
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = SearchHashtagAdapter(hashtagList)
+//        recyclerView = binding.MapHashtagRecylerView
+//        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+//        recyclerView.setHasFixedSize(true)
+//        recyclerView.adapter = SearchHashtagAdapter(hashtagList)
 
         return view
     }
