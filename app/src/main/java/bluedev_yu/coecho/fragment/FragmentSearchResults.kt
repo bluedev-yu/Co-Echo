@@ -45,4 +45,5 @@ class FragmentSearchResults : Fragment() {
         return view
     }
 
+
 }

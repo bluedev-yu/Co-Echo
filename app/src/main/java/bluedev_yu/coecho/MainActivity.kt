@@ -1,14 +1,18 @@
 package bluedev_yu.coecho
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import bluedev_yu.coecho.fragment.FragmentMap
 import bluedev_yu.coecho.data.model.FollowDTO
@@ -22,8 +26,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.kakao.util.maps.helper.Utility
 
+interface onBack{
 
-class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener{
+    fun onBackPressed()
+}
+
+class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener, onBack{
 
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
@@ -48,7 +56,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         setDefaultFragment()
 
         binding.bottomNavBar.itemIconTintList = null;
-
 
         //firebase 로그인, 권한
         firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener {
@@ -101,12 +108,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             Log.d("권한 허용 여부", "***granted***")
         }
         printHash()
-        //val optionbutton : ImageView = findViewById(R.id.MyPageOptionButton)
-        //val drawerLayout : DrawerLayout = findViewById(R.id.MyPageDrawerLayout)
-        // 햄버거 메뉴 선택시 오른쪽으로 열린다
-        //optionbutton.setOnClickListener{
-        //    drawerLayout.openDrawer(GravityCompat.END)
-        //}
 
     }
 
@@ -117,6 +118,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     }
 
+    @SuppressLint("ResourceType")
     override fun onNavigationItemSelected(item: MenuItem): Boolean { //내비게이션바 아이템 선택시 프래그먼트 교체
         when (item.itemId) {
             R.id.action_sns -> {
@@ -135,6 +137,10 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         return false
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
     private fun setDefaultFragment(){ //앱 실행시 디폴트 프래그먼트 설정
         loadFragment(FragmentSNS())
     }
@@ -142,8 +148,9 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private fun loadFragment(fragment: Fragment) { //프래그먼트 로드
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout, fragment)
-        transaction.disallowAddToBackStack()
-        transaction.commit()
+            .disallowAddToBackStack()
+            .commit()
     }
+
 
 }

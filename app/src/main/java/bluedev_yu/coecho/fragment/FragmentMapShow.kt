@@ -14,9 +14,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.KAKAO_Place
-import bluedev_yu.coecho.Place
-import bluedev_yu.coecho.PlaceAdapter
 import bluedev_yu.coecho.R
+import bluedev_yu.coecho.adapter.PlaceAdapter
+import bluedev_yu.coecho.data.model.Place
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -40,8 +40,8 @@ class FragmentMapShow : Fragment() {
     var UserLati: Double = 35.81//x
     var UserLong: Double = 128.52//y
 
-    lateinit var mapView : MapView
-    lateinit var t_rv_places : RecyclerView
+    lateinit var mapView: MapView
+    lateinit var t_rv_places: RecyclerView
 
     //네비게이션뷰에 들어가는 데이터
     val placeList = arrayListOf<Place>()
@@ -79,16 +79,17 @@ class FragmentMapShow : Fragment() {
             } else {
                 Log.i("mapView nullcheck", "맵뷰 널 아님")
             }
-            mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOff
+            mapView.currentLocationTrackingMode =
+                MapView.CurrentLocationTrackingMode.TrackingModeOff
             //API키 인증 성공 확인 코드(아래 로그가 뜨지 않을 경우 김예현에게 문의)
             mapView.setOpenAPIKeyAuthenticationResultListener { mapView, i, s ->
                 Log.d("카카오맵 인증 로그", "성공")
             }
 
-            //스피너안의 목록
-            val spinnerItems = resources.getStringArray(R.array.spinner_array)
-            thisFragView.findViewById<Spinner>(R.id.MapSpinner).adapter =
-                ArrayAdapter(requireActivity(), R.layout.spinner_item, spinnerItems)
+//            //스피너안의 목록
+//            val spinnerItems = resources.getStringArray(R.array.spinner_array)
+//            thisFragView.findViewById<Spinner>(R.id.MapSpinner).adapter =
+//                ArrayAdapter(requireActivity(), R.layout.spinner_item, spinnerItems)
 
             //맵뷰에 현재 위치 리스너 적용
             mapView.setCurrentLocationEventListener(mCurrentLocationEventListener)
@@ -221,11 +222,12 @@ class FragmentMapShow : Fragment() {
                 var tempLong: Double = p1.mapPointGeoCoord.longitude
                 var tempLati: Double = p1.mapPointGeoCoord.latitude
                 if (tempLong!=UserLong||tempLati!=UserLati) {
+                //if (Math.abs(tempLong - UserLong) + Math.abs(tempLati - UserLati) > 0.00001) {
                     UserLong = p1.mapPointGeoCoord.longitude
                     UserLati = p1.mapPointGeoCoord.latitude
                     Log.i("사용자 경위도", UserLati.toString() + " " + UserLong.toString())
                 }
-                loadRecommendationP(mapView,t_rv_places)
+                loadRecommendationP(mapView, t_rv_places)
             }
         }
 

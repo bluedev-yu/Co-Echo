@@ -19,7 +19,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginRight="3dp"
+            android:layout_marginVertical="3dp"
+            android:layout_marginLeft="5dp">
 
             <ImageButton
                 android:id="@+id/imageButton"
@@ -33,12 +36,12 @@
 
             <RatingBar
                 android:id="@+id/placeRatingBar"
+                style="@style/style_ratingbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/style_ratingbar"
                 android:layout_marginTop="8dp"
                 android:isIndicator="true"
-                app:layout_constraintStart_toStartOf="@id/tv_placeHashtag"
+                app:layout_constraintStart_toStartOf="@id/tv_placeName"
                 app:layout_constraintTop_toBottomOf="@id/tv_placeName" />
 
             <TextView
@@ -50,8 +53,8 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/tv_placeHashtag"
-                app:layout_constraintTop_toBottomOf="@id/tv_placeHashtag" />
+                app:layout_constraintStart_toStartOf="@id/tv_placeName"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_placeCategory"
@@ -65,26 +68,13 @@
                 app:layout_constraintTop_toTopOf="@id/tv_placeName" />
 
             <TextView
-                android:id="@+id/tv_placeHashtag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/lightGreen"
-                android:text="#해시태그"
-                android:textColor="@color/green"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-
-            <TextView
                 android:id="@+id/tv_placeReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
                 android:text="방문자리뷰"
                 android:textColor="#555555"
-                app:layout_constraintStart_toStartOf="@id/tv_placeHashtag"
+                app:layout_constraintStart_toStartOf="@id/tv_placeName"
                 app:layout_constraintTop_toBottomOf="@id/placeRatingBar" />
 
             <TextView
@@ -108,7 +98,7 @@
                 android:text="대구 달서구 진천로 114-18"
                 android:textColor="#555555"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/tv_placeHashtag"
+                app:layout_constraintStart_toStartOf="@id/tv_placeName"
                 app:layout_constraintTop_toBottomOf="@id/tv_placeReview" />
 
             <TextView
