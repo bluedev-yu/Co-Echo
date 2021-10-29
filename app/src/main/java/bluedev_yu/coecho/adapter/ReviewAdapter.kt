@@ -1,6 +1,7 @@
 package bluedev_yu.coecho.adapter
 
 import android.media.Image
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,9 @@ import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.ReviewDTO
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 class ReviewAdapter(val reviewList: ArrayList<ReviewDTO>): RecyclerView.Adapter<ReviewAdapter.CustomViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewAdapter.CustomViewHolder {
@@ -34,7 +38,45 @@ class ReviewAdapter(val reviewList: ArrayList<ReviewDTO>): RecyclerView.Adapter<
         else
             holder.title.setText(R.string.grade3)
         holder.strName.text = reviewList.get(position).strName
-        holder.timeStamp.text = reviewList.get(position).timestamp.toString()
+
+        //타임스탬프 -> 시간:분 (08:23)
+        fun Long.convertHourMinute(): String = DateFormat.format("HH:mm", this).toString()
+
+        //타임스탬프 -> 날짜 시간:분 (2021.01.07 08:23)
+        fun Long.convertDateTimeMinute(): String =
+            DateFormat.format("yyyy.MM.dd HH:mm", this).toString()
+
+        fun Long.convertBoardTime(): String {
+            val now = Calendar.getInstance(Locale.KOREA)
+            val diffInMillis = now.timeInMillis - this //현재와의 밀리초 차이
+            //오늘 기준 00시
+            now.set(Calendar.HOUR_OF_DAY, 0)
+            now.set(Calendar.MINUTE, 0)
+            now.set(Calendar.SECOND, 0)
+            now.set(Calendar.MILLISECOND, 0)
+            //toDays()로 하면 날이 아예 24시간이 자나야 날 수로쳐서 계산이 이상하게됨
+            val todayOfHour =
+                TimeUnit.MILLISECONDS.toHours(now.timeInMillis)
+            val thisOfHour = TimeUnit.MILLISECONDS.toHours(this)
+            val currentDiffHour = diffInMillis / 1000 / 60 / 60L //현재와 시간 차이
+            return if (currentDiffHour < 1) { //현재시간 60분 전
+                (diffInMillis / 1000 / 60L).toString() + "분 전"
+            } else {
+                if (todayOfHour < thisOfHour || (
+                            thisOfHour - todayOfHour in 0..23)
+                ) { //오늘
+                    this.convertHourMinute() //(08:23)
+                } else { // 하루 이상 지난 날
+                    this.convertDateTimeMinute() // (2021.01.07 08:23)
+                }
+            }
+        }
+
+
+
+        holder.timeStamp.text = reviewList.get(position).timestamp?.convertBoardTime()
+
+
         holder.content.text = reviewList.get(position).content
         Glide.with(holder.itemView.context).load(reviewList.get(position).reviewImage!!).into(holder.reviewImage) //피드 이미지
 

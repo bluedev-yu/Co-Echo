@@ -54,7 +54,7 @@ class CommentAdapter(val commentList: ArrayList<Feeds.Comment>): RecyclerView.Ad
             override fun onClick(v: View?) {
                 var fragmentUserPage = FragmentMyPage()
                 var bundle = Bundle()
-                bundle.putString("uid", auth?.uid.toString())
+                bundle.putString("uid", commentList.get(position).uid.toString())
                 fragmentUserPage.arguments = bundle
 
                 val activity = v!!.context as AppCompatActivity

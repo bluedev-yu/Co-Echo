@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="피드가 없습니다. \n 리뷰를 적어보세요!"
+        android:text="리뷰가 없습니다. \n 리뷰를 적어보세요!"
         android:textAlignment="center"
         android:layout_marginBottom="30dp"
         android:visibility="invisible" />

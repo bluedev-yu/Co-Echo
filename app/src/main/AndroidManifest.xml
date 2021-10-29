@@ -17,22 +17,17 @@
         android:theme="@style/Theme.CoEcho"
         android:usesCleartextTraffic="true">
         <activity android:name=".MyPageBackground"></activity>
-        <activity android:name="bluedev_yu.MyPageBackGround"></activity>
         <activity android:name=".FeedDetail" />
         <activity android:name=".UploadFeed" />
         <activity android:name=".UploadReview"></activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"/>
+
         <activity android:name=".splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".UploadFeed" />
-        <activity android:name=".UploadReview" >
-        </activity>
-        <activity android:name=".LoginActivity">
         </activity>
         <activity
             android:name=".MainActivity"

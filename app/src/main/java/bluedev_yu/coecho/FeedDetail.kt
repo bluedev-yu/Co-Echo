@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import kotlinx.android.synthetic.main.activity_feed_detail.*
 import org.w3c.dom.Text
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -217,27 +216,21 @@ class FeedDetail : AppCompatActivity() {
 
         feed_timeStamp.setText(timeStamp.convertBoardTime())
 
-        when(title) //칭호
-        feed_timeStamp.setText(timeStamp.toString())
-
-        if(title!!.toString().toInt() <20) //칭호
-        {
-            tv_title.setText(R.string.grade1)
-        }
-        else if(title!!.toString().toInt() <40) //칭호
-        {
-            tv_title.setText(R.string.grade2)
-        }
-        else
-            tv_title.setText(R.string.grade3)
-
+        if (title!!.toString().toInt() < 20) //칭호
+            {
+                tv_title.setText(R.string.grade1)
+            } else if (title!!.toString().toInt() < 40) //칭호
+            {
+                tv_title.setText(R.string.grade2)
+            } else
+                tv_title.setText(R.string.grade3)
 
         //게시 버튼
         tv_uploadComment = findViewById(R.id.feed_comment_upload)
         tv_uploadComment.setOnClickListener {
             //댓글 게시 눌렀을 때 데이터 올리기
             val comment = Feeds.Comment()
-
+            var feed_user_comment = findViewById<TextView>(R.id.feed_user_comment)
             comment.strName = user!!.displayName
             if(feed_user_comment.text.toString().equals(""))
             {
