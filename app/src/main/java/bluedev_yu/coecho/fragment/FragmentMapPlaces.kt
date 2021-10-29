@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import bluedev_yu.coecho.Place
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.adapter.MapPlacesAdapter
+import bluedev_yu.coecho.data.model.Place
 import bluedev_yu.coecho.databinding.FragmentMapPlacesBinding
 
 

@@ -9,8 +9,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import bluedev_yu.coecho.Place
 import bluedev_yu.coecho.R
+import bluedev_yu.coecho.data.model.Place
 import bluedev_yu.coecho.fragment.FragmentMapDetail
 import bluedev_yu.coecho.fragment.FragmentMapHashtag
 import kotlinx.coroutines.NonDisposableHandle.parent

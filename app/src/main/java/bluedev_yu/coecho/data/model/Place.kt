@@ -1,4 +1,4 @@
-package bluedev_yu.coecho
+package bluedev_yu.coecho.data.model
 
 class Place(
     var placeHashtag: String?,
