@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -170,11 +171,17 @@ class FeedDetail : AppCompatActivity() {
         tv_hashtag.setText("#"+hashtag.toString())
         tv_like_cnt.setText(likeCnt.toString())
         feed_timeStamp.setText(timeStamp.toString())
-        when(title) //칭호
+
+        if(title!!.toString().toInt() <20) //칭호
         {
-            0 -> tv_title.setText(R.string.grade1)
-            1 -> tv_title.setText(R.string.grade2)
+            tv_title.setText(R.string.grade1)
         }
+        else if(title!!.toString().toInt() <40) //칭호
+        {
+            tv_title.setText(R.string.grade2)
+        }
+        else
+            tv_title.setText(R.string.grade3)
 
 
         //게시 버튼
@@ -184,17 +191,25 @@ class FeedDetail : AppCompatActivity() {
             val comment = Feeds.Comment()
 
             comment.strName = user!!.displayName
-            comment.comment = feed_user_comment.text.toString()
-            comment.uid = user!!.uid
-            comment.timestamp = System.currentTimeMillis()
+            if(feed_user_comment.text.toString().equals(""))
+            {
+                Toast.makeText(this,"내용을 입력해 주세요!",Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                Log.v("Comment",feed_user_comment.toString())
+                comment.comment = feed_user_comment.text.toString()
+                comment.uid = user!!.uid
+                comment.timestamp = System.currentTimeMillis()
 
-            Log.v("commentSize Before", commentList.size.toString())
-            firestore?.collection("Feeds")?.document(contentUid!!)?.collection("Comments")?.document()?.set(comment)
-            Log.v("commentSize After", commentList.size.toString())
-            firestore?.collection("Feeds")?.document(contentUid!!)?.update("commentCnt",(commentCnt+1))
+                Log.v("commentSize Before", commentList.size.toString())
+                firestore?.collection("Feeds")?.document(contentUid!!)?.collection("Comments")?.document()?.set(comment)
+                Log.v("commentSize After", commentList.size.toString())
+                firestore?.collection("Feeds")?.document(contentUid!!)?.update("commentCnt",(commentCnt+1))
 
 
-            feed_user_comment.setText("")
+                feed_user_comment.setText("")
+            }
 
         }
 

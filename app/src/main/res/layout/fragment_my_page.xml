@@ -152,6 +152,7 @@
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/MypageText"
             app:layout_constraintStart_toStartOf="@+id/MypageText"
             app:layout_constraintTop_toBottomOf="@+id/MypageText" />
 

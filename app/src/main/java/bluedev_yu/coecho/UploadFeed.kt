@@ -77,6 +77,10 @@ class UploadFeed : AppCompatActivity() {
             //해시태그, 글, 공개범위 등록
             FeedDTO.hashtag = etHashtag.text.toString() //해시태그 문자열
             FeedDTO.content = etText.text.toString() //글 문자열
+            FeedDTO.privacy = privacy
+            FeedDTO.uid = auth?.uid
+            FeedDTO.likes = HashMap()
+            FeedDTO.timeStamp = System.currentTimeMillis()
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -84,35 +88,55 @@ class UploadFeed : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             )
             CoroutineScope(Dispatchers.Main).launch {
+
+                //null check하기
                 FeedDTO.feedImgUrl = funImageUpLoad()
+                 if(FeedDTO.content?.equals("") == true) //내용없음
+                {
+                    makeToast(true,"내용을 입력해 주세요!")
+                }
+                else if(FeedDTO.hashtag?.equals("")== true) //해시태그없음
+                {
+                    makeToast(true, "해시태그를 입력해 주세요!")
+                }
+                else if(FeedDTO.feedImgUrl.equals(null))
+                {
+                    makeToast(true,"사진을 업로드 해주세요!")
+                }
+                else //다 만족
+                {
+                    makeToast(true,"사진을 업로드하고 있습니다...")
+                    //피드에서 나의 정보 가져오기
+                    firestore?.collection("User")?.document(auth?.uid.toString())?.get()
+                        ?.addOnSuccessListener { task ->
+                            var document = task?.toObject(userDTO::class.java)
+                            FeedDTO.imageUrl = document?.imageUrl
+                            FeedDTO.strName = document?.strName
+                            FeedDTO.title = document?.title
+                            FeedDTO.commentCnt = 0
 
-                FeedDTO.privacy = privacy
-                FeedDTO.uid = auth?.uid
-                FeedDTO.likes = HashMap()
-                FeedDTO.timeStamp = System.currentTimeMillis()
-
-                //피드에서 나의 정보 가져오기
-                firestore?.collection("User")?.document(auth?.uid.toString())?.get()
-                    ?.addOnSuccessListener { task ->
-                        var document = task?.toObject(userDTO::class.java)
-                        FeedDTO.imageUrl = document?.imageUrl
-                        FeedDTO.strName = document?.strName
-                        FeedDTO.title = document?.title
-                        FeedDTO.commentCnt = 0
-
-                        //피드 정보 업로드
-                        firestore?.collection("Feeds")?.document()?.set(FeedDTO)
-                            ?.addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    makeToast(task.isSuccessful,"게시 완료!")
-                                    makeToast(task.isSuccessful,"환경을 위해 " + (FeedDTO.title!! + 1) + "만큼 노력하셨네요!")
-                                    startActivity(Intent(this@UploadFeed,MainActivity::class.java))
+                            //피드 정보 업로드
+                            firestore?.collection("Feeds")?.document()?.set(FeedDTO)
+                                ?.addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        makeToast(task.isSuccessful, "게시 완료!")
+                                        makeToast(
+                                            task.isSuccessful,
+                                            "환경을 위해 " + (FeedDTO.title!! + 1) + "만큼 노력하셨네요!"
+                                        )
+                                        startActivity(
+                                            Intent(
+                                                this@UploadFeed,
+                                                MainActivity::class.java
+                                            )
+                                        )
+                                    }
                                 }
-                            }
 
-                        firestore?.collection("User")?.document(auth?.uid.toString())
-                            ?.update("title", FeedDTO.title!! + 1)
-                    }
+                            firestore?.collection("User")?.document(auth?.uid.toString())
+                                ?.update("title", FeedDTO.title!! + 1)
+                        }
+                }
             }
         }
     }
@@ -136,9 +160,8 @@ class UploadFeed : AppCompatActivity() {
         var user = auth?.currentUser?.uid.toString()
         var imgFileName = "Feed" + user + timestamp + ".png"
         var storageRef = firestorage?.reference?.child("Feed")?.child(imgFileName)
-
-        makeToast(true,"업로드중입니다. 잠시 기다려주세요")
         try {
+            makeToast(true,"업로드중입니다. 잠시 기다려주세요")
             storageRef?.putFile(uriPhoto!!)?.await()
             val url = storageRef?.downloadUrl?.await().toString()
             return url

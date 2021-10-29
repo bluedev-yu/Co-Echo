@@ -11,14 +11,17 @@
         android:id="@+id/splashText"
         android:layout_width="261dp"
         android:layout_height="218dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="400dp"
         android:layout_marginBottom="120dp"
         android:fontFamily="@font/bmhannaair"
-        android:textColor="@color/logoYello"
-        android:textSize="20dp"
         android:lineSpacingExtra="5dp"
         android:text="패스트패션 브랜드 H&amp;M이 폐기물로 만든 지속가능한 소재로 \'컨셔스 익스클루시브 컬렉션\'을 만들었다."
+        android:textColor="@color/logoYello"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

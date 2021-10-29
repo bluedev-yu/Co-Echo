@@ -87,9 +87,28 @@ class UploadReview : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             )
                 CoroutineScope(Dispatchers.Main).launch {
-                    ReviewDTO.reviewImage = funImageUpLoad()
                     Log.v("ReviewImage",ReviewDTO.reviewImage.toString())
-
+                    ReviewDTO.reviewImage = funImageUpLoad()
+                    //null check하기
+                    if(ReviewDTO.star!!<0.5)
+                    {
+                        makeToast(true,"별점을 입력해 주세요!")
+                    }
+                    else if(ReviewDTO.content?.equals("") == true) //내용없음
+                    {
+                        makeToast(true,"내용을 입력해 주세요!")
+                    }
+                    else if(ReviewDTO.hashtag?.equals("")== true) //해시태그없음
+                    {
+                        makeToast(true, "해시태그를 입력해 주세요!")
+                    }
+                    else if(ReviewDTO.reviewImage.equals(null))
+                    {
+                        makeToast(true,"사진을 업로드 해주세요!")
+                    }
+                    else //다 만족
+                    {
+                        makeToast(true,"사진을 업로드하고 있습니다...")
                     firestore?.collection("User")?.document(auth?.uid.toString())?.get()
                         ?.addOnSuccessListener { task ->
                             var document = task?.toObject(userDTO::class.java)
@@ -109,7 +128,7 @@ class UploadReview : AppCompatActivity() {
                                 ?.update("title", ReviewDTO.title!! + 1)
                         }
 
-                }
+                }}
         }
     }
 
@@ -133,9 +152,8 @@ class UploadReview : AppCompatActivity() {
         var imgFileName = "Review" + user + timestamp + ".png"
         var storageRef = firestorage?.reference?.child("Review")?.child(imgFileName)
 
-        makeToast(true,"업로드중입니다. 잠시 기다려주세요")
         try {
-            Log.v("in!!!!","하는중..")
+            makeToast(true,"업로드중입니다. 잠시 기다려주세요")
             storageRef?.putFile(uriPhoto!!)?.await()
             val url = storageRef?.downloadUrl?.await().toString()
             return url

@@ -277,8 +277,6 @@ class FragmentMyPage : Fragment() {
         //탭레이아웃
         val fragmentManager = (activity as FragmentActivity).supportFragmentManager
 
-        Toast.makeText(requireContext(), "페이지/클릭한 사람의 uid : $uid", Toast.LENGTH_SHORT).show()
-
         val pagerAdapter = FragmentAdapter(childFragmentManager, uid)
         val pager = viewProfile!!.findViewById<ViewPager>(R.id.viewPager)
         pager.adapter = pagerAdapter
