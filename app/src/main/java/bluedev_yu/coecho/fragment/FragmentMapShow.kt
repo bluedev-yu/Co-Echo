@@ -86,10 +86,10 @@ class FragmentMapShow : Fragment() {
                 Log.d("카카오맵 인증 로그", "성공")
             }
 
-            //스피너안의 목록
-            val spinnerItems = resources.getStringArray(R.array.spinner_array)
-            thisFragView.findViewById<Spinner>(R.id.MapSpinner).adapter =
-                ArrayAdapter(requireActivity(), R.layout.spinner_item, spinnerItems)
+//            //스피너안의 목록
+//            val spinnerItems = resources.getStringArray(R.array.spinner_array)
+//            thisFragView.findViewById<Spinner>(R.id.MapSpinner).adapter =
+//                ArrayAdapter(requireActivity(), R.layout.spinner_item, spinnerItems)
 
             //맵뷰에 현재 위치 리스너 적용
             mapView.setCurrentLocationEventListener(mCurrentLocationEventListener)

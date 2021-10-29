@@ -42,5 +42,9 @@ class KAKAO_Place {
                              @Query("x") x:String,
                              @Query("y") y:String,
                              @Query("radius")radius:Int):retrofit2.Call<ResultSearchKeyword>
+
+        @GET("/v2/local/search/keyword.json")
+        fun getSearchKeywordWithoutLoca(@Header("Authorization")key: String,
+                             @Query("query") query: String):retrofit2.Call<ResultSearchKeyword>
     }
 }

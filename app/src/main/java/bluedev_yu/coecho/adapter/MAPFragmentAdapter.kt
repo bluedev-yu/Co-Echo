@@ -6,14 +6,15 @@ import androidx.fragment.app.FragmentPagerAdapter
 import bluedev_yu.coecho.fragment.FragmentMapHashtag
 import bluedev_yu.coecho.fragment.FragmentMapPlaces
 
-class MAPFragmentAdapter(fm:FragmentManager):FragmentPagerAdapter(fm){
+class MAPFragmentAdapter(fm:FragmentManager,query:String?):FragmentPagerAdapter(fm){
+    private val query: String? = query
     override fun getCount():Int = 2
 
     override fun getItem(position: Int): Fragment {
         val fragment = when(position)
         {
-            0 -> FragmentMapHashtag()
-            else -> FragmentMapPlaces()
+            0 -> FragmentMapHashtag(query)
+            else -> FragmentMapPlaces(query)
 
         }
         return fragment

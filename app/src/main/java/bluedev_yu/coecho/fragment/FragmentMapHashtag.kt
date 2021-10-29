@@ -14,7 +14,7 @@ import bluedev_yu.coecho.databinding.FragmentMapHashtagBinding
 import bluedev_yu.coecho.databinding.FragmentMapSearchBinding
 
 
-class FragmentMapHashtag : Fragment() {
+class FragmentMapHashtag(query:String?) : Fragment() {
 
     lateinit var recyclerView: RecyclerView
     private lateinit var binding: FragmentMapHashtagBinding
@@ -42,10 +42,13 @@ class FragmentMapHashtag : Fragment() {
         return view
     }
 
-    private fun newInstant() : FragmentMapHashtag {
+    private fun newInstant(query: String?): FragmentMapHashtag {
         val bundle = Bundle()
-        val frag = FragmentMapHashtag()
+        val frag = FragmentMapHashtag(query)
+        bundle.putString("query", query)
         frag.arguments = bundle
         return frag
     }
+
+
 }

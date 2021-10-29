@@ -32,30 +32,6 @@ class PlaceAdapter(val placeList: ArrayList<Place>) :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         var tempRes: Pair<String, String>?
-        if (placeList.get(position).placeHashtag == null) {
-            CoroutineScope(Dispatchers.Main).launch {
-                var pid = DB_Place().search_data(
-                    placeList.get(position).placeName,
-                    placeList.get(position).placeAdress
-                )
-                if (pid != "false" && pid != "none") {
-                    tempRes = DB_Review().getHashtag(pid)
-                    if (tempRes != null) {
-                        if (tempRes!!.first != "") {
-                            Log.i("비져빌리티","a"+placeList.get(position).placeName+tempRes)
-                            holder.placeHashtag.visibility = View.VISIBLE
-                            holder.placeHashtag.text = tempRes!!.first
-                        }
-                    } else {
-                        Log.i("비져빌리티","b"+placeList.get(position).placeName+tempRes)
-                        holder.placeHashtag.visibility = View.INVISIBLE
-                    }
-                } else {
-                    Log.i("비져빌리티","c"+placeList.get(position).placeName)
-                    holder.placeHashtag.visibility = View.INVISIBLE
-                }
-            }
-        }
         holder.placeName.text = placeList.get(position).placeName
         holder.placeCategory.text = placeList.get(position).placeCategory
         holder.placeReviewCnt.text = placeList.get(position).placeReviewCnt.toString()
@@ -93,7 +69,6 @@ class PlaceAdapter(val placeList: ArrayList<Place>) :
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var placeCardView = itemView.findViewById<CardView>(R.id.place_cardview) //장소 카드뷰
-        var placeHashtag = itemView.findViewById<TextView>(R.id.tv_placeHashtag) //장소 해시태그
         var placeName = itemView.findViewById<TextView>(R.id.tv_placeName) //장소 이름
         var placeCategory = itemView.findViewById<TextView>(R.id.tv_placeCategory) //장소 카테고리
         var placeReviewCnt = itemView.findViewById<TextView>(R.id.tv_placeReviewCnt) //장소 리뷰 개수

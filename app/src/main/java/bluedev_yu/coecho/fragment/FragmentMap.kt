@@ -46,8 +46,10 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener,
         searchView = binding.MapSearchBar
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
+
+                val bundle = Bundle().apply{ putString("query", query)}
                 val transaction = childFragmentManager.beginTransaction()
-                transaction.replace(R.id.MapFragment, FragmentMapSearch())
+                transaction.replace(R.id.MapFragment, FragmentMapSearch().apply { arguments=bundle })
                 transaction.disallowAddToBackStack()
                 transaction.commit()
                 return false

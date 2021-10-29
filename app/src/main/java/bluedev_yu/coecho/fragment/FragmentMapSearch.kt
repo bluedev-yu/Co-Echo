@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import bluedev_yu.coecho.R
+import bluedev_yu.coecho.SNSFragementAdapter
 import bluedev_yu.coecho.adapter.MAPFragmentAdapter
 import bluedev_yu.coecho.databinding.FragmentMapSearchBinding
 
@@ -26,10 +27,11 @@ class FragmentMapSearch : Fragment() {
 
         binding = FragmentMapSearchBinding.inflate(layoutInflater)
         val view = binding.root
-
+        val query=arguments?.getString("query")
         val MapFragmentManager = (activity as FragmentActivity).supportFragmentManager
 
-        val MapPagerAdapter = MAPFragmentAdapter(childFragmentManager)
+
+        val MapPagerAdapter = MAPFragmentAdapter(childFragmentManager,query)
         val MapPager = binding.MapViewPager
         MapPager.adapter = MapPagerAdapter
         val MapTab = binding.MapTabs
