@@ -24,6 +24,8 @@ class FragmentResultPeople(query: String?) : Fragment() {
     var firestore : FirebaseFirestore? = null
     var auth : FirebaseAuth?= null
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

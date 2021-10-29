@@ -1,4 +1,4 @@
-package bluedev_yu.coecho
+package bluedev_yu.coecho.adapter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,20 +9,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import bluedev_yu.coecho.Place
+import bluedev_yu.coecho.R
 import bluedev_yu.coecho.fragment.PlaceDetailFragment
 
 class PlaceAdapter (val placeList: ArrayList<Place>): RecyclerView.Adapter<PlaceAdapter.CustomViewHolder>(){
 
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PlaceAdapter.CustomViewHolder {
+    ): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate((R.layout.list_place), parent, false)
         return CustomViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: PlaceAdapter.CustomViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.placeCardView.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
                 var fragmentPlaceDetail = PlaceDetailFragment()

@@ -33,9 +33,9 @@
 
             <RatingBar
                 android:id="@+id/placeRatingBar"
+                style="@style/style_ratingbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/style_ratingbar"
                 android:layout_marginTop="8dp"
                 android:isIndicator="true"
                 app:layout_constraintStart_toStartOf="@id/tv_placeHashtag"
