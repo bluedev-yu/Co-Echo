@@ -2,8 +2,10 @@ package bluedev_yu.coecho
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -14,13 +16,19 @@ import androidx.core.content.ContextCompat
 import bluedev_yu.coecho.databinding.ActivityMyPageBackgroundBinding
 import bluedev_yu.coecho.sticker.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_my_page_background.*
+import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
+import java.lang.Exception
 import java.util.*
 import java.util.Base64.getDecoder
 
 class MyPageBackground : AppCompatActivity() {
     private lateinit var binding: ActivityMyPageBackgroundBinding
+    var firestorage : FirebaseStorage? = null
+    var auth : FirebaseAuth?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +36,9 @@ class MyPageBackground : AppCompatActivity() {
         binding = ActivityMyPageBackgroundBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        auth = FirebaseAuth.getInstance()
+        firestorage = FirebaseStorage.getInstance()
 
 //        val view: View = this.window.decorView.findViewById(android.R.id.content)
         if(view == null){
@@ -124,7 +135,8 @@ class MyPageBackground : AppCompatActivity() {
 //            Toast.makeText(this, "클릭됐음", Toast.LENGTH_SHORT).show()
 
             //save layout as an image
-            val bmp: Bitmap = getBitmapFromView(testlayout)
+            val bmp: Bitmap = getBitmapFromView(testlayout) //저장해야할 비트맵 이미지
+
 //            val backgroundImgStr: String? = BitmapToString(bmp) //백그라운드 이미지
             val backgroundImg = bmp as ImageView
 
@@ -163,4 +175,29 @@ class MyPageBackground : AppCompatActivity() {
         return returnedBitmap
     }
 
+    suspend fun funImageUpLoad(bitmap : Bitmap): String? {
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var user = auth?.currentUser?.uid.toString()
+        var imgFileName = "MypageBackground" + user + timestamp + ".png"
+        var storageRef = firestorage?.reference?.child("MypageBackground")?.child(imgFileName)
+        try {
+            makeToast(true,"업로드중입니다. 잠시 기다려주세요")
+            var stream : ByteArrayOutputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG,100,stream)
+            var data = stream.toByteArray()
+
+            storageRef?.putBytes(data)?.await()
+            val url = storageRef?.downloadUrl?.await().toString()
+            return url
+        } catch (e: Exception) {
+            Log.e("error:", "error:" + e.message.toString())
+            return null
+        }
+    }
+
+    fun makeToast(success: Boolean,text : String){
+        if (success){
+            Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+        }
+    }
 }
