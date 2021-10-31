@@ -175,7 +175,6 @@ class FeedDetail : AppCompatActivity() {
             likeEvent()
         }
 
-
         tv_name.setText(strName.toString())
         tv_content.setText(content.toString())
         tv_hashtag.setText("#"+hashtag.toString())
@@ -263,6 +262,7 @@ class FeedDetail : AppCompatActivity() {
             {
                 commentList.add(snapshot.toObject(Feeds.Comment::class.java)!!)
             }
+            commentList.sortByDescending { it.timestamp }
             rv_comments.adapter = CommentAdapter(commentList)
             rv_comments.adapter!!.notifyDataSetChanged()
         }

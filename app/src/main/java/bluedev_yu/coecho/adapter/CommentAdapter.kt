@@ -1,5 +1,6 @@
 package bluedev_yu.coecho.adapter
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,7 @@ class CommentAdapter(val commentList: ArrayList<Feeds.Comment>): RecyclerView.Ad
             {
                 val imageUrl = documentSnapshot?.data!!["imageUrl"]
                 //프로필사진
+
                 if(imageUrl == null) //기본 이미지
                     Glide.with(holder.itemView.context).load(R.drawable.default_profilephoto).apply(
                         RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지

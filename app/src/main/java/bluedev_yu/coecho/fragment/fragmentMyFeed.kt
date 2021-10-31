@@ -82,6 +82,7 @@ class fragmentMyFeed(uid: String?) : Fragment() {
                 nofeed.visibility = View.VISIBLE
             }
             else {
+                feedList.sortByDescending { it.timeStamp }
                 rv_feeds.adapter = FeedAdapter(feedList, contentUidList)
                 rv_feeds.adapter!!.notifyDataSetChanged()
             }

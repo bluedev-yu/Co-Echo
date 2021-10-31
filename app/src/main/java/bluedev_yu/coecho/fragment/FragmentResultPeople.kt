@@ -50,7 +50,6 @@ class FragmentResultPeople(query: String?) : Fragment() {
                 if(imsi?.strName!!.contains(query!!) && !imsi.uid!!.equals(auth?.uid.toString())) //검색내용 포함시
                     userlist.add(imsi)
             }
-
             rv_result_people.adapter = SearchPeopleAdapter(userlist)
             rv_result_people.adapter!!.notifyDataSetChanged()
 

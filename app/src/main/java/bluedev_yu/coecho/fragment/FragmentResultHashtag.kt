@@ -50,6 +50,7 @@ class FragmentResultHashtag(query: String?) : Fragment() {
                     contentUidList.add(snapshot.id)
                 }
             }
+            hashtagList.sortByDescending { it.timeStamp }
             rv_result_hashtag.adapter = FeedAdapter(hashtagList,contentUidList)
             rv_result_hashtag.adapter!!.notifyDataSetChanged()
 
