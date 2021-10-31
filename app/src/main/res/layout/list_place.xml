@@ -45,6 +45,18 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_placeName" />
 
             <TextView
+                android:id="@+id/tv_ratingValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="0.0"
+                android:layout_marginLeft="8dp"
+                android:textColor="#555555"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@id/placeRatingBar"
+                app:layout_constraintBottom_toBottomOf="@id/placeRatingBar"/>
+
+            <TextView
                 android:id="@+id/tv_placeName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="30"
+                android:text="0"
                 android:textColor="#555555"
                 app:layout_constraintBottom_toBottomOf="@id/tv_placeReview"
                 app:layout_constraintStart_toEndOf="@id/tv_placeReview"

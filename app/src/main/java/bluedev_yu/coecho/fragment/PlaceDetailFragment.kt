@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_place_detail.*
 import kotlinx.android.synthetic.main.fragment_place_detail.view.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import java.util.ArrayList
 
 class PlaceDetailFragment : Fragment() {
 
@@ -141,7 +142,6 @@ class PlaceDetailFragment : Fragment() {
         // Inflate the layout for this fragment
         return thisFragView
     }
-
     suspend fun loadPlaceReview(pid: String, list: ArrayList<ReviewDTO>): Boolean {
         val db = Firebase.firestore
         var a = db.collection("Reviews").whereEqualTo("pid", pid).get()
@@ -160,6 +160,5 @@ class PlaceDetailFragment : Fragment() {
             return false
         }
     }
-
 
 }

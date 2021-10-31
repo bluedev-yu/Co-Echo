@@ -223,7 +223,7 @@ class FragmentMapShow : Fragment() {
                 var tempLong: Double = p1.mapPointGeoCoord.longitude
                 var tempLati: Double = p1.mapPointGeoCoord.latitude
                 //if (tempLong!=UserLong||tempLati!=UserLati) {
-                if (Math.abs(tempLong - UserLong) + Math.abs(tempLati - UserLati) > 0.00001) {
+                if (Math.abs(tempLong - UserLong) + Math.abs(tempLati - UserLati) > 0.0005) {
                     UserLong = p1.mapPointGeoCoord.longitude
                     UserLati = p1.mapPointGeoCoord.latitude
                     Log.i("사용자 경위도", UserLati.toString() + " " + UserLong.toString())

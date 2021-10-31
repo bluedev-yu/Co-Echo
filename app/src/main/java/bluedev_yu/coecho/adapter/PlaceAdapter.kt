@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -17,6 +18,7 @@ import bluedev_yu.coecho.fragment.PlaceDetailFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class PlaceAdapter(val placeList: ArrayList<Place>) :
     RecyclerView.Adapter<PlaceAdapter.CustomViewHolder>() {
@@ -31,15 +33,26 @@ class PlaceAdapter(val placeList: ArrayList<Place>) :
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        var tempRes: Pair<String, String>?
-        holder.placeName.text = placeList.get(position).placeName
+
+        var placeName = placeList.get(position).placeName
+        var placeAddress=placeList.get(position).placeAdress
+        holder.placeName.text = placeName
         holder.placeCategory.text = placeList.get(position).placeCategory
-        holder.placeReviewCnt.text = placeList.get(position).placeReviewCnt.toString()
-        holder.placeLocation.text = placeList.get(position).placeAdress
+        holder.placeLocation.text = placeAddress
         if (placeList.get(position).placeDistanceFromMyLocation != "") {
             holder.placeDistanceFromMyLocation.text =
                 placeList.get(position).placeDistanceFromMyLocation + "m"
         }
+
+        var tempRes: Pair<Int, Float>?
+        CoroutineScope(Dispatchers.Main).launch{
+            tempRes=DB_Review().getReviewMeta(placeName,placeAddress)
+            Log.d("placeadapter ",tempRes!!.first.toString()+" "+tempRes!!.second.toString())
+            holder.placeReviewCnt.text= tempRes!!.first.toString()
+            holder.placeRatingBar.rating= tempRes!!.second
+            holder.placeRating.text=tempRes!!.second.toString()
+        }
+
         holder.placeCardView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 var fragmentPlaceDetail = PlaceDetailFragment()
@@ -75,5 +88,7 @@ class PlaceAdapter(val placeList: ArrayList<Place>) :
         var placeLocation = itemView.findViewById<TextView>(R.id.tv_placeLocation) //장소 주소
         var placeDistanceFromMyLocation =
             itemView.findViewById<TextView>(R.id.tv_placeDistanceFromMyLocation) //내 위치로부터 거리
+        var placeRatingBar = itemView.findViewById<RatingBar>(R.id.placeRatingBar) //별점 이미지
+        var placeRating=itemView.findViewById<TextView>(R.id.tv_ratingValue) //별점 글자
     }
 }
