@@ -22,7 +22,7 @@
             android:layout_marginLeft="20dp"
             android:text="SNS"
             android:textColor="#00B06A"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:layoutDirection="rtl"
             android:text="에코 공간"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <SearchView
