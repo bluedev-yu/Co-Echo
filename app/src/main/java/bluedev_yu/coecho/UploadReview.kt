@@ -35,15 +35,15 @@ class UploadReview : AppCompatActivity() {
     lateinit var etHashtag: EditText
     lateinit var etText: EditText
     lateinit var tvUpload: TextView
-    lateinit var ratingBar : RatingBar
+    lateinit var ratingBar: RatingBar
 
-    private var view  : View? = null
-    var auth : FirebaseAuth? = null
-    var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
-    var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
+    private var view: View? = null
+    var auth: FirebaseAuth? = null
+    var firestore: FirebaseFirestore? = null //String 등 자료형 데이터베이스
+    var firestorage: FirebaseStorage? = null //사진, GIF 등의 파일 데이터베이스
 
-    var pickImageFromAlbum =0
-    var uriPhoto : Uri?= null
+    var pickImageFromAlbum = 0
+    var uriPhoto: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,11 +59,11 @@ class UploadReview : AppCompatActivity() {
         }
 
         //리뷰 사진 업로드
-        val ReviewPhotoUploadButton : TextView = findViewById(R.id.ReviewImageUploadButton)
-        ReviewPhotoUploadButton.setOnClickListener{
+        val ReviewPhotoUploadButton: TextView = findViewById(R.id.ReviewImageUploadButton)
+        ReviewPhotoUploadButton.setOnClickListener {
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type = "image/*"
-            startActivityForResult(photoPickerIntent,pickImageFromAlbum)
+            startActivityForResult(photoPickerIntent, pickImageFromAlbum)
         }
 
         etHashtag = findViewById(R.id.rv_hashtag)
@@ -74,20 +74,35 @@ class UploadReview : AppCompatActivity() {
         tvUpload.setOnClickListener {
             //해시태그, 글, 공개범위 등록
             var ReviewDTO = ReviewDTO()
-            var tempHash= etHashtag.text.toString()
-            if(!tempHash.startsWith("#")){
-                Log.i("구간 첵","a")
-                ReviewDTO.hashtag="#"+tempHash //해시태그 문자열
-                }
-            else{
-                Log.i("구간 첵","b")
-                ReviewDTO.hashtag=tempHash
+            var tempHash = etHashtag.text.toString()
+            if (!tempHash.startsWith("#")) {
+                Log.i("구간 첵", "a")
+                ReviewDTO.hashtag = "#" + tempHash //해시태그 문자열
+            } else {
+                Log.i("구간 첵", "b")
+                ReviewDTO.hashtag = tempHash
             }
             ReviewDTO.content = etText.text.toString() //글 문자열
             ReviewDTO.uid = auth?.uid
             ReviewDTO.star = ratingBar.rating
             ReviewDTO.timestamp = System.currentTimeMillis()
-            ReviewDTO.pid = intent.getStringExtra("pid")
+            var pid = intent.getStringExtra("pid")
+            if (pid != null)
+            {
+                ReviewDTO.pid = pid
+            }
+            else
+            {
+                var a=intent.getStringExtra("pName")
+                var b=intent.getStringExtra("pAddress")
+                if (a != null&&b!=null) {
+                    CoroutineScope(Dispatchers.Default).launch {
+                        pid=DB_Place().search_data(a, b)
+                        Log.i("새로 검색한 pid", pid!!)
+                        ReviewDTO.pid = pid
+                    }
+                }
+            }
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -95,48 +110,51 @@ class UploadReview : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             )
                 CoroutineScope(Dispatchers.Main).launch {
-                    Log.v("ReviewImage",ReviewDTO.reviewImage.toString())
+                    Log.v("ReviewImage", ReviewDTO.reviewImage.toString())
                     ReviewDTO.reviewImage = funImageUpLoad()
                     //null check하기
-                    if(ReviewDTO.star!!<0.5)
+                    if (ReviewDTO.star!! < 0.5) {
+                        makeToast(true, "별점을 입력해 주세요!")
+                    } else if (ReviewDTO.content?.equals("") == true) //내용없음
                     {
-                        makeToast(true,"별점을 입력해 주세요!")
-                    }
-                    else if(ReviewDTO.content?.equals("") == true) //내용없음
-                    {
-                        makeToast(true,"내용을 입력해 주세요!")
-                    }
-                    else if(ReviewDTO.hashtag?.equals("")== true) //해시태그없음
+                        makeToast(true, "내용을 입력해 주세요!")
+                    } else if (ReviewDTO.hashtag?.equals("") == true) //해시태그없음
                     {
                         makeToast(true, "해시태그를 입력해 주세요!")
-                    }
-                    else if(ReviewDTO.reviewImage.equals(null))
+                    } else if (ReviewDTO.reviewImage.equals(null)) {
+                        makeToast(true, "사진을 업로드 해주세요!")
+                    } else //다 만족
                     {
-                        makeToast(true,"사진을 업로드 해주세요!")
-                    }
-                    else //다 만족
-                    {
-                        makeToast(true,"사진을 업로드하고 있습니다...")
-                    firestore?.collection("User")?.document(auth?.uid.toString())?.get()
-                        ?.addOnSuccessListener { task ->
-                            var document = task?.toObject(userDTO::class.java)
-                            ReviewDTO.strName = document?.strName
-                            ReviewDTO.title = document?.title
-                            ReviewDTO.imageUrl = document?.imageUrl
+                        makeToast(true, "사진을 업로드하고 있습니다...")
+                        firestore?.collection("User")?.document(auth?.uid.toString())?.get()
+                            ?.addOnSuccessListener { task ->
+                                var document = task?.toObject(userDTO::class.java)
+                                ReviewDTO.strName = document?.strName
+                                ReviewDTO.title = document?.title
+                                ReviewDTO.imageUrl = document?.imageUrl
 
-                            firestore?.collection("Reviews")?.document()?.set(ReviewDTO)
-                                ?.addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        makeToast(task.isSuccessful,"게시 완료!")
-                                        makeToast(task.isSuccessful,"환경을 위해 " + (ReviewDTO.title!! + 1) + "만큼 노력하셨네요!")
-                                        startActivity(Intent(this@UploadReview,MainActivity::class.java))
+                                firestore?.collection("Reviews")?.document()?.set(ReviewDTO)
+                                    ?.addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            makeToast(task.isSuccessful, "게시 완료!")
+                                            makeToast(
+                                                task.isSuccessful,
+                                                "환경을 위해 " + (ReviewDTO.title!! + 1) + "만큼 노력하셨네요!"
+                                            )
+                                            startActivity(
+                                                Intent(
+                                                    this@UploadReview,
+                                                    MainActivity::class.java
+                                                )
+                                            )
+                                        }
                                     }
-                                }
-                            firestore?.collection("User")?.document(auth?.uid.toString())
-                                ?.update("title", ReviewDTO.title!! + 1)
-                        }
+                                firestore?.collection("User")?.document(auth?.uid.toString())
+                                    ?.update("title", ReviewDTO.title!! + 1)
+                            }
 
-                }}
+                    }
+                }
         }
     }
 
@@ -161,7 +179,7 @@ class UploadReview : AppCompatActivity() {
         var storageRef = firestorage?.reference?.child("Review")?.child(imgFileName)
 
         try {
-            makeToast(true,"업로드중입니다. 잠시 기다려주세요")
+            makeToast(true, "업로드중입니다. 잠시 기다려주세요")
             storageRef?.putFile(uriPhoto!!)?.await()
             val url = storageRef?.downloadUrl?.await().toString()
             return url
@@ -171,8 +189,8 @@ class UploadReview : AppCompatActivity() {
         }
     }
 
-    fun makeToast(success: Boolean,text : String){
-        if (success){
+    fun makeToast(success: Boolean, text: String) {
+        if (success) {
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
         }
     }

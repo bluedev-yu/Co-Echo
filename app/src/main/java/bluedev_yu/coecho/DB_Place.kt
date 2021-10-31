@@ -72,4 +72,10 @@ class DB_Place {
             return "false"
         }
     }
+    suspend fun placeAtrribute(pid:String):String
+    {
+        var searchJob= FirebaseFirestore.getInstance().collection("Places").document(pid).get()
+        searchJob.await()
+        return searchJob.result.data?.get("placeName").toString()
+    }
 }

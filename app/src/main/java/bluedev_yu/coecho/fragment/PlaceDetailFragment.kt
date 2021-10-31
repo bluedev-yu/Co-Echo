@@ -51,7 +51,7 @@ class PlaceDetailFragment : Fragment() {
         thisFragView.tv_url_placedetail.setText(pUrl)
 
         thisFragView.ib_backbutton.setOnClickListener {
-
+            requireActivity().onBackPressed()
         }
 
 
@@ -75,6 +75,7 @@ class PlaceDetailFragment : Fragment() {
             } else {
                 CoroutineScope(Dispatchers.Main).launch {
                     tempRes = DB_Review().getHashtag(pid)
+                    Log.d("리뷰 검색 결과", tempRes.toString())
                     if (tempRes != null) {
                         if (tempRes!!.first != "") {
                             layout_hashtag1.visibility = View.VISIBLE
@@ -121,24 +122,18 @@ class PlaceDetailFragment : Fragment() {
                                 pY!!
                             )
                         )
-                        pid = DB_Place().search_data(
-                            pName!!, pAddress!!
-                        )
                         Log.i("넘어가는placeId", "앙영" + pid)
                         val intent = Intent(requireContext(), UploadReview::class.java)
-                        intent.putExtra("pid", pid)
+                        intent.putExtra("pName", pName)
+                        intent.putExtra("pAddress",pAddress)
                         requireContext().startActivity(intent)
                     }
                 } else {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        pid = DB_Place().search_data(
-                            pName!!, pAddress!!
-                        )
-                        Log.i("넘어가는placeId", "앙영" + pid)
-                        val intent = Intent(requireContext(), UploadReview::class.java)
-                        intent.putExtra("pid", pid)
-                        requireContext().startActivity(intent)
-                    }
+                    Log.i("넘어가는placeId", "앙영" + pid)
+                    val intent = Intent(requireContext(), UploadReview::class.java)
+                    intent.putExtra("pid", pid)
+                    requireContext().startActivity(intent)
+
                 }
             }
         }

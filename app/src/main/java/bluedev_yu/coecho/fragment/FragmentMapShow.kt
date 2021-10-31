@@ -36,9 +36,9 @@ class FragmentMapShow : Fragment() {
     var firestore: FirebaseFirestore? = null //String 등 자료형 데이터베이스
     var firestorage: FirebaseStorage? = null //사진, GIF 등의 파일 데이터베이스
 
-    //디폴트 위치 진천동
-    var UserLati: Double = 35.81//x
-    var UserLong: Double = 128.52//y
+    //디폴트 위치 서울시청
+    var UserLati: Double = 37.541
+    var UserLong: Double = 126.986
 
     lateinit var mapView: MapView
     lateinit var t_rv_places: RecyclerView
@@ -102,6 +102,7 @@ class FragmentMapShow : Fragment() {
                         Toast.makeText(activity, "장소 추천 중! 잠시만 기다려주세요", Toast.LENGTH_LONG).show()
                         mapView.currentLocationTrackingMode =
                             MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
+                        loadRecommendationP(mapView, t_rv_places)
                     } else {
                         mapView.currentLocationTrackingMode =
                             MapView.CurrentLocationTrackingMode.TrackingModeOff
@@ -208,7 +209,7 @@ class FragmentMapShow : Fragment() {
         for (i in 0 until markerList.size) {
             mapView.addPOIItem(markerList.get(i))
         }
-        mapView.fitMapViewAreaToShowAllPOIItems()
+        //mapView.fitMapViewAreaToShowAllPOIItems()
         t_rv_places.getRecycledViewPool().clear()
         t_rv_places.adapter = PlaceAdapter(placeList)
         PlaceAdapter(placeList).notifyDataSetChanged()
@@ -221,13 +222,13 @@ class FragmentMapShow : Fragment() {
             if (p1 != null) {
                 var tempLong: Double = p1.mapPointGeoCoord.longitude
                 var tempLati: Double = p1.mapPointGeoCoord.latitude
-                if (tempLong!=UserLong||tempLati!=UserLati) {
-                //if (Math.abs(tempLong - UserLong) + Math.abs(tempLati - UserLati) > 0.00001) {
+                //if (tempLong!=UserLong||tempLati!=UserLati) {
+                if (Math.abs(tempLong - UserLong) + Math.abs(tempLati - UserLati) > 0.00001) {
                     UserLong = p1.mapPointGeoCoord.longitude
                     UserLati = p1.mapPointGeoCoord.latitude
                     Log.i("사용자 경위도", UserLati.toString() + " " + UserLong.toString())
+                    loadRecommendationP(mapView, t_rv_places)
                 }
-                loadRecommendationP(mapView, t_rv_places)
             }
         }
 
