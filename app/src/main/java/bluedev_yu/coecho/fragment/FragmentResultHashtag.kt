@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.compose.animation.core.snap
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class FragmentResultHashtag(query: String?) : Fragment() {
 
     lateinit var rv_result_hashtag: RecyclerView
+    lateinit var noSearchHashtag: TextView
     var query: String? = query
     var firestore : FirebaseFirestore? = null
 
@@ -32,6 +34,8 @@ class FragmentResultHashtag(query: String?) : Fragment() {
 
         val bundle = Bundle()
         bundle.putString("query", query)
+
+        noSearchHashtag = view.findViewById(R.id.noSearchHashtag)
 
         val hashtagList = arrayListOf<Feeds>()
         val contentUidList = arrayListOf<String>()
@@ -50,9 +54,15 @@ class FragmentResultHashtag(query: String?) : Fragment() {
                     contentUidList.add(snapshot.id)
                 }
             }
-            rv_result_hashtag.adapter = FeedAdapter(hashtagList,contentUidList)
-            rv_result_hashtag.adapter!!.notifyDataSetChanged()
 
+            if(hashtagList.size ==0) {
+                noSearchHashtag.visibility = View.VISIBLE
+            }
+            else{
+                noSearchHashtag.visibility = View.INVISIBLE
+                rv_result_hashtag.adapter = FeedAdapter(hashtagList, contentUidList)
+                rv_result_hashtag.adapter!!.notifyDataSetChanged()
+            }
         }
 
         rv_result_hashtag = view.findViewById(R.id.rv_result_hashtag)
