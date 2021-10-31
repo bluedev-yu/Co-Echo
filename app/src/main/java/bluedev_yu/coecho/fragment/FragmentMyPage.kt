@@ -4,8 +4,10 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.transition.Transition
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.ViewPager
 import bluedev_yu.coecho.LoginActivity
@@ -24,7 +27,12 @@ import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.fragment.*
 import bluedev_yu.coecho.MyPageBackground
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.Target
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -68,6 +76,30 @@ class FragmentMyPage : Fragment() {
                     documentSnapshot, firebaseFirestoreException ->
                 var document = documentSnapshot?.toObject(userDTO::class.java)
                 val ProfileImage : ImageView = viewProfile!!.findViewById(R.id.MypageProfileImage)
+                val mypageBackground : FrameLayout = viewProfile!!.findViewById(R.id.mypageBackground)
+
+
+                //배경화면
+                if(document?.mypageBackground != null)
+                {
+                    activity?.let {
+                        Glide.with(it)
+                            .load(document.mypageBackground)
+                            .into(object : CustomTarget<Drawable>(){
+                                override fun onLoadCleared(placeholder: Drawable?) {
+                                }
+
+                                override fun onResourceReady(
+                                    resource: Drawable,
+                                    transition: com.bumptech.glide.request.transition.Transition<in Drawable>?
+                                ) {
+                                    val layout = mypageBackground
+                                    layout.background = resource
+                                }
+
+                            })
+                    }
+                }
 
                 //칭호
                 val MypageTitle : TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
@@ -152,7 +184,10 @@ class FragmentMyPage : Fragment() {
                         (followDTO?.followerCount!! - 1).toString() + " 팔로워" //한명은 자기 자신
                     MyPageFollowing.text = (followDTO.followingCount - 1).toString() + " 팔로잉"
                 }
-        } else //남의 페이지
+
+        }
+
+        else //남의 페이지
         {
             //각종 버튼 숨기기, 보이기
             val mypageText: TextView = viewProfile!!.findViewById(R.id.MypageText) //MYPAGE TEXT

@@ -1,5 +1,6 @@
 package bluedev_yu.coecho
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.icu.text.SimpleDateFormat
@@ -13,12 +14,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.databinding.ActivityMyPageBackgroundBinding
+import bluedev_yu.coecho.fragment.FragmentMyPage
 import bluedev_yu.coecho.sticker.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_my_page_background.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
@@ -29,6 +38,7 @@ class MyPageBackground : AppCompatActivity() {
     private lateinit var binding: ActivityMyPageBackgroundBinding
     var firestorage : FirebaseStorage? = null
     var auth : FirebaseAuth?= null
+    var firestore : FirebaseFirestore? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +49,7 @@ class MyPageBackground : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         firestorage = FirebaseStorage.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
 //        val view: View = this.window.decorView.findViewById(android.R.id.content)
         if(view == null){
@@ -91,57 +102,98 @@ class MyPageBackground : AppCompatActivity() {
         val stamp5: ImageView = findViewById(R.id.stamp5)
         val stamp6: ImageView = findViewById(R.id.stamp6)
 
-        stamp1.setTag("stamp1")
-        stamp2.setTag("stamp2")
-        stamp3.setTag("stamp3")
-        stamp4.setTag("stamp4")
-        stamp5.setTag("stamp5")
-        stamp6.setTag("stamp6")
+        //스탬프 보이기 안보이기
+        firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener { task ->
 
+            var doc = task?.toObject(userDTO::class.java)
 
-        class StampListener: View.OnClickListener{
-            override fun onClick(v: View?) {
-                if (v != null) {
-                    val img: ImageView = v as ImageView
-
-                    val selectedStickerId = img.getResources().getIdentifier(img.getTag().toString(), "drawable", getPackageName())
-//                    val tmp = R.drawable.testimg
-                    loadSticker(selectedStickerId)
-//                    Toast.makeText(v.context, "내가 구한 아이디: ${selectedStickerId.toString()}, 정답: $tmp", Toast.LENGTH_SHORT).show()
-                }
+            if (doc?.title!! < 60) {
+                stamp6.visibility = View.INVISIBLE
+            }
+            if (doc?.title!! < 50) {
+                stamp5.visibility = View.INVISIBLE
+            }
+            if (doc?.title!! < 40) {
+                stamp4.visibility = View.INVISIBLE
+            }
+            if (doc?.title!! < 30) {
+                stamp3.visibility = View.INVISIBLE
+            }
+            if (doc?.title!! < 20) {
+                stamp2.visibility = View.INVISIBLE
+            }
+            if (doc?.title!! < 10) {
+                stamp1.visibility = View.INVISIBLE
+                //textview visible로 부탁해~~~~~~
             }
 
-        }
-
-        stamp1.setOnClickListener(StampListener())
-        stamp2.setOnClickListener(StampListener())
-        stamp3.setOnClickListener(StampListener())
-        stamp4.setOnClickListener(StampListener())
-        stamp5.setOnClickListener(StampListener())
-        stamp6.setOnClickListener(StampListener())
+            stamp1.setTag("stamp1")
+            stamp2.setTag("stamp2")
+            stamp3.setTag("stamp3")
+            stamp4.setTag("stamp4")
+            stamp5.setTag("stamp5")
+            stamp6.setTag("stamp6")
 
 
-        val backgroundCancle: TextView = findViewById(R.id.background_cancle)
-        backgroundCancle.setOnClickListener {
-            this.finish()
-        }
+            class StampListener : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    if (v != null) {
+                        val img: ImageView = v as ImageView
+
+                        val selectedStickerId = img.getResources()
+                            .getIdentifier(img.getTag().toString(), "drawable", getPackageName())
+//                    val tmp = R.drawable.testimg
+                        loadSticker(selectedStickerId)
+//                    Toast.makeText(v.context, "내가 구한 아이디: ${selectedStickerId.toString()}, 정답: $tmp", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+            }
+
+            stamp1.setOnClickListener(StampListener())
+            stamp2.setOnClickListener(StampListener())
+            stamp3.setOnClickListener(StampListener())
+            stamp4.setOnClickListener(StampListener())
+            stamp5.setOnClickListener(StampListener())
+            stamp6.setOnClickListener(StampListener())
+
+
+            val backgroundCancle: TextView = findViewById(R.id.background_cancle)
+            backgroundCancle.setOnClickListener {
+                this.finish()
+            }
 
 
 //        val testimg: ImageView = findViewById(R.id.testimg)
-        val testlayout: ConstraintLayout = findViewById(R.id.layout_background)
+            val testlayout: ConstraintLayout = findViewById(R.id.layout_background)
 
-        val backgroundSave: TextView = findViewById(R.id.background_save)
-        backgroundSave.setOnClickListener {
+            val backgroundSave: TextView = findViewById(R.id.background_save)
+            backgroundSave.setOnClickListener {
 //            Toast.makeText(this, "클릭됐음", Toast.LENGTH_SHORT).show()
 
-            //save layout as an image
-            val bmp: Bitmap = getBitmapFromView(testlayout) //저장해야할 비트맵 이미지
+                //save layout as an image
+                val bmp: Bitmap = getBitmapFromView(testlayout) //저장해야할 비트맵 이미지
+                CoroutineScope(Dispatchers.Main).launch {
+                    doc.mypageBackground = funImageUpLoad(bmp) //이미지 저장
 
+                    //배경사진 업로드
+                    firestore?.collection("User")?.document(auth?.uid.toString())?.set(doc)
+                        ?.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                makeToast(task.isSuccessful, "배경화면 설정 완료!")
+
+                                val mypage = FragmentMyPage()
+                                var fm: FragmentManager = supportFragmentManager
+                                var ft: FragmentTransaction = fm.beginTransaction()
+                                ft.replace(R.id.background_uploadpage, mypage)
+                            }
+                        }
+                }
 //            val backgroundImgStr: String? = BitmapToString(bmp) //백그라운드 이미지
-            val backgroundImg = bmp as ImageView
+//            val backgroundImg = bmp as ImageView
 
-            
 
+            }
         }
 
     }

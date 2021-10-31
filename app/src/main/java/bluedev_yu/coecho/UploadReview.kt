@@ -13,11 +13,14 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.ReviewDTO
 import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.fragment.FragmentMap
+import bluedev_yu.coecho.fragment.FragmentMyPage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -129,7 +132,11 @@ class UploadReview : AppCompatActivity() {
                                     if (task.isSuccessful) {
                                         makeToast(task.isSuccessful,"게시 완료!")
                                         makeToast(task.isSuccessful,"환경을 위해 " + (ReviewDTO.title!! + 1) + "만큼 노력하셨네요!")
-                                        startActivity(Intent(this@UploadReview,MainActivity::class.java))
+
+                                        val map = FragmentMap()
+                                        var fm: FragmentManager = supportFragmentManager
+                                        var ft: FragmentTransaction = fm.beginTransaction()
+                                        ft.replace(R.id.uploadReview, map)
                                     }
                                 }
                             firestore?.collection("User")?.document(auth?.uid.toString())

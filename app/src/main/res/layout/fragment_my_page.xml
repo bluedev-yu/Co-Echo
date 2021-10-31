@@ -23,6 +23,7 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
             android:layout_width="match_parent"
             android:layout_height="450dp"
             android:layout_marginTop="10dp"
@@ -169,6 +170,16 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+        <!-- 얘 이동 부탁해~~ 애용~~ -->
+        <FrameLayout
+            android:id="@+id/mypageBackground"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+            app:layout_constraintStart_toEndOf="@+id/FollowButton">
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
