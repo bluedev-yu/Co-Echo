@@ -61,6 +61,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         binding.bottomNavBar.itemIconTintList = null;
 
+        Toast.makeText(this,auth?.uid.toString(), Toast.LENGTH_LONG).show()
+        Log.v("User!",auth?.uid.toString())
         //firebase 로그인, 권한
         firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener {
                 doc ->
@@ -121,7 +123,23 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         Log.d("해시 키", keyHash)
 
     }
-
+    private fun printReleaseKey()
+    {
+        var packageInfo: PackageInfo? = null
+        try{
+            packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+            packageInfo.signatures
+            for(signature: Signature in packageInfo.signatures) {
+                var md: MessageDigest = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                var smt =String(Base64.encode(md.digest(),0))
+                Toast.makeText(this,smt,Toast.LENGTH_LONG).show()
+            }
+        }catch (e:Exception)
+        {
+            Log.e("name not found",e.toString())
+        }
+    }
     @SuppressLint("ResourceType")
     override fun onNavigationItemSelected(item: MenuItem): Boolean { //내비게이션바 아이템 선택시 프래그먼트 교체
         when (item.itemId) {
@@ -156,21 +174,5 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .commit()
     }
 
-    private fun printReleaseKey()
-    {
-        var packageInfo: PackageInfo? = null
-        try{
-            packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-            packageInfo.signatures
-            for(signature: Signature in packageInfo.signatures) {
-                var md: MessageDigest = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                var smt =String(Base64.encode(md.digest(),0))
-                Toast.makeText(this,smt,Toast.LENGTH_LONG).show()
-            }
-        }catch (e:Exception)
-        {
-            Log.e("name not found",e.toString())
-        }
-    }
+
 }
