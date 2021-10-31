@@ -101,7 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="350dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        android:background="@drawable/background_bottomsheet">
+        android:background="@drawable/bottom_sheet_background">
 
         <ImageView
             android:layout_width="70dp"

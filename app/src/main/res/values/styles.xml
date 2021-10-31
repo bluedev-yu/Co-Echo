@@ -6,4 +6,5 @@
         <item name="android:progressDrawable">@drawable/rating_each_star</item>
         <item name="android:minHeight">34dp</item>
     </style>
+
 </resources>
