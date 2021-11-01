@@ -42,46 +42,41 @@ class FragmentResultContent(query: String?) : Fragment() {
         val hashtagList = arrayListOf<Feeds>()
         val contentUidList = arrayListOf<Feeds.ContentUids>()
 
-        firestore?.collection("Feeds")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            hashtagList.clear()
-            contentUidList.clear()
-            if (querySnapshot == null) {
-                return@addSnapshotListener
-            }
-            for (snapshot in querySnapshot!!.documents) {
-                val imsi = snapshot.toObject(Feeds::class.java)
-                if (imsi?.content!!.contains(query!!)) //검색내용 포함시
-                {
-                    hashtagList.add(imsi)
-                    var imsic = Feeds.ContentUids()
-                    imsic!!.contentUid = snapshot.id
-                    imsic!!.timestamp = imsi.timeStamp
-                    contentUidList.add(imsic)
+        firestore?.collection("Feeds")
+            ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                hashtagList.clear()
+                contentUidList.clear()
+                if (querySnapshot == null) {
+                    return@addSnapshotListener
                 }
                 for (snapshot in querySnapshot!!.documents) {
                     val imsi = snapshot.toObject(Feeds::class.java)
                     if (imsi?.content!!.contains(query!!)) //검색내용 포함시
                     {
                         hashtagList.add(imsi)
-                        contentUidList.add(snapshot.id)
+                        var imsic = Feeds.ContentUids()
+                        imsic!!.contentUid = snapshot.id
+                        imsic!!.timestamp = imsi.timeStamp
+                        contentUidList.add(imsic)
                     }
-                }
 
-                if(hashtagList.size ==0) {
-                    noSearchContent.visibility = View.VISIBLE
-                }
-                else{
-                    noSearchContent.visibility = View.INVISIBLE
-                    rv_result_content.adapter = FeedAdapter(hashtagList, contentUidList)
-                    rv_result_content.adapter!!.notifyDataSetChanged()
-                }
+                    hashtagList.sortByDescending { it.timeStamp }
+                    contentUidList.sortByDescending { it.timestamp }
 
+                    if (hashtagList.size == 0) {
+                        noSearchContent.visibility = View.VISIBLE
+                    } else {
+                        noSearchContent.visibility = View.INVISIBLE
+                        rv_result_content.adapter = FeedAdapter(hashtagList, contentUidList)
+                        rv_result_content.adapter!!.notifyDataSetChanged()
+                    }
+
+                }
+                hashtagList.sortByDescending { it.timeStamp }
+                contentUidList.sortByDescending { it.timestamp }
+                rv_result_content.adapter = FeedAdapter(hashtagList, contentUidList)
+                rv_result_content.adapter!!.notifyDataSetChanged()
             }
-            hashtagList.sortByDescending { it.timeStamp }
-            contentUidList.sortByDescending { it.timestamp }
-            rv_result_content.adapter = FeedAdapter(hashtagList,contentUidList)
-            rv_result_content.adapter!!.notifyDataSetChanged()
-        }
 
         rv_result_content = view.findViewById(R.id.rv_result_content)
         rv_result_content.layoutManager =
