@@ -1,6 +1,7 @@
 package bluedev_yu.coecho.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.KAKAO_Place
@@ -39,6 +41,8 @@ class FragmentMapShow : Fragment() {
     //디폴트 위치 서울시청
     var UserLati: Double = 37.541
     var UserLong: Double = 126.986
+
+    var recomCheck = false
 
     lateinit var mapView: MapView
     lateinit var t_rv_places: RecyclerView
@@ -85,6 +89,7 @@ class FragmentMapShow : Fragment() {
             mapView.setOpenAPIKeyAuthenticationResultListener { mapView, i, s ->
                 Log.d("카카오맵 인증 로그", "성공")
             }
+            mapView.setPOIItemEventListener(MarkerEventListener)
 
 //            //스피너안의 목록
 //            val spinnerItems = resources.getStringArray(R.array.spinner_array)
@@ -99,11 +104,19 @@ class FragmentMapShow : Fragment() {
                 .setOnClickListener(View.OnClickListener {
                     if (mapView.currentLocationTrackingMode == MapView.CurrentLocationTrackingMode.TrackingModeOff) {
                         //현재 위치를 중심으로 맵 보여주기
-                        Toast.makeText(activity, "현재위치 파악 오류! 현재 위치 추적 기능 다시 한번 껐다 켜주세요", Toast.LENGTH_LONG).show()
+                        if (recomCheck == false) {
+                            Toast.makeText(
+                                activity,
+                                "현재위치 파악 오류! 현재 위치 추적 기능을 껐다 켜주세요",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            recomCheck=true
+                        }
                         mapView.currentLocationTrackingMode =
                             MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
                         loadRecommendationP(mapView, t_rv_places)
                     } else {
+                        Toast.makeText(activity, "위치추적 기능 off", Toast.LENGTH_LONG).show()
                         mapView.currentLocationTrackingMode =
                             MapView.CurrentLocationTrackingMode.TrackingModeOff
                     }
@@ -281,37 +294,45 @@ class FragmentMapShow : Fragment() {
         }
     }
 
-    class MarkerEventListener(val context: Context) : MapView.POIItemEventListener {
+    val MarkerEventListener = object : MapView.POIItemEventListener {
         override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
-            //마커 클릭 이벤트
+            if (p1 != null) {
+                Log.d("selected", p1.tag.toString())
+                t_rv_places.scrollToPosition(p1.tag)
+            }
         }
 
         override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
-//            //말품선 클릭 1
-//            val intent = Intent(context, Place_detail::class.java)
-//            context.startActivity(intent)
         }
 
         override fun onCalloutBalloonOfPOIItemTouched(
             p0: MapView?,
             p1: MapPOIItem?,
             p2: MapPOIItem.CalloutBalloonButtonType?
-            //말풍선 클릭 2
         ) {
-            //혹시나 place_detail을 fragment로 변경할 경우
-//            supportFragmentManager.beginTransaction()
-//                .add(R.id.framelayout, Place_detail())
-//                .commit()
-
-//            val intent = Intent(context, Place_detail::class.java)
-//            context.startActivity(intent)
-
+            var fragmentPlaceDetail = PlaceDetailFragment()
+            val bundle = Bundle()
+            var temp = placeList[p1?.tag!!]
+            bundle.putString("name", temp.placeName)
+            bundle.putString("address", temp.placeAdress)
+            bundle.putString("category", temp.placeCategory)
+            bundle.putString("phone", temp.placePhone)
+            bundle.putString("url", temp.placeURL)
+            bundle.putDouble("x", temp.placeX)
+            bundle.putDouble("y", temp.placeY)
+            fragmentPlaceDetail.arguments = bundle
+            val activity = context as AppCompatActivity
+            activity.supportFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, fragmentPlaceDetail)
+                .addToBackStack(null)
+                .commit()
         }
 
         override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {
-            //마커 속성이 idDraggable = true일 때 마커 이동시
+            TODO("Not yet implemented")
         }
     }
+
 
     //마커 추가 함수
     fun newMapPoiItem(iName: String, lat: String, lon: String): MapPOIItem//지도에 마커 추가 함수
@@ -343,3 +364,4 @@ class FragmentMapShow : Fragment() {
         return marker
     }
 }
+
