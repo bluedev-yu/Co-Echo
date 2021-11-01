@@ -78,7 +78,15 @@ class ReviewAdapter(val reviewList: ArrayList<ReviewDTO>): RecyclerView.Adapter<
 
 
         holder.content.text = reviewList.get(position).content
-        Glide.with(holder.itemView.context).load(reviewList.get(position).reviewImage!!).into(holder.reviewImage) //피드 이미지
+
+        if(reviewList.get(position).reviewImage.equals(null)){
+            //리뷰 이미지가 없을 경우
+            holder.reviewImage.visibility = View.GONE
+        }else{
+            //리뷰 이미지가 있을 경우
+            Glide.with(holder.itemView.context).load(reviewList.get(position).reviewImage!!).into(holder.reviewImage) //피드 이미지
+
+        }
 
         //프로필사진
         if(reviewList.get(position).imageUrl == null) //기본 이미지
