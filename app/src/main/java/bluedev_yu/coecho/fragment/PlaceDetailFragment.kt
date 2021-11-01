@@ -7,16 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.*
 import bluedev_yu.coecho.adapter.ReviewAdapter
 import bluedev_yu.coecho.data.model.Place
 import bluedev_yu.coecho.data.model.ReviewDTO
+import com.bumptech.glide.Glide
 import com.google.firebase.FirebaseException
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_place_detail.*
@@ -63,6 +63,9 @@ class PlaceDetailFragment : Fragment() {
         t_rv_review.setHasFixedSize(true)
         t_rv_review.getRecycledViewPool().clear()
 
+        val t_scrollItem =
+            thisFragView.findViewById<LinearLayout>(R.id.ll_horizontal_item)
+
         var tempRes: Pair<String, String>?
         CoroutineScope(Dispatchers.Main).launch {
             pid = DB_Place().search_data(
@@ -73,7 +76,7 @@ class PlaceDetailFragment : Fragment() {
                 Toast.makeText(activity, "리뷰 로드 오류 발생", Toast.LENGTH_LONG).show()
             } else if (pid == "none") {
                 Toast.makeText(activity, "리뷰가 아직 없습니다", Toast.LENGTH_LONG).show()
-
+                ll_horizontal_item.addView(inflater.inflate(R.layout.no_image_item, null))
             } else {
                 CoroutineScope(Dispatchers.Main).launch {
                     tempRes = DB_Review().getHashtag(pid)
@@ -88,8 +91,7 @@ class PlaceDetailFragment : Fragment() {
                             hashtag1_2.text = tempRes!!.second
                         }
                     } else {
-                        layout_hashtag1.visibility = View.INVISIBLE
-                        layout_hashtag2.visibility = View.INVISIBLE
+                        ll_horizontal_item.addView(inflater.inflate(R.layout.no_image_item, null))
                     }
                     loadPlaceReview(pid, reviewList)
                     Log.i("로드되었다", reviewList.toString())
@@ -97,67 +99,79 @@ class PlaceDetailFragment : Fragment() {
                     tvCount.setText("방문자리뷰 " + reviewList.size)
                     t_rv_review.adapter = ReviewAdapter(reviewList)
                     t_rv_review.adapter!!.notifyDataSetChanged()
+
+//                    val db = FirebaseFirestore.getInstance().collection("Reviews")
+//                    val a = db.whereEqualTo("pid", pid).get()
+//                    a.await()
+//                    for (doc in a.result.documents) {
+//                        var img = doc.data.get("reviewImage")
+//                        if (img != null) {
+//                            Glide.with(requireContext())
+//                                .load(img)
+//                                .into(holder.reviewImage) //피드 이미지
+//                            // }
+//                        }
+                    }
                 }
             }
-        }
 
 
 
-        thisFragView.findViewById<Button>(R.id.btn_write_review).setOnClickListener {
-            if (pid == "false")
-                Toast.makeText(activity, "pid 로드 오류 발생", Toast.LENGTH_LONG).show()
-            else {
-                if (pid == "none") {
-                    //Log.i("널 췍",pName+pCategory+pPhone+pAddress+pAddress+pUrl+pX+pY)
-                    CoroutineScope(Dispatchers.Main).launch {
-                        DB_Place().insert_data(
-                            Place(
-                                pName!!,
-                                pCategory!!,
-                                pPhone!!,
-                                pAddress!!,
-                                pUrl!!,
-                                "",
-                                pX!!,
-                                pY!!
+            thisFragView.findViewById<Button>(R.id.btn_write_review).setOnClickListener {
+                if (pid == "false")
+                    Toast.makeText(activity, "pid 로드 오류 발생", Toast.LENGTH_LONG).show()
+                else {
+                    if (pid == "none") {
+                        //Log.i("널 췍",pName+pCategory+pPhone+pAddress+pAddress+pUrl+pX+pY)
+                        CoroutineScope(Dispatchers.Main).launch {
+                            DB_Place().insert_data(
+                                Place(
+                                    pName!!,
+                                    pCategory!!,
+                                    pPhone!!,
+                                    pAddress!!,
+                                    pUrl!!,
+                                    "",
+                                    pX!!,
+                                    pY!!
+                                )
                             )
-                        )
+                            Log.i("넘어가는placeId", "앙영" + pid)
+                            val intent = Intent(requireContext(), UploadReview::class.java)
+                            intent.putExtra("pName", pName)
+                            intent.putExtra("pAddress", pAddress)
+                            requireContext().startActivity(intent)
+                        }
+                    } else {
                         Log.i("넘어가는placeId", "앙영" + pid)
                         val intent = Intent(requireContext(), UploadReview::class.java)
-                        intent.putExtra("pName", pName)
-                        intent.putExtra("pAddress",pAddress)
+                        intent.putExtra("pid", pid)
                         requireContext().startActivity(intent)
+
                     }
-                } else {
-                    Log.i("넘어가는placeId", "앙영" + pid)
-                    val intent = Intent(requireContext(), UploadReview::class.java)
-                    intent.putExtra("pid", pid)
-                    requireContext().startActivity(intent)
-
                 }
             }
-        }
 
-        // Inflate the layout for this fragment
-        return thisFragView
-    }
-    suspend fun loadPlaceReview(pid: String, list: ArrayList<ReviewDTO>): Boolean {
-        val db = Firebase.firestore
-        var a = db.collection("Reviews").whereEqualTo("pid", pid).get()
-        try {
-            a.await()
-            if (a.result.isEmpty)
+            // Inflate the layout for this fragment
+            return thisFragView
+        }
+        suspend fun loadPlaceReview(pid: String, list: ArrayList<ReviewDTO>): Boolean {
+            val db = Firebase.firestore
+            var a = db.collection("Reviews").whereEqualTo("pid", pid).get()
+            try {
+                a.await()
+                if (a.result.isEmpty)
+                    return false
+                else {
+                    for (document in a.result) {
+                        list.add(document.toObject(ReviewDTO::class.java))
+                    }
+                    return true
+                }
+            } catch (e: FirebaseException) {
+                Log.e("error:", "error:" + e.message.toString())
                 return false
-            else {
-                for (document in a.result) {
-                    list.add(document.toObject(ReviewDTO::class.java))
-                }
-                return true
             }
-        } catch (e: FirebaseException) {
-            Log.e("error:", "error:" + e.message.toString())
-            return false
         }
-    }
 
-}
+    }
