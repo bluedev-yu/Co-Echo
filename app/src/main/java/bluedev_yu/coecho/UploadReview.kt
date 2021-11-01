@@ -99,7 +99,14 @@ class UploadReview : AppCompatActivity() {
             )
                 CoroutineScope(Dispatchers.Main).launch {
                     Log.v("ReviewImage",ReviewDTO.reviewImage.toString())
-                    ReviewDTO.reviewImage = funImageUpLoad()
+                    if(ReviewDTO.reviewImage.equals(null)){
+                        //리뷰 이미지가 없을 경우
+                        val ImagePreview: ImageView = findViewById(R.id.imagePreviewInReview)
+                        ImagePreview.visibility = View.GONE
+                    }else{
+                        //리뷰 이미지가 있을 경우
+                        ReviewDTO.reviewImage = funImageUpLoad()
+                    }
                     //null check하기
                     if(ReviewDTO.star!!<0.5)
                     {
@@ -113,10 +120,10 @@ class UploadReview : AppCompatActivity() {
                     {
                         makeToast(true, "해시태그를 입력해 주세요!")
                     }
-                    else if(ReviewDTO.reviewImage.equals(null))
-                    {
-                        makeToast(true,"사진을 업로드 해주세요!")
-                    }
+//                    else if(ReviewDTO.reviewImage.equals(null))
+//                    {
+//                        makeToast(true,"사진을 업로드 해주세요!")
+//                    }
                     else //다 만족
                     {
                         makeToast(true,"사진을 업로드하고 있습니다...")

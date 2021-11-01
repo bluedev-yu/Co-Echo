@@ -14,7 +14,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="마이페이지 꾸미기"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -35,7 +35,7 @@
             android:layout_marginStart="16dp"
             android:gravity="center_vertical"
             android:text="프로필 사진 바꾸기"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +47,7 @@
             android:layout_marginStart="16dp"
             android:gravity="center_vertical"
             android:text="배경 꾸미기"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/mypage_change_profile"
             app:layout_constraintTop_toBottomOf="@+id/mypage_change_profile" />

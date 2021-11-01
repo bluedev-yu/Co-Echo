@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.R
+import bluedev_yu.coecho.adapter.FeedAdapter
 import bluedev_yu.coecho.adapter.SearchPeopleAdapter
 import bluedev_yu.coecho.data.model.userDTO
 import com.google.firebase.auth.FirebaseAuth
@@ -16,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class FragmentResultPeople(query: String?) : Fragment() {
 
     lateinit var rv_result_people: RecyclerView
+    lateinit var noSearchUser: TextView
     var query: String? = query
     var firestore : FirebaseFirestore? = null
     var auth : FirebaseAuth?= null
@@ -35,6 +38,8 @@ class FragmentResultPeople(query: String?) : Fragment() {
         val bundle = Bundle()
         bundle.putString("query", query)
 
+        noSearchUser = view.findViewById(R.id.noSearchUser)
+
         //검색
         val userlist = arrayListOf<userDTO>()
 
@@ -50,9 +55,15 @@ class FragmentResultPeople(query: String?) : Fragment() {
                 if(imsi?.strName!!.contains(query!!) && !imsi.uid!!.equals(auth?.uid.toString())) //검색내용 포함시
                     userlist.add(imsi)
             }
-            rv_result_people.adapter = SearchPeopleAdapter(userlist)
-            rv_result_people.adapter!!.notifyDataSetChanged()
 
+            if(userlist.size ==0) {
+                noSearchUser.visibility = View.VISIBLE
+            }
+            else{
+                noSearchUser.visibility = View.INVISIBLE
+                rv_result_people.adapter = SearchPeopleAdapter(userlist)
+                rv_result_people.adapter!!.notifyDataSetChanged()
+            }
         }
 
         rv_result_people = view.findViewById(R.id.rv_result_people)

@@ -14,4 +14,5 @@
     <color name="CoEcho_background">#f8ffe0</color>
     <color name="CoEcho_mainBackground">#f9ffe1</color>
     <color name="logoYello">#ffffad</color>
+    <color name="transparent">#7F000000</color>
 </resources>
