@@ -1,19 +1,16 @@
 package bluedev_yu.coecho.fragment
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.ImageButton
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.KAKAO_Place
 import bluedev_yu.coecho.R
@@ -23,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.*
+import me.relex.circleindicator.CircleIndicator2
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -52,6 +50,9 @@ class FragmentMapShow : Fragment() {
 
     //마커 표시하는 데이터 배열
     val markerList = arrayListOf<MapPOIItem>()
+    //리사이클러뷰 인디케이터
+    val pagerSnapHelper = PagerSnapHelper()
+    lateinit var indicator: CircleIndicator2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,6 +126,7 @@ class FragmentMapShow : Fragment() {
             t_rv_places.layoutManager =
                 LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             t_rv_places.setHasFixedSize(true)
+            indicator=thisFragView.findViewById(R.id.mapRV_indicator)
 
         }
 
@@ -223,6 +225,11 @@ class FragmentMapShow : Fragment() {
         t_rv_places.getRecycledViewPool().clear()
         t_rv_places.adapter = PlaceAdapter(placeList)
         PlaceAdapter(placeList).notifyDataSetChanged()
+
+        pagerSnapHelper.attachToRecyclerView(t_rv_places)
+
+        indicator.attachToRecyclerView(t_rv_places, pagerSnapHelper)
+
     }
 
     //현재 위치로 맵 조정했을 때 사용자 위경도 저장(+이후 추천순 검색 기능 추가)

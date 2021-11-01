@@ -73,6 +73,7 @@ class PlaceDetailFragment : Fragment() {
                 Toast.makeText(activity, "리뷰 로드 오류 발생", Toast.LENGTH_LONG).show()
             } else if (pid == "none") {
                 Toast.makeText(activity, "리뷰가 아직 없습니다", Toast.LENGTH_LONG).show()
+
             } else {
                 CoroutineScope(Dispatchers.Main).launch {
                     tempRes = DB_Review().getHashtag(pid)

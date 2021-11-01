@@ -29,11 +29,21 @@
             android:id="@+id/MapRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="170dp"
-            android:layout_margin="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <me.relex.circleindicator.CircleIndicator2
+            android:id="@+id/mapRV_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:ci_drawable="@color/green"
+            app:ci_drawable_unselected="@color/lightGreen"
+            app:layout_constraintTop_toBottomOf="@id/MapRecyclerView"
+            android:gravity="center_horizontal"
+            />
 <!--        <Spinner-->
 <!--            android:id="@+id/MapSpinner"-->
 <!--            android:layout_width="120dp"-->
