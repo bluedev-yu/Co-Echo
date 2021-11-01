@@ -11,13 +11,6 @@
 
     <!-- 상단 -->
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/mypage_drawer"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="right"
-        app:menu="@menu/mypage_items" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -183,8 +176,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <!-- 도장이랑 프로필수정 보이는곳 -->
-
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/MypageNavigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_marginStart="15dp"
+        app:menu="@menu/mypage_navigation_items" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

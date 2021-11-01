@@ -185,7 +185,7 @@ class MyPageBackground : AppCompatActivity() {
                                 val mypage = FragmentMyPage()
                                 var fm: FragmentManager = supportFragmentManager
                                 var ft: FragmentTransaction = fm.beginTransaction()
-                                ft.replace(R.id.background_uploadpage, mypage)
+                                ft.replace(R.id.background_uploadpage, mypage).commit()
                             }
                         }
                 }

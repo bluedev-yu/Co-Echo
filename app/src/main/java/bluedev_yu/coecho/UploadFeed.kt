@@ -75,7 +75,14 @@ class UploadFeed : AppCompatActivity() {
         var FeedDTO = Feeds()
         tvUpload.setOnClickListener {
             //해시태그, 글, 공개범위 등록
-            FeedDTO.hashtag = etHashtag.text.toString() //해시태그 문자열
+            var tempHash = etHashtag.text.toString()
+            if (!tempHash.startsWith("#")) {
+                Log.i("구간 첵", "a")
+                FeedDTO.hashtag = "#" + tempHash //해시태그 문자열
+            } else {
+                Log.i("구간 첵", "b")
+                FeedDTO.hashtag = tempHash
+            }
             FeedDTO.content = etText.text.toString() //글 문자열
             FeedDTO.privacy = privacy
             FeedDTO.uid = auth?.uid

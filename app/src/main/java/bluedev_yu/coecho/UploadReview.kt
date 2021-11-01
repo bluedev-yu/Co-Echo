@@ -136,7 +136,7 @@ class UploadReview : AppCompatActivity() {
                                         val map = FragmentMap()
                                         var fm: FragmentManager = supportFragmentManager
                                         var ft: FragmentTransaction = fm.beginTransaction()
-                                        ft.replace(R.id.uploadReview, map)
+                                        ft.replace(R.id.uploadReview, map).commit()
                                     }
                                 }
                             firestore?.collection("User")?.document(auth?.uid.toString())

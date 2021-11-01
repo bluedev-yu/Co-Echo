@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.FeedDetail
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.Feeds
+import bluedev_yu.coecho.data.model.ReviewDTO
 import bluedev_yu.coecho.fragment.FragmentMyPage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -143,7 +144,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
 
         holder.content.text = feedList.get(position).content
-        holder.hashtag.text = "#"+feedList.get(position).hashtag
+        holder.hashtag.text = feedList.get(position).hashtag
         holder.likeCnt.text = feedList.get(position).likeCnt.toString()
         holder.commentCnt.text = feedList.get(position).commentCnt.toString()
         holder.feedCardView.setOnClickListener {
