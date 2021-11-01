@@ -7,7 +7,6 @@ import android.util.Base64
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -28,13 +27,6 @@ class MyPageBackground : AppCompatActivity() {
         binding = ActivityMyPageBackgroundBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-//        val view: View = this.window.decorView.findViewById(android.R.id.content)
-        if(view == null){
-            Toast.makeText(this, "view가 널임", Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(this, "view가 널이 아님", Toast.LENGTH_SHORT).show()
-        }
 
         val stickerView: StickerView = findViewById(R.id.stickerView)
         //BitmapStickerIcon(아이콘이미지 drawable,아이콘 위치)

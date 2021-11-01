@@ -99,10 +99,10 @@ class UploadFeed : AppCompatActivity() {
                 {
                     makeToast(true, "해시태그를 입력해 주세요!")
                 }
-                else if(FeedDTO.feedImgUrl.equals(null))
-                {
-                    makeToast(true,"사진을 업로드 해주세요!")
-                }
+//                else if(FeedDTO.feedImgUrl.equals(null))
+//                {
+//                    makeToast(true,"사진을 업로드 해주세요!")
+//                }
                 else //다 만족
                 {
                     makeToast(true,"사진을 업로드하고 있습니다...")
