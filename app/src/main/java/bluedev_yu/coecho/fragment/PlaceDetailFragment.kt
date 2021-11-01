@@ -111,11 +111,9 @@ class PlaceDetailFragment : Fragment() {
                     CoroutineScope(Dispatchers.Main).launch {
                         DB_Place().insert_data(
                             Place(
-                                null,
                                 pName!!,
                                 pCategory!!,
                                 pPhone!!,
-                                0,
                                 pAddress!!,
                                 pUrl!!,
                                 "",

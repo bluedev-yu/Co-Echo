@@ -47,23 +47,24 @@ class DB_Review {
     }
 
     suspend fun getReviewMeta(placeName: String, placeAddress: String): Pair<Int, Float> {
-        var cnt:Int=0
-        var starRes:Float=0.0F
+        var cnt: Int = 0
+        var starRes: Float = 0.0F
         CoroutineScope(Dispatchers.Default).launch {
             val pid = DB_Place().search_data(placeName, placeAddress)
-            Log.d("메타 pid ",pid)
-            val a = db.collection("Reviews").whereEqualTo("pid", pid).get()
-            a.await()
-            cnt = a.result.size()
-            for (doc in a.result.documents) {
-                starRes += doc.data!!.get("star").toString().toFloat()
+            Log.d("메타 pid ", pid)
+            if (pid != "none" && pid != "false") {
+                val a = db.collection("Reviews").whereEqualTo("pid", pid).get()
+                a.await()
+                cnt = a.result.size()
+                for (doc in a.result.documents) {
+                    starRes += doc.data!!.get("star").toString().toFloat()
+                }
             }
         }.join()
-        if(cnt==0)
-        {
-            return Pair(0,0.0F)
+        if (cnt == 0) {
+            return Pair(0, 0.0F)
         }
-        Log.d("메타 cnt ",cnt.toString()+" "+starRes.toString())
+        Log.d("메타 cnt ", cnt.toString() + " " + starRes.toString())
         return Pair(cnt, starRes / cnt.toFloat())
     }
 

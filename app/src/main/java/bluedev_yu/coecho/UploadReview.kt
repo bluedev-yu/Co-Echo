@@ -102,6 +102,10 @@ class UploadReview : AppCompatActivity() {
                         ReviewDTO.pid = pid
                     }
                 }
+                if(pid=="none"||pid=="false")
+                {
+                    makeToast(true,"잘못된 pid입니다. 나중에 다시 시도해주세요")
+                }
             }
 
             if (ContextCompat.checkSelfPermission(

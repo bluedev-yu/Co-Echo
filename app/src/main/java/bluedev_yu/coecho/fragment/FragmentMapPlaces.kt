@@ -33,7 +33,6 @@ class FragmentMapPlaces(query: String?) : Fragment() {
     private lateinit var binding: FragmentMapPlacesBinding
 
     val BASE_URL = "https://dapi.kakao.com/"
-    val API_KEY = "KakaoAK 0d22f63c01f4013bda7cba8927cd0e33"  // REST API 키
 
     val placeList = arrayListOf<Place>()
 
@@ -86,11 +85,9 @@ class FragmentMapPlaces(query: String?) : Fragment() {
                         //Toast.makeText(this@MapActivity,tmp.place_name+" "+tmp.address_name,Toast.LENGTH_SHORT).show()
                         placeList.add(
                             Place(
-                                null,
                                 tmp.place_name,
                                 tmp.category_name,
                                 tmp.phone,
-                                0,
                                 tmp.address_name,
                                 tmp.place_url,
                                 tmp.distance,

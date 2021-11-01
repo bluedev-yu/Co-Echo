@@ -24,6 +24,8 @@ class DB_Place {
                     val place_input = hashMapOf(
                         "placeName" to tPlace.placeName,
                         "pCategory" to tPlace.placeCategory,
+                        "pPhone" to tPlace.placePhone,
+                        "pURL" to tPlace.placeURL,
                         "longitude" to tPlace.placeX,
                         "latitude" to tPlace.placeY,
                         "address" to tPlace.placeAdress

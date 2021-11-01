@@ -37,6 +37,7 @@ class PlaceAdapter(val placeList: ArrayList<Place>) :
         var placeName = placeList.get(position).placeName
         var placeAddress=placeList.get(position).placeAdress
         holder.placeName.text = placeName
+        Log.d("장소 어댑터 출력",placeName)
         holder.placeCategory.text = placeList.get(position).placeCategory
         holder.placeLocation.text = placeAddress
         if (placeList.get(position).placeDistanceFromMyLocation != "") {

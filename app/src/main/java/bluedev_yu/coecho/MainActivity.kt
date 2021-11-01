@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         binding.bottomNavBar.itemIconTintList = null;
 
-        Toast.makeText(this,auth?.uid.toString(), Toast.LENGTH_LONG).show()
         Log.v("User!",auth?.uid.toString())
         //firebase 로그인, 권한
         firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener {

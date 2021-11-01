@@ -99,7 +99,7 @@ class FragmentMapShow : Fragment() {
                 .setOnClickListener(View.OnClickListener {
                     if (mapView.currentLocationTrackingMode == MapView.CurrentLocationTrackingMode.TrackingModeOff) {
                         //현재 위치를 중심으로 맵 보여주기
-                        Toast.makeText(activity, "장소 추천 중! 잠시만 기다려주세요", Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity, "현재위치 파악 오류! 현재 위치 추적 기능 다시 한번 껐다 켜주세요", Toast.LENGTH_LONG).show()
                         mapView.currentLocationTrackingMode =
                             MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
                         loadRecommendationP(mapView, t_rv_places)
@@ -155,11 +155,9 @@ class FragmentMapShow : Fragment() {
                             //Toast.makeText(this@MapActivity,tmp.place_name+" "+tmp.address_name,Toast.LENGTH_SHORT).show()
                             placeList.add(
                                 Place(
-                                    null,
                                     tmp.place_name,
                                     tmp.category_name,
                                     tmp.phone,
-                                    0,
                                     tmp.address_name,
                                     tmp.place_url,
                                     tmp.distance,
@@ -198,7 +196,6 @@ class FragmentMapShow : Fragment() {
         } else {
             Log.i("loadP", "b 진입")
             runBlocking {
-
                 CoroutineScope(Dispatchers.Default).launch {
                     searchKeyword(mapView, "환경")
                 }.join()
@@ -209,7 +206,7 @@ class FragmentMapShow : Fragment() {
         for (i in 0 until markerList.size) {
             mapView.addPOIItem(markerList.get(i))
         }
-        //mapView.fitMapViewAreaToShowAllPOIItems()
+        mapView.fitMapViewAreaToShowAllPOIItems()
         t_rv_places.getRecycledViewPool().clear()
         t_rv_places.adapter = PlaceAdapter(placeList)
         PlaceAdapter(placeList).notifyDataSetChanged()
