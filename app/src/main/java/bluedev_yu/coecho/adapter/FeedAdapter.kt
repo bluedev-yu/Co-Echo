@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 
-class FeedAdapter(val feedList: ArrayList<Feeds>, val contentUidList : ArrayList<String>) : 
+class FeedAdapter(val feedList: ArrayList<Feeds>, val contentUidList : ArrayList<Feeds.ContentUids>) :
 RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
     var auth : FirebaseAuth? = null
@@ -125,7 +125,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         }
 
         holder.trash.setOnClickListener{
-            firestore?.collection("Feeds")?.document(contentUidList[position])?.delete()
+            firestore?.collection("Feeds")?.document(contentUidList[position].contentUid!!)?.delete()
             feedList.clear()
             this.notifyDataSetChanged()
         }
@@ -160,7 +160,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
             intent.putExtra("commentCnt",feedList.get(position).commentCnt)
             intent.putExtra("feedImage",feedList.get(position).feedImgUrl)
 
-            intent.putExtra("contentUid",contentUidList.get(position))
+            intent.putExtra("contentUid",contentUidList.get(position).contentUid)
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
         }
 
@@ -204,7 +204,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
     private fun likeEvent(position: Int)
     {
-        var tsDoc = firestore?.collection("Feeds")?.document(contentUidList[position])
+        var tsDoc = firestore?.collection("Feeds")?.document(contentUidList[position].contentUid!!)
         firestore?.runTransaction{
             transaction ->
 

@@ -36,7 +36,7 @@ class FragmentResultContent(query: String?) : Fragment() {
         bundle.putString("query", query)
 
         val hashtagList = arrayListOf<Feeds>()
-        val contentUidList = arrayListOf<String>()
+        val contentUidList = arrayListOf<Feeds.ContentUids>()
 
         firestore?.collection("Feeds")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             hashtagList.clear()
@@ -49,10 +49,14 @@ class FragmentResultContent(query: String?) : Fragment() {
                 if (imsi?.content!!.contains(query!!)) //검색내용 포함시
                 {
                     hashtagList.add(imsi)
-                    contentUidList.add(snapshot.id)
+                    var imsic = Feeds.ContentUids()
+                    imsic!!.contentUid = snapshot.id
+                    imsic!!.timestamp = imsi.timeStamp
+                    contentUidList.add(imsic)
                 }
             }
             hashtagList.sortByDescending { it.timeStamp }
+            contentUidList.sortByDescending { it.timestamp }
             rv_result_content.adapter = FeedAdapter(hashtagList,contentUidList)
             rv_result_content.adapter!!.notifyDataSetChanged()
         }

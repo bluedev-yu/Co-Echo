@@ -25,5 +25,10 @@ class Feeds(
             var uid: String? = null, // uid
             var comment: String? = null //comment
         )
+
+    data class ContentUids(
+        var contentUid : String?= null,
+        var timestamp: Long?= null,
+    )
 }
 
