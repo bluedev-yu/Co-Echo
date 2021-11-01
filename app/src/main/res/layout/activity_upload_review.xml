@@ -8,6 +8,12 @@
     android:background="@color/CoEcho_mainBackground">
 
 
+    <androidx.constraintlayout.widget.Barrier
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="imagePreviewInReview"/>
+
     <ImageView
         android:id="@+id/imagePreviewInReview"
         android:layout_width="100dp"
