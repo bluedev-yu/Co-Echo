@@ -129,13 +129,10 @@ class PlaceDetailFragment : Fragment() {
                 pid = DB_Place().search_data(
                     pName!!, pAddress!!
                 )
-            Log.v("bookmark",pid.toString())
             if (doc?.placeLike!!.containsKey(pid)) //좋아요 눌렀을 경우
             {
-                Log.v("bookmark","filled")
                 thisFragView.bookmark.setBackgroundResource(R.drawable.bookmark_filled)
             } else {
-                Log.v("bookmark","empty")
                 thisFragView.bookmark.setBackgroundResource(R.drawable.bookmark_empty)
             }
             }
