@@ -68,15 +68,16 @@ class fragmentSubscriber(uid: String?) : Fragment() {
                         for (snapshot in task!!.documents) {
                             if(placelike.containsKey(snapshot.id)) //지금 doc이 placelike에 포함되어 있는 경우
                             {
-                                var place = snapshot.toObject(Place::class.java)
+                                var place = snapshot.data
 
                                 var imsi = Place()
-                                imsi!!.placeName = place?.placeName
-                                imsi!!.placeAdress = place?.placeAdress
+                                if (place != null) {
+                                    imsi!!.placeName = place.get("placeName").toString()
+                                    imsi!!.placeAdress = place.get("address").toString()
+                                    Log.v("placeName",place.get("placeName").toString())
+                                    Log.v("placeAdress",place.get("address").toString())
 
-                                Log.v("placeName",place?.placeName.toString())
-                                Log.v("placeAdress",place?.placeAdress.toString())
-
+                                }
                                 placeList.add(imsi!!)
                             }
                         }

@@ -95,6 +95,5 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener,
         tra.replace(R.id.MapDrawerLayout, fragment)
         tra.disallowAddToBackStack()
         tra.commit()
-
     }
 }
