@@ -3,12 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/CoEcho_mainBackground"
     tools:context=".fragment.FragmentMapPlaces">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MapPlacesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+    <TextView
+        android:id="@+id/nofeed_myplace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:text="장소가 없습니다. \n장소를 즐겨찾기 해보세요!"
+        android:textAlignment="center"
+        android:visibility="invisible" />
 
 </FrameLayout>

@@ -37,7 +37,7 @@ class PlaceAdapter(val placeList: ArrayList<Place>) :
         var placeName = placeList.get(position).placeName
         var placeAddress=placeList.get(position).placeAdress
         holder.placeName.text = placeName
-        Log.d("장소 어댑터 출력",placeName)
+        Log.d("장소 어댑터 출력",placeName!!)
         holder.placeCategory.text = placeList.get(position).placeCategory
         holder.placeLocation.text = placeAddress
         if (placeList.get(position).placeDistanceFromMyLocation != "") {
@@ -47,7 +47,7 @@ class PlaceAdapter(val placeList: ArrayList<Place>) :
 
         var tempRes: Pair<Int, Float>?
         CoroutineScope(Dispatchers.Main).launch{
-            tempRes=DB_Review().getReviewMeta(placeName,placeAddress)
+            tempRes=DB_Review().getReviewMeta(placeName!!,placeAddress!!)
             Log.d("placeadapter ",tempRes!!.first.toString()+" "+tempRes!!.second.toString())
             holder.placeReviewCnt.text= tempRes!!.first.toString()
             holder.placeRatingBar.rating= tempRes!!.second

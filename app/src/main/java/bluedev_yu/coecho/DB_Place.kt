@@ -20,7 +20,7 @@ class DB_Place {
         db= FirebaseFirestore.getInstance()
         try {
             CoroutineScope(Dispatchers.Main).launch {
-                if (search_data(tPlace.placeName, tPlace.placeAdress) != "false") {
+                if (search_data(tPlace.placeName!!, tPlace.placeAdress!!) != "false") {
                     val place_input = hashMapOf(
                         "placeName" to tPlace.placeName,
                         "pCategory" to tPlace.placeCategory,
