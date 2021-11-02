@@ -91,7 +91,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:showBorder="true"
-                app:showIcons="true" />
+                app:showIcons="true" >
+
+                <TextView
+                    android:id="@+id/noSticker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="아직 모은 스티커가 없습니다.\n 게시글이나 리뷰를 작성해 보세요!"
+                    android:textAlignment="center"
+                    android:visibility="invisible" />
+            </bluedev_yu.coecho.sticker.StickerView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

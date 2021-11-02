@@ -94,6 +94,7 @@ class MyPageBackground : AppCompatActivity() {
         val stamp4: ImageView = findViewById(R.id.stamp4)
         val stamp5: ImageView = findViewById(R.id.stamp5)
         val stamp6: ImageView = findViewById(R.id.stamp6)
+        val noSticker : TextView = findViewById(R.id.noSticker)
 
         //스탬프 보이기 안보이기
         firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener { task ->
@@ -117,6 +118,7 @@ class MyPageBackground : AppCompatActivity() {
             }
             if (doc?.title!! < 10) {
                 stamp1.visibility = View.INVISIBLE
+                noSticker.visibility = View.VISIBLE
                 //textview visible로 부탁해~~~~~~
             }
 
