@@ -41,14 +41,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TextView_map" />
 
-        <ImageView
-            android:id="@+id/MapOptionButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/ic_baseline_menu_50"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--        <ImageView-->
+<!--            android:id="@+id/MapOptionButton"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:src="@drawable/ic_baseline_menu_50"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
         <SearchView
             android:id="@+id/MapSearchBar"
