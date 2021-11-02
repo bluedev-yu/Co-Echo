@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +17,10 @@ import bluedev_yu.coecho.*
 import bluedev_yu.coecho.adapter.ReviewAdapter
 import bluedev_yu.coecho.data.model.Place
 import bluedev_yu.coecho.data.model.ReviewDTO
+import bluedev_yu.coecho.data.model.userDTO
 import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_place_detail.*
@@ -27,7 +31,7 @@ import kotlinx.coroutines.tasks.await
 class PlaceDetailFragment : Fragment() {
 
     var firebase : FirebaseFirestore?= null
-    var auth : FirebaseAuth ?= null
+    var auth : FirebaseAuth?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

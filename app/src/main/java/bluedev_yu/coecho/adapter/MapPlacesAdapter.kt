@@ -18,6 +18,7 @@ class MapPlacesAdapter(val placeList: ArrayList<Place>) :
 
     class MapViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView = itemView.findViewById<TextView>(R.id.tv_PlaceName)
+        val placeAddress = itemView.findViewById<TextView>(R.id.tv_placeAddress)
         val layout=itemView.findViewById<ConstraintLayout>(R.id.search_place_view)
     }
 
@@ -30,6 +31,7 @@ class MapPlacesAdapter(val placeList: ArrayList<Place>) :
     override fun onBindViewHolder(holder: MapViewHolder, position: Int) {
 
         holder.textView.text = placeList.get(position).placeName
+        holder.placeAddress.text = placeList.get(position).placeAdress
         holder.layout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 var fragmentPlaceDetail = PlaceDetailFragment()

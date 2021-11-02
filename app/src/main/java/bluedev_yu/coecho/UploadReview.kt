@@ -13,6 +13,8 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.ReviewDTO
