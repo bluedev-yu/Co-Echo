@@ -3,7 +3,6 @@ package bluedev_yu.coecho.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import bluedev_yu.coecho.fragment.fragmentLikeStores
 import bluedev_yu.coecho.fragment.fragmentMyFeed
 import bluedev_yu.coecho.fragment.fragmentMyReview
 import bluedev_yu.coecho.fragment.fragmentSubscriber

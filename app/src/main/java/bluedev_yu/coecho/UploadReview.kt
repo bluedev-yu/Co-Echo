@@ -139,7 +139,7 @@ class UploadReview : AppCompatActivity() {
                                                 task.isSuccessful,
                                                 "환경을 위해 " + (ReviewDTO.title!! + 1) + "만큼 노력하셨네요!"
                                             )
-
+                                            
                                             val map = FragmentMap()
                                             var fm: FragmentManager = supportFragmentManager
                                             var ft: FragmentTransaction = fm.beginTransaction()

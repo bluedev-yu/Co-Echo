@@ -19,7 +19,7 @@ import bluedev_yu.coecho.*
 import com.google.android.material.navigation.NavigationView
 
 
-class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener, onBack{
+class FragmentMap : Fragment(){
 
     private lateinit var binding: FragmentMapBinding
 
@@ -71,24 +71,24 @@ class FragmentMap : Fragment(), NavigationView.OnNavigationItemSelectedListener,
         return view
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId)
-        {
-            R.id.marked_place -> loadFrag(FragmentMapFavorite())
-//            R.id.marked_place -> Toast.makeText(context, "즐겨찾기", Toast.LENGTH_SHORT).show()
-        }
-        binding.MapDrawerLayout.closeDrawers()
-        return false
-    }
+//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+//        when(item.itemId)
+//        {
+//            R.id.marked_place -> loadFrag(FragmentMapFavorite())
+////            R.id.marked_place -> Toast.makeText(context, "즐겨찾기", Toast.LENGTH_SHORT).show()
+//        }
+//        binding.MapDrawerLayout.closeDrawers()
+//        return false
+//    }
 
-    override fun onBackPressed() {
-        if (binding.MapDrawerLayout.isDrawerOpen(GravityCompat.END)){
-            binding.MapDrawerLayout.closeDrawers()
-        }
-        else{
-            activity?.finish()
-        }
-    }
+//    override fun onBackPressed() {
+//        if (binding.MapDrawerLayout.isDrawerOpen(GravityCompat.END)){
+//            binding.MapDrawerLayout.closeDrawers()
+//        }
+//        else{
+//            activity?.finish()
+//        }
+//    }
 
     private fun loadFrag(fragment: Fragment){
         val tra = childFragmentManager.beginTransaction()
