@@ -22,8 +22,8 @@
             android:id="@+id/ib_backbutton"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/arrow"
             android:background="#00ffffff"
+            android:src="@drawable/arrow"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,8 +62,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
-            android:background="@color/white"
             android:layout_marginBottom="10dp"
+            android:background="@color/white"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/horizontalScrollView">
 
@@ -169,6 +169,7 @@
                     android:layout_marginTop="3dp"
                     android:background="#E0E0E0" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -178,14 +179,16 @@
                     android:id="@+id/tv_review_cnt"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="방문자리뷰 0"
                     android:layout_gravity="left"
-                    android:textSize="20dp"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:text="방문자리뷰 0"
+                    android:textSize="20dp" />
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <Button
                     android:id="@+id/btn_write_review"
                     android:layout_width="wrap_content"
@@ -193,6 +196,7 @@
                     android:layout_gravity="right"
                     android:text="리뷰 등록" />
             </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_placeReview"
                 android:layout_width="match_parent"
@@ -203,6 +207,16 @@
                 app:layout_constraintTop_toBottomOf="@id/place_info_layout"
                 tools:layout_editor_absoluteY="450dp" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/bookmark_empty"
+            app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
