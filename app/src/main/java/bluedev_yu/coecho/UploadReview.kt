@@ -116,7 +116,9 @@ class UploadReview : AppCompatActivity() {
 //                    }
                     else //다 만족
                     {
-                        makeToast(true, "사진을 업로드하고 있습니다...")
+                        if(!ReviewDTO.reviewImage.equals(null)) {
+                            makeToast(true, "사진을 업로드하고 있습니다...")
+                        }
                         firestore?.collection("User")?.document(auth?.uid.toString())?.get()
                             ?.addOnSuccessListener { task ->
                                 var document = task?.toObject(userDTO::class.java)
