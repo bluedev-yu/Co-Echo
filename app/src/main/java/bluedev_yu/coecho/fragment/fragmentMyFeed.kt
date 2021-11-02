@@ -46,7 +46,7 @@ class fragmentMyFeed(uid: String?) : Fragment() {
 
         // Inflate the layout for this fragment
         val feedList = arrayListOf<Feeds>()
-        val contentUidList = arrayListOf<String>()
+        val contentUidList = arrayListOf<Feeds.ContentUids>()
         val nofeed = view.findViewById<TextView>(R.id.nofeed_myfeed)
 
         firestore?.collection("Feeds")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
@@ -64,7 +64,10 @@ class fragmentMyFeed(uid: String?) : Fragment() {
                     if(now?.uid.toString().equals(uid)) //내피드
                     {
                         feedList.add(now!!)
-                        contentUidList.add(snapshot.id)
+                        var imsi = Feeds.ContentUids()
+                        imsi!!.contentUid = snapshot.id
+                        imsi!!.timestamp = now.timeStamp
+                        contentUidList.add(imsi)
                     }
                 }
                 else //남이 내페이지, 내가 남페이지
@@ -72,7 +75,10 @@ class fragmentMyFeed(uid: String?) : Fragment() {
                     if ((now?.uid!!.equals(uid) && now.privacy == false)) //남페이지이고 공개된 경우
                     {
                         feedList.add(now)
-                        contentUidList.add(snapshot.id)
+                        var imsi = Feeds.ContentUids()
+                        imsi!!.contentUid = snapshot.id
+                        imsi!!.timestamp = now.timeStamp
+                        contentUidList.add(imsi)
                     }
                 }
             }
@@ -82,6 +88,8 @@ class fragmentMyFeed(uid: String?) : Fragment() {
                 nofeed.visibility = View.VISIBLE
             }
             else {
+                feedList.sortByDescending { it.timeStamp }
+                contentUidList.sortByDescending { it.timestamp }
                 rv_feeds.adapter = FeedAdapter(feedList, contentUidList)
                 rv_feeds.adapter!!.notifyDataSetChanged()
             }

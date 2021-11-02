@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.FeedDetail
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.Feeds
+import bluedev_yu.coecho.data.model.ReviewDTO
 import bluedev_yu.coecho.fragment.FragmentMyPage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -29,12 +31,12 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 
-class FeedAdapter(val feedList: ArrayList<Feeds>, val contentUidList : ArrayList<String>) : 
+class FeedAdapter(val feedList: ArrayList<Feeds>, val contentUidList : ArrayList<Feeds.ContentUids>) :
 RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
-    var auth : FirebaseAuth? = null
-    var firestore : FirebaseFirestore?= null //String 등 자료형 데이터베이스
-    var firestorage : FirebaseStorage?= null //사진, GIF 등의 파일 데이터베이스
+    var auth: FirebaseAuth? = null
+    var firestore: FirebaseFirestore? = null //String 등 자료형 데이터베이스
+    var firestorage: FirebaseStorage? = null //사진, GIF 등의 파일 데이터베이스
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
@@ -78,27 +80,34 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
         holder.strName.text = feedList.get(position).strName //유저 이름
         //프로필사진
-        if(feedList.get(position).imageUrl == null) //기본 이미지
+        if (feedList.get(position).imageUrl == null) //기본 이미지
             Glide.with(holder.itemView.context).load(R.drawable.default_profilephoto).apply(
-                RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
-        else
-        {
-            Glide.with(holder.itemView.context).load(feedList.get(position).imageUrl!!.toUri()).apply(
-                RequestOptions().circleCrop()).into(holder.profileImgUrl) //유저 프로필 이미지
+                RequestOptions().circleCrop()
+            ).into(holder.profileImgUrl) //유저 프로필 이미지
+        else {
+            Glide.with(holder.itemView.context).load(feedList.get(position).imageUrl!!.toUri())
+                .apply(
+                    RequestOptions().circleCrop()
+                ).into(holder.profileImgUrl) //유저 프로필 이미지
         }
 
-        if(feedList.get(position).title!! <20) //칭호
+        if (feedList.get(position).title!! < 20) //칭호
         {
             holder.userTitle.setText(R.string.grade1)
-        }
-        else if(feedList.get(position).title!! <40) //칭호
+        } else if (feedList.get(position).title!! < 40) //칭호
         {
             holder.userTitle.setText(R.string.grade2)
-        }
-        else
+        } else
             holder.userTitle.setText(R.string.grade3)
 
-        Glide.with(holder.itemView.context).load(feedList.get(position).feedImgUrl!!).into(holder.feedImgUrl) //피드 이미지
+        if (feedList.get(position).feedImgUrl == null) {
+            //피드 이미지가 없을 경우
+            holder.feedImgUrl.visibility = View.GONE
+        } else {
+            Glide.with(holder.itemView.context).load(feedList.get(position).feedImgUrl!!)
+                .into(holder.feedImgUrl) //피드 이미지
+        }
+
         holder.strName.text = feedList.get(position).strName
         holder.profileImgUrl.setOnClickListener(object : View.OnClickListener {
             //해당 유저의 마이페이지를 띄우기
@@ -117,25 +126,22 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         })
 
         //피드 지우기 내 피드인경우에만 보이기
-        if(feedList[position].uid!!.equals(auth?.uid.toString()))
-        {
+        if (feedList[position].uid!!.equals(auth?.uid.toString())) {
             holder.trash.visibility = View.VISIBLE
 
         }
 
         holder.trash.setOnClickListener{
-            firestore?.collection("Feeds")?.document(contentUidList[position])?.delete()
+            firestore?.collection("Feeds")?.document(contentUidList[position].contentUid!!)?.delete()
             feedList.clear()
             this.notifyDataSetChanged()
         }
 
         //미리 하트가 비었는가 찼는가
-        if(feedList[position].likes.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
+        if (feedList[position].likes.containsKey(auth?.uid.toString())) //좋아요 눌렀을 경우
         {
             holder.ivLike.setImageResource(R.drawable.like)
-        }
-        else
-        {
+        } else {
             holder.ivLike.setImageResource(R.drawable.blank_like) //안눌렀을 경우
         }
 
@@ -143,23 +149,23 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
 
         holder.content.text = feedList.get(position).content
-        holder.hashtag.text = "#"+feedList.get(position).hashtag
+        holder.hashtag.text = feedList.get(position).hashtag
         holder.likeCnt.text = feedList.get(position).likeCnt.toString()
         holder.commentCnt.text = feedList.get(position).commentCnt.toString()
         holder.feedCardView.setOnClickListener {
             val intent = Intent(holder.itemView?.context, FeedDetail::class.java)
             intent.putExtra("uid", feedList.get(position).uid)
-            intent.putExtra("timeStamp",feedList.get(position).timeStamp)
+            intent.putExtra("timeStamp", feedList.get(position).timeStamp)
             intent.putExtra("content", feedList.get(position).content)
             intent.putExtra("hashtag", feedList.get(position).hashtag)
             intent.putExtra("likeCnt", feedList.get(position).likeCnt)
             intent.putExtra("strName", feedList.get(position).strName)
-            intent.putExtra("imageUrl",feedList.get(position).imageUrl)
-            intent.putExtra("title",feedList.get(position).title)
-            intent.putExtra("commentCnt",feedList.get(position).commentCnt)
-            intent.putExtra("feedImage",feedList.get(position).feedImgUrl)
+            intent.putExtra("imageUrl", feedList.get(position).imageUrl)
+            intent.putExtra("title", feedList.get(position).title)
+            intent.putExtra("commentCnt", feedList.get(position).commentCnt)
+            intent.putExtra("feedImage", feedList.get(position).feedImgUrl)
 
-            intent.putExtra("contentUid",contentUidList.get(position))
+            intent.putExtra("contentUid",contentUidList.get(position).contentUid)
             ContextCompat.startActivity(holder.itemView?.context, intent, null)
         }
 
@@ -203,24 +209,23 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
 
     private fun likeEvent(position: Int)
     {
-        var tsDoc = firestore?.collection("Feeds")?.document(contentUidList[position])
+        var tsDoc = firestore?.collection("Feeds")?.document(contentUidList[position].contentUid!!)
         firestore?.runTransaction{
             transaction ->
 
             val uid = auth?.uid.toString()
             val feedDTO = transaction.get(tsDoc!!).toObject(Feeds::class.java)
 
-            if(feedDTO!!.likes.containsKey(uid)){ //이미 좋아요 한 경우 -> 좋아요 철회
-                feedDTO?.likeCnt = feedDTO.likeCnt-1
+            if (feedDTO!!.likes.containsKey(uid)) { //이미 좋아요 한 경우 -> 좋아요 철회
+                feedDTO?.likeCnt = feedDTO.likeCnt - 1
                 feedDTO?.likes.remove(uid)
-            }
-            else //좋아요 아직 안함 -> 좋아요 하기
+            } else //좋아요 아직 안함 -> 좋아요 하기
             {
                 feedDTO.likes[uid] = uid
-                feedDTO.likeCnt = feedDTO.likeCnt+1
+                feedDTO.likeCnt = feedDTO.likeCnt + 1
             }
 
-            transaction.set(tsDoc,feedDTO)
+            transaction.set(tsDoc, feedDTO)
         }
     }
 
@@ -228,7 +233,7 @@ RecyclerView.Adapter<FeedAdapter.CustomViewHolder>(){
         return feedList.size
     }
 
-    class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var profileImgUrl = itemView.findViewById<ImageView>(R.id.feed_profile) //프로필 이미지
         var userTitle = itemView.findViewById<TextView>(R.id.feed_title) //칭호
         var strName = itemView.findViewById<TextView>(R.id.feed_name) //이름

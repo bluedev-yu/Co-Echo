@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.compose.animation.core.snap
 import androidx.fragment.app.Fragment
@@ -20,44 +21,66 @@ import com.google.firebase.firestore.FirebaseFirestore
 class FragmentResultContent(query: String?) : Fragment() {
 
     lateinit var rv_result_content: RecyclerView
+    lateinit var noSearchContent: TextView
     var query: String? = query
-    var firestore : FirebaseFirestore? = null
+    var firestore: FirebaseFirestore? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_result_content, container, false)
+        val view = inflater.inflate(R.layout.fragment_result_content, container, false)
 
         firestore = FirebaseFirestore.getInstance()
 
         val bundle = Bundle()
         bundle.putString("query", query)
 
-        val hashtagList = arrayListOf<Feeds>()
-        val contentUidList = arrayListOf<String>()
+        noSearchContent = view.findViewById(R.id.noSearchContent)
 
-        firestore?.collection("Feeds")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            hashtagList.clear()
-            contentUidList.clear()
-            if (querySnapshot == null) {
-                return@addSnapshotListener
-            }
-            for (snapshot in querySnapshot!!.documents) {
-                val imsi = snapshot.toObject(Feeds::class.java)
-                if (imsi?.content!!.contains(query!!)) //검색내용 포함시
-                {
-                    hashtagList.add(imsi)
-                    contentUidList.add(snapshot.id)
+        val hashtagList = arrayListOf<Feeds>()
+        val contentUidList = arrayListOf<Feeds.ContentUids>()
+
+        firestore?.collection("Feeds")
+            ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                hashtagList.clear()
+                contentUidList.clear()
+                if (querySnapshot == null) {
+                    return@addSnapshotListener
                 }
+                for (snapshot in querySnapshot!!.documents) {
+                    val imsi = snapshot.toObject(Feeds::class.java)
+                    if (imsi?.content!!.contains(query!!)) //검색내용 포함시
+                    {
+                        hashtagList.add(imsi)
+                        var imsic = Feeds.ContentUids()
+                        imsic!!.contentUid = snapshot.id
+                        imsic!!.timestamp = imsi.timeStamp
+                        contentUidList.add(imsic)
+                    }
+
+                    hashtagList.sortByDescending { it.timeStamp }
+                    contentUidList.sortByDescending { it.timestamp }
+
+                    if (hashtagList.size == 0) {
+                        noSearchContent.visibility = View.VISIBLE
+                    } else {
+                        noSearchContent.visibility = View.INVISIBLE
+                        rv_result_content.adapter = FeedAdapter(hashtagList, contentUidList)
+                        rv_result_content.adapter!!.notifyDataSetChanged()
+                    }
+
+                }
+                hashtagList.sortByDescending { it.timeStamp }
+                contentUidList.sortByDescending { it.timestamp }
+                rv_result_content.adapter = FeedAdapter(hashtagList, contentUidList)
+                rv_result_content.adapter!!.notifyDataSetChanged()
             }
-            rv_result_content.adapter = FeedAdapter(hashtagList,contentUidList)
-            rv_result_content.adapter!!.notifyDataSetChanged()
-        }
 
         rv_result_content = view.findViewById(R.id.rv_result_content)
-        rv_result_content.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        rv_result_content.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv_result_content.setHasFixedSize(true)
 
         return view

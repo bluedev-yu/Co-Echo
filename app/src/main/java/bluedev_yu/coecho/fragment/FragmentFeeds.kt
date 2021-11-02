@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.compose.animation.core.snap
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -37,7 +38,7 @@ class FragmentFeeds : Fragment() {
     var followings :MutableMap<String,String> = mutableMapOf()
 
     var feedList = arrayListOf<Feeds>()
-    var contentUidList = arrayListOf<String>()
+    var contentUidList = arrayListOf<Feeds.ContentUids>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,7 +102,10 @@ class FragmentFeeds : Fragment() {
                             if(now?.uid!!.equals(auth?.uid.toString()) || (now?.uid!!.equals(auth?.uid.toString())==false && now.privacy == false)) //내것이거나, 남것이지만 public인 경우
                             {
                                 feedList.add(now!!)
-                                contentUidList.add(snapshot.id)
+                                var imsi = Feeds.ContentUids()
+                                imsi!!.contentUid = snapshot.id
+                                imsi!!.timestamp = now.timeStamp
+                                contentUidList.add(imsi)
                             }
                         }
                         if(feedList.size ==0)
@@ -111,6 +115,8 @@ class FragmentFeeds : Fragment() {
                         else
                         {
                             nofeed.visibility = View.INVISIBLE
+                            feedList.sortByDescending { it.timeStamp }
+                            contentUidList.sortByDescending { it.timestamp }
                             rv_feed.adapter = FeedAdapter(feedList,contentUidList)
                             rv_feed.adapter!!.notifyDataSetChanged()
                         }

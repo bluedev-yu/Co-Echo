@@ -5,8 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UploadFeed"
+    android:id="@+id/uploadReview"
     android:background="@color/CoEcho_mainBackground">
 
+
+    <androidx.constraintlayout.widget.Barrier
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="imagePreviewInReview"/>
 
     <ImageView
         android:id="@+id/imagePreviewInReview"

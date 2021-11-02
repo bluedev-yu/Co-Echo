@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MyPageBackground"
+    android:id="@+id/background_uploadpage"
     android:background="@color/CoEcho_mainBackground">
 
     <LinearLayout
@@ -23,7 +24,7 @@
                 android:layoutDirection="rtl"
                 android:text="나의 에코"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/MypageText"
                 app:layout_constraintTop_toBottomOf="@+id/MypageText" />
@@ -36,7 +37,7 @@
                 android:layout_marginTop="30dp"
                 android:text="MYPAGE"
                 android:textColor="#00B06A"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -101,7 +102,7 @@
         android:layout_width="match_parent"
         android:layout_height="350dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        android:background="@drawable/background_bottomsheet">
+        android:background="@drawable/bottom_sheet_background">
 
         <ImageView
             android:layout_width="70dp"
@@ -120,44 +121,56 @@
             android:layout_marginRight="30dp"
             android:layout_marginBottom="30dp"
             app:columnCount="3"
-            app:orientation="horizontal"
-            app:rowCount="2">
+            app:rowCount="2"
+            app:orientation="horizontal">
 
 
             <ImageView
                 android:id="@+id/stamp1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_gravity="center"
+                android:layout_margin="10dp"
                 app:srcCompat="@drawable/stamp1" />
 
             <ImageView
                 android:id="@+id/stamp2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_gravity="center"
+                android:layout_margin="10dp"
                 app:srcCompat="@drawable/stamp2" />
 
             <ImageView
                 android:id="@+id/stamp3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_gravity="center"
+                android:layout_margin="10dp"
                 app:srcCompat="@drawable/stamp3" />
 
             <ImageView
                 android:id="@+id/stamp4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_gravity="center"
+                android:layout_margin="10dp"
                 app:srcCompat="@drawable/stamp4" />
 
             <ImageView
                 android:id="@+id/stamp5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_gravity="center"
+                android:layout_margin="10dp"
                 app:srcCompat="@drawable/stamp5" />
 
             <ImageView
                 android:id="@+id/stamp6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_gravity="center"
+                android:layout_margin="10dp"
                 app:srcCompat="@drawable/stamp6" />
 
         </androidx.gridlayout.widget.GridLayout>

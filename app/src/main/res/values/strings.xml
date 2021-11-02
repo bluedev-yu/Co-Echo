@@ -13,7 +13,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
-<!--    <string name="default_web_client_id">741116606261-4ookp5a3r988dmo817qfqk9ubclt2jos.apps.googleusercontent.com</string>-->
+    <string name="default_web_client_id">741116606261-4ookp5a3r988dmo817qfqk9ubclt2jos.apps.googleusercontent.com</string>
 
     <!-- 로그인 -->
     <string name="signin_email">회원가입 및 이메일</string>
@@ -45,9 +45,10 @@
 
     <string-array name="splash">
         <item>종이빨대가 도입되고 1년후, 카페 내 플라스틱 사용량이 약 70% 줄었다.</item>
-        <item>스위스 업사이클링 브랜드 \'프라이탁\'은 가방, 지갑 등을 판매하고 있다.</item>
-        <item>패스트패션 브랜드 H&amp;M이 폐기물로 만든 지속가능한 소재로 \'컨셔스 익스클루시브 컬렉션\'을 만들었다.</item>
-        <item>당근마켓에서 환경의 날에 환경보호를 위한 실천을 공유하는 캠페인을 진행한다.</item>
-        <item>자산운용사 블랙룩이 석탄원료를 사용하는 기업을 처분하는 중이다.</item>
+        <item>플라스틱 소비가 지금과 같다면 2050년에든 바다에 물고기보다 플라스틱 쓰레기가 더 많아질 것이다! [2016년 세계경제포럼]</item>
+        <item>전세계에서 3월의 마지막 토요일 오후 8시 30분! 한시간동안 어스아워(Earth Hour)에 함께 참여해보세요!
+대략 180개 국가, 18,000개 랜드마크가 함께합니다!</item>
+        <item>미세먼지를 줄이는 운전 방법 "3급(급출발ㆍ급가속ㆍ급감속)"을 하지 마세요!</item>
+        <item>친환경 옷? 사지마세요! 친환경 재킷도 공정 과정에서 온실가스가 20% 배출되며 2/3의 천이 버려집니다! 옷을 새로 사지말고 물려받아 입기, 리폼해 딥기, 옷 기증하기!</item>
     </string-array>
 </resources>

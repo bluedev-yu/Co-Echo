@@ -10,26 +10,16 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
-import bluedev_yu.coecho.DB_Place
 import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.ReviewDTO
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
-class ReviewAdapter(val reviewList: ArrayList<ReviewDTO>) :
-    RecyclerView.Adapter<ReviewAdapter.CustomViewHolder>() {
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ReviewAdapter.CustomViewHolder {
+class ReviewAdapter(val reviewList: ArrayList<ReviewDTO>): RecyclerView.Adapter<ReviewAdapter.CustomViewHolder>(){
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewAdapter.CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_review, parent, false)
         return CustomViewHolder(view)
     }
@@ -93,8 +83,15 @@ class ReviewAdapter(val reviewList: ArrayList<ReviewDTO>) :
 
 
         holder.content.text = reviewList.get(position).content
-        Glide.with(holder.itemView.context).load(reviewList.get(position).reviewImage!!)
-            .into(holder.reviewImage) //피드 이미지
+
+        if(reviewList.get(position).reviewImage.equals(null)){
+            //리뷰 이미지가 없을 경우
+            holder.reviewImage.visibility = View.GONE
+        }else{
+            //리뷰 이미지가 있을 경우
+            Glide.with(holder.itemView.context).load(reviewList.get(position).reviewImage!!).into(holder.reviewImage) //피드 이미지
+
+        }
 
         //프로필사진
         if (reviewList.get(position).imageUrl == null) //기본 이미지
@@ -113,7 +110,7 @@ class ReviewAdapter(val reviewList: ArrayList<ReviewDTO>) :
         return reviewList.size
     }
 
-    class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class CustomViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val star = itemView.findViewById<RatingBar>(R.id.review_star) //별점
         val title = itemView.findViewById<TextView>(R.id.review_title) //사용자 칭호
         val place = itemView.findViewById<TextView>(R.id.review_place)//가게 이름

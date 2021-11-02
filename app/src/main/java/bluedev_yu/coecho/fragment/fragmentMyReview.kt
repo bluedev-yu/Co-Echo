@@ -67,6 +67,7 @@ class fragmentMyReview(uid: String?): Fragment() {
                 nofeed.visibility = View.VISIBLE
             }
             else {
+                reviewList.sortByDescending { it.timestamp }
             rv_review.adapter = ReviewAdapter(reviewList)
             rv_review.adapter!!.notifyDataSetChanged()}
         }

@@ -114,8 +114,15 @@ class UploadReview : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             )
                 CoroutineScope(Dispatchers.Main).launch {
-                    Log.v("ReviewImage", ReviewDTO.reviewImage.toString())
-                    ReviewDTO.reviewImage = funImageUpLoad()
+                    Log.v("ReviewImage",ReviewDTO.reviewImage.toString())
+                    if(ReviewDTO.reviewImage.equals(null)){
+                        //리뷰 이미지가 없을 경우
+                        val ImagePreview: ImageView = findViewById(R.id.imagePreviewInReview)
+                        ImagePreview.visibility = View.GONE
+                    }else{
+                        //리뷰 이미지가 있을 경우
+                        ReviewDTO.reviewImage = funImageUpLoad()
+                    }
                     //null check하기
                     if (ReviewDTO.star!! < 0.5) {
                         makeToast(true, "별점을 입력해 주세요!")
@@ -137,25 +144,21 @@ class UploadReview : AppCompatActivity() {
                                 ReviewDTO.title = document?.title
                                 ReviewDTO.imageUrl = document?.imageUrl
 
-                                firestore?.collection("Reviews")?.document()?.set(ReviewDTO)
-                                    ?.addOnCompleteListener { task ->
-                                        if (task.isSuccessful) {
-                                            makeToast(task.isSuccessful, "게시 완료!")
-                                            makeToast(
-                                                task.isSuccessful,
-                                                "환경을 위해 " + (ReviewDTO.title!! + 1) + "만큼 노력하셨네요!"
-                                            )
-                                            startActivity(
-                                                Intent(
-                                                    this@UploadReview,
-                                                    MainActivity::class.java
-                                                )
-                                            )
-                                        }
+                            firestore?.collection("Reviews")?.document()?.set(ReviewDTO)
+                                ?.addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        makeToast(task.isSuccessful,"게시 완료!")
+                                        makeToast(task.isSuccessful,"환경을 위해 " + (ReviewDTO.title!! + 1) + "만큼 노력하셨네요!")
+
+                                        val map = FragmentMap()
+                                        var fm: FragmentManager = supportFragmentManager
+                                        var ft: FragmentTransaction = fm.beginTransaction()
+                                        ft.replace(R.id.uploadReview, map).commit()
                                     }
-                                firestore?.collection("User")?.document(auth?.uid.toString())
-                                    ?.update("title", ReviewDTO.title!! + 1)
-                            }
+                                }
+                            firestore?.collection("User")?.document(auth?.uid.toString())
+                                ?.update("title", ReviewDTO.title!! + 1)
+                        }
 
                     }
                 }
