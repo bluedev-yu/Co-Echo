@@ -113,11 +113,12 @@ class UploadReview : AppCompatActivity() {
                     } else if (ReviewDTO.hashtag?.equals("") == true) //해시태그없음
                     {
                         makeToast(true, "해시태그를 입력해 주세요!")
-                    } else if (ReviewDTO.reviewImage.equals(null)) {
-                        makeToast(true, "사진을 업로드 해주세요!")
+//                    } else if (ReviewDTO.reviewImage.equals(null)) {
+//                        makeToast(true, "사진을 업로드 해주세요!")
                     } else //다 만족
                     {
-                        makeToast(true, "사진을 업로드하고 있습니다...")
+                        if(ReviewDTO.reviewImage!=null)
+                            makeToast(true, "사진을 업로드하고 있습니다...")
                         firestore?.collection("User")?.document(auth?.uid.toString())?.get()
                             ?.addOnSuccessListener { task ->
                                 var document = task?.toObject(userDTO::class.java)
