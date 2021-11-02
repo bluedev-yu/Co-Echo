@@ -43,6 +43,7 @@ class FragmentMapShow : Fragment() {
     var recomCheck = false
 
     lateinit var mapView: MapView
+    lateinit var mapViewContainer:ViewGroup
     lateinit var t_rv_places: RecyclerView
 
     //네비게이션뷰에 들어가는 데이터
@@ -58,6 +59,12 @@ class FragmentMapShow : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    override fun onStop() {
+        super.onStop()
+        mapViewContainer.removeView(mapView);
+        recomCheck = false
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,7 +78,7 @@ class FragmentMapShow : Fragment() {
             Log.i("fragmentactivity", "not null")
 
             mapView = MapView(activity)
-            val mapViewContainer = thisFragView.findViewById<MapView>(R.id.MapView) as ViewGroup
+            mapViewContainer = thisFragView.findViewById<MapView>(R.id.MapView) as ViewGroup
             mapViewContainer.addView(mapView)
 
             //firebase DB 접근
