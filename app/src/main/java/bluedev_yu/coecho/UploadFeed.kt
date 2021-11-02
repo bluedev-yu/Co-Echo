@@ -112,7 +112,8 @@ class UploadFeed : AppCompatActivity() {
 //                }
                 else //다 만족
                 {
-                    makeToast(true,"사진을 업로드하고 있습니다...")
+                    if(FeedDTO.feedImgUrl!=null)
+                        makeToast(true, "사진을 업로드하고 있습니다...")
                     //피드에서 나의 정보 가져오기
                     firestore?.collection("User")?.document(auth?.uid.toString())?.get()
                         ?.addOnSuccessListener { task ->

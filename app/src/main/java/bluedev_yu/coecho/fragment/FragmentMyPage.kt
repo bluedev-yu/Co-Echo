@@ -87,6 +87,10 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
         firestore = FirebaseFirestore.getInstance()
         firestorage = FirebaseStorage.getInstance()
 
+        val followButton: Button =
+            viewProfile!!.findViewById(R.id.FollowButton) //팔로우 버튼 팔로우/언팔로우로 보이기
+        val score : TextView = viewProfile!!.findViewById(R.id.score)
+
         if (uid == null || uid == auth?.uid.toString()) //마이페이지
         {
             firestore?.collection("User")?.document(auth?.uid.toString())?.addSnapshotListener{
@@ -147,6 +151,10 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
                                 .into(viewProfile!!.findViewById(R.id.MypageProfileImage))
                         }
                     }
+
+                //점수 표시
+                score.setText("환경 기여도 "+ (document.title.toString()))
+
                 }
 
             //프로필이미지 바꾸기
@@ -215,8 +223,8 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
             val MypageProfileOptionButton: Button =
                 viewProfile!!.findViewById(R.id.MyPageProfileOptionButton) //마이페이지 배경변경 버튼
             MypageProfileOptionButton.visibility = View.INVISIBLE
-            val followButton: Button =
-                viewProfile!!.findViewById(R.id.FollowButton) //팔로우 버튼 팔로우/언팔로우로 보이기
+            followButton.visibility = View.VISIBLE //follow button 보이기
+            score.visibility=View.INVISIBLE //score 가리기
 
             firestore?.collection("Follow")?.document(auth?.uid.toString())
                 ?.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
