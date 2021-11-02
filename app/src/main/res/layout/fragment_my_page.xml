@@ -83,31 +83,22 @@
             android:id="@+id/MyPageTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_marginTop="15dp"
             android:text="칭호"
             android:textColor="#00B06A"
             app:layout_constraintEnd_toEndOf="@+id/MyPageFollowing"
-            app:layout_constraintStart_toStartOf="@+id/frameLayout2"
+            app:layout_constraintStart_toStartOf="@+id/MyPageFollower"
             app:layout_constraintTop_toBottomOf="@+id/frameLayout2"></TextView>
 
         <TextView
             android:id="@+id/MyPageUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="임시이름"
             app:layout_constraintBottom_toBottomOf="@+id/MyPageTitle"
-            app:layout_constraintEnd_toEndOf="@+id/frameLayout2"
             app:layout_constraintStart_toEndOf="@+id/MyPageTitle"
             app:layout_constraintTop_toTopOf="@+id/MyPageTitle"></TextView>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/MyPageProfileOptionButton"
-            android:layout_width="33dp"
-            android:layout_height="33dp"
-            android:background="@drawable/mypage_profileoptionbutton"
-            app:layout_constraintEnd_toEndOf="@+id/frameLayout2"
-            app:layout_constraintTop_toTopOf="@+id/frameLayout2"></androidx.appcompat.widget.AppCompatButton>
 
         <FrameLayout
             android:id="@+id/frameLayout2"
@@ -119,12 +110,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/MyEchoText">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/MypageProfileImage"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:background="@drawable/default_profilephoto" />
+            <FrameLayout
+                android:id="@+id/mypageBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="130dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/MypageProfileImage"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/default_profilephoto"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/MyPageProfileOptionButton"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:background="@drawable/mypage_profileoptionbutton"
+                        app:layout_constraintStart_toEndOf="@+id/MypageProfileImage"
+                        app:layout_constraintTop_toTopOf="@+id/MypageProfileImage" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
 
         </FrameLayout>
 
@@ -166,13 +180,6 @@
 
 
         <!-- 얘 이동 부탁해~~ 애용~~ -->
-        <FrameLayout
-            android:id="@+id/mypageBackground"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
-            app:layout_constraintStart_toEndOf="@+id/FollowButton">
-        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

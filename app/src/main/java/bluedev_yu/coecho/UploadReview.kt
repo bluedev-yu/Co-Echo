@@ -102,14 +102,8 @@ class UploadReview : AppCompatActivity() {
             )
                 CoroutineScope(Dispatchers.Main).launch {
                     Log.v("ReviewImage", ReviewDTO.reviewImage.toString())
-                    if (ReviewDTO.reviewImage.equals(null)) {
-                        //리뷰 이미지가 없을 경우
-                        val ImagePreview: ImageView = findViewById(R.id.imagePreviewInReview)
-                        ImagePreview.visibility = View.GONE
-                    } else {
-                        //리뷰 이미지가 있을 경우
-                        ReviewDTO.reviewImage = funImageUpLoad()
-                    }
+
+                    ReviewDTO.reviewImage = funImageUpLoad()
                     //null check하기
                     if (ReviewDTO.star!! < 0.5) {
                         makeToast(true, "별점을 입력해 주세요!")
@@ -139,7 +133,9 @@ class UploadReview : AppCompatActivity() {
                                                 task.isSuccessful,
                                                 "환경을 위해 " + (ReviewDTO.title!! + 1) + "만큼 노력하셨네요!"
                                             )
-                                            
+
+                                            ReviewPhotoUploadButton.visibility = View.GONE
+
                                             val map = FragmentMap()
                                             var fm: FragmentManager = supportFragmentManager
                                             var ft: FragmentTransaction = fm.beginTransaction()
