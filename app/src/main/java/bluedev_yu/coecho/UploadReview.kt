@@ -13,6 +13,8 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import bluedev_yu.coecho.data.model.Feeds
 import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.ReviewDTO
@@ -87,25 +89,10 @@ class UploadReview : AppCompatActivity() {
             ReviewDTO.star = ratingBar.rating
             ReviewDTO.timestamp = System.currentTimeMillis()
             var pid = intent.getStringExtra("pid")
-            if (pid != null)
-            {
+            if (pid != null) {
                 ReviewDTO.pid = pid
-            }
-            else
-            {
-                var a=intent.getStringExtra("pName")
-                var b=intent.getStringExtra("pAddress")
-                if (a != null&&b!=null) {
-                    CoroutineScope(Dispatchers.Default).launch {
-                        pid=DB_Place().search_data(a, b)
-                        Log.i("새로 검색한 pid", pid!!)
-                        ReviewDTO.pid = pid
-                    }
-                }
-                if(pid=="none"||pid=="false")
-                {
-                    makeToast(true,"잘못된 pid입니다. 나중에 다시 시도해주세요")
-                }
+            } else {
+                makeToast(true, "잘못된 pid입니다. 나중에 다시 시도해주세요")
             }
 
             if (ContextCompat.checkSelfPermission(
@@ -114,12 +101,12 @@ class UploadReview : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             )
                 CoroutineScope(Dispatchers.Main).launch {
-                    Log.v("ReviewImage",ReviewDTO.reviewImage.toString())
-                    if(ReviewDTO.reviewImage.equals(null)){
+                    Log.v("ReviewImage", ReviewDTO.reviewImage.toString())
+                    if (ReviewDTO.reviewImage.equals(null)) {
                         //리뷰 이미지가 없을 경우
                         val ImagePreview: ImageView = findViewById(R.id.imagePreviewInReview)
                         ImagePreview.visibility = View.GONE
-                    }else{
+                    } else {
                         //리뷰 이미지가 있을 경우
                         ReviewDTO.reviewImage = funImageUpLoad()
                     }
@@ -144,21 +131,24 @@ class UploadReview : AppCompatActivity() {
                                 ReviewDTO.title = document?.title
                                 ReviewDTO.imageUrl = document?.imageUrl
 
-                            firestore?.collection("Reviews")?.document()?.set(ReviewDTO)
-                                ?.addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        makeToast(task.isSuccessful,"게시 완료!")
-                                        makeToast(task.isSuccessful,"환경을 위해 " + (ReviewDTO.title!! + 1) + "만큼 노력하셨네요!")
+                                firestore?.collection("Reviews")?.document()?.set(ReviewDTO)
+                                    ?.addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            makeToast(task.isSuccessful, "게시 완료!")
+                                            makeToast(
+                                                task.isSuccessful,
+                                                "환경을 위해 " + (ReviewDTO.title!! + 1) + "만큼 노력하셨네요!"
+                                            )
 
-                                        val map = FragmentMap()
-                                        var fm: FragmentManager = supportFragmentManager
-                                        var ft: FragmentTransaction = fm.beginTransaction()
-                                        ft.replace(R.id.uploadReview, map).commit()
+                                            val map = FragmentMap()
+                                            var fm: FragmentManager = supportFragmentManager
+                                            var ft: FragmentTransaction = fm.beginTransaction()
+                                            ft.replace(R.id.uploadReview, map).commit()
+                                        }
                                     }
-                                }
-                            firestore?.collection("User")?.document(auth?.uid.toString())
-                                ?.update("title", ReviewDTO.title!! + 1)
-                        }
+                                firestore?.collection("User")?.document(auth?.uid.toString())
+                                    ?.update("title", ReviewDTO.title!! + 1)
+                            }
 
                     }
                 }

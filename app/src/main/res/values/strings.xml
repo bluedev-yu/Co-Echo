@@ -13,7 +13,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
-    <string name="default_web_client_id">741116606261-4ookp5a3r988dmo817qfqk9ubclt2jos.apps.googleusercontent.com</string>
+<!--    <string name="default_web_client_id">741116606261-4ookp5a3r988dmo817qfqk9ubclt2jos.apps.googleusercontent.com</string>-->
 
     <!-- 로그인 -->
     <string name="signin_email">회원가입 및 이메일</string>
@@ -49,6 +49,6 @@
         <item>전세계에서 3월의 마지막 토요일 오후 8시 30분! 한시간동안 어스아워(Earth Hour)에 함께 참여해보세요!
 대략 180개 국가, 18,000개 랜드마크가 함께합니다!</item>
         <item>미세먼지를 줄이는 운전 방법 "3급(급출발ㆍ급가속ㆍ급감속)"을 하지 마세요!</item>
-        <item>친환경 옷? 사지마세요! 친환경 재킷도 공정 과정에서 온실가스가 20% 배출되며 2/3의 천이 버려집니다! 옷을 새로 사지말고 물려받아 입기, 리폼해 딥기, 옷 기증하기!</item>
+        <item>친환경 재킷도 공정 과정에서 온실가스가 20% 배출되며 2/3의 천이 버려집니다! 옷을 새로 사지말고 물려받아 입기, 리폼해 입기, 옷 기증하기!</item>
     </string-array>
 </resources>
