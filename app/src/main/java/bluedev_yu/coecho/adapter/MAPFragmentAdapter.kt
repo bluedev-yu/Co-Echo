@@ -13,8 +13,8 @@ class MAPFragmentAdapter(fm:FragmentManager,query:String?):FragmentPagerAdapter(
     override fun getItem(position: Int): Fragment {
         val fragment = when(position)
         {
-            0 -> FragmentMapHashtag(query)
-            else -> FragmentMapPlaces(query)
+            0 -> FragmentMapPlaces(query)
+            else -> FragmentMapHashtag(query)
 
         }
         return fragment
@@ -23,8 +23,8 @@ class MAPFragmentAdapter(fm:FragmentManager,query:String?):FragmentPagerAdapter(
     override fun getPageTitle(position: Int): CharSequence? {
         val title = when(position)
         {
-            0 -> "해시태그"
-            else -> "장소"
+            0 -> "장소"
+            else -> "해시태그"
         }
         return title
     }

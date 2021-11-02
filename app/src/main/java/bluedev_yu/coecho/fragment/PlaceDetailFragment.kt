@@ -7,10 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bluedev_yu.coecho.*
@@ -18,6 +15,7 @@ import bluedev_yu.coecho.adapter.ReviewAdapter
 import bluedev_yu.coecho.data.model.Place
 import bluedev_yu.coecho.data.model.ReviewDTO
 import bluedev_yu.coecho.data.model.userDTO
+import com.bumptech.glide.Glide
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -102,38 +100,42 @@ class PlaceDetailFragment : Fragment() {
                 }
                 t_scrollItem.addView(inflater.inflate(R.layout.no_image_item, null))
             } else {
-                CoroutineScope(Dispatchers.Main).launch {
-                    tempRes = DB_Review().getHashtag(pid)
-                    Log.d("리뷰 검색 결과", tempRes.toString())
-                    if (tempRes != null) {
-                        if (tempRes!!.first != "") {
-                            hashtag1_1.text = tempRes!!.first
+                loadPlaceReview(pid, reviewList)
+                Log.i("로드되었다", reviewList.toString())
+                val tvCount = thisFragView.findViewById<TextView>(R.id.tv_review_cnt)
+                tvCount.setText("방문자리뷰 " + reviewList.size)
+                t_rv_review.adapter = ReviewAdapter(reviewList)
+                t_rv_review.adapter!!.notifyDataSetChanged()
+                if (reviewList.isEmpty()) {//장소id는 있으나 리뷰가 하나도 없을때 소개이미지에 노이미지아이템 삽입
+                    t_scrollItem.addView(inflater.inflate(R.layout.no_image_item, null))
+                } else { //리뷰 있음->해시태그,이미지 삽입
+                    for (doc in reviewList) {
+                        var img = doc.reviewImage
+                        if (img != null) {
+                            val imgView = ImageView(context)
+                            val layoutParams = LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                LinearLayout.LayoutParams.MATCH_PARENT
+                            )
+                            imgView.layoutParams = layoutParams
+                            Glide.with(thisFragView)
+                                .load(img)
+                                .into(imgView) //피드 이미지
+                            t_scrollItem.addView(imgView)
                         }
-                        if (tempRes!!.second != "") {
-                            hashtag1_2.text = tempRes!!.second
-                        }
-                    } else {
-                        t_scrollItem.addView(inflater.inflate(R.layout.no_image_item, null))
                     }
-                    loadPlaceReview(pid, reviewList)
-                    Log.i("로드되었다", reviewList.toString())
-                    val tvCount = thisFragView.findViewById<TextView>(R.id.tv_review_cnt)
-                    tvCount.setText("방문자리뷰 " + reviewList.size)
-                    t_rv_review.adapter = ReviewAdapter(reviewList)
-                    t_rv_review.adapter!!.notifyDataSetChanged()
-
-
-//                    val db = FirebaseFirestore.getInstance().collection("Reviews")
-//                    val a = db.whereEqualTo("pid", pid).get()
-//                    a.await()
-//                    for (doc in a.result.documents) {
-//                        var img = doc.data.get("reviewImage")
-//                        if (img != null) {
-//                            Glide.with(requireContext())
-//                                .load(img)
-//                                .into(holder.reviewImage) //피드 이미지
-//                            // }
-//                        }
+                    CoroutineScope(Dispatchers.Main).launch {
+                        tempRes = DB_Review().getHashtag(pid)
+                        Log.d("리뷰 검색 결과", tempRes.toString())
+                        if (tempRes != null) {
+                            if (tempRes!!.first != "") {
+                                hashtag1_1.text = "  "+tempRes!!.first+"  "
+                            }
+                            if (tempRes!!.second != "") {
+                                hashtag1_2.text = "  "+tempRes!!.second+"  "
+                            }
+                        }
+                    }
                 }
             }
         }
