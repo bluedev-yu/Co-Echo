@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:ci_drawable="@color/green"
-            app:ci_drawable_unselected="@color/lightGreen"
+            app:ci_drawable_unselected="@color/green"
             app:layout_constraintTop_toBottomOf="@id/MapRecyclerView"
             android:gravity="center_horizontal"
             />
