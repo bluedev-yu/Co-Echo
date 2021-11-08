@@ -37,14 +37,6 @@ class FragmentMap : Fragment(){
         binding = FragmentMapBinding.inflate(inflater, container, false)
         val view = binding.root
 
-//        // 햄버거 메뉴 선택시 오른쪽으로 열린다
-//        binding.MapOptionButton.setOnClickListener {
-//            binding.MapDrawerLayout
-//                .openDrawer(GravityCompat.END)
-//        }
-//        // 네비게이션 드로워 아이템 클릭 속성 부여
-//        binding.MapNavigationView
-//            .setNavigationItemSelectedListener(this)
 
         // 맵 서치뷰 리스너
         searchView = binding.MapSearchBar
@@ -71,24 +63,6 @@ class FragmentMap : Fragment(){
         return view
     }
 
-//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId)
-//        {
-//            R.id.marked_place -> loadFrag(FragmentMapFavorite())
-////            R.id.marked_place -> Toast.makeText(context, "즐겨찾기", Toast.LENGTH_SHORT).show()
-//        }
-//        binding.MapDrawerLayout.closeDrawers()
-//        return false
-//    }
-
-//    override fun onBackPressed() {
-//        if (binding.MapDrawerLayout.isDrawerOpen(GravityCompat.END)){
-//            binding.MapDrawerLayout.closeDrawers()
-//        }
-//        else{
-//            activity?.finish()
-//        }
-//    }
 
     private fun loadFrag(fragment: Fragment){
         val tra = childFragmentManager.beginTransaction()

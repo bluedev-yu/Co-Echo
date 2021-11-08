@@ -48,14 +48,6 @@ class FragmentMapHashtag(query:String?) : Fragment() {
         val nofeed = view.findViewById<TextView>(R.id.nofeed_myplace)
 
 
-        //1) 해시태그에서 검색
-
-//                        rv_place = binding.MapHashtagRecylerView
-//                        rv_place!!.adapter = MapPlacesAdapter(placeList)
-//                        rv_place!!.adapter!!.notifyDataSetChanged()
-//                        rv_place!!.layoutManager =
-//                            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-//                        rv_place!!.setHasFixedSize(true)
         return view
     }
 

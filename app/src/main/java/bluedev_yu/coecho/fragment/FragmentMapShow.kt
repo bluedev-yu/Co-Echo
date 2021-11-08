@@ -219,7 +219,7 @@ class FragmentMapShow : Fragment() {
             Log.i("loadP", "b 진입")
             runBlocking {
                 CoroutineScope(Dispatchers.Default).launch {
-                    searchKeyword(mapView, "환경")
+                    searchKeyword(mapView, "제로웨이스트")
                 }.join()
             }
         }
