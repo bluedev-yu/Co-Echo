@@ -158,7 +158,7 @@ class FragmentMapShow : Fragment() {
             keyword,
             UserLong.toString(),
             UserLati.toString(),
-            3000
+            10000
         )
         GlobalScope.launch {
             call.enqueue(object : Callback<KAKAO_Place.ResultSearchKeyword> {

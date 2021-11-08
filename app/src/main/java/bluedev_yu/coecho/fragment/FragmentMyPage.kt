@@ -4,11 +4,14 @@ import android.Manifest
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.pm.Signature
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.transition.Transition
+import android.util.Base64
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -20,15 +23,12 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.ViewPager
-import bluedev_yu.coecho.LoginActivity
+import bluedev_yu.coecho.*
 import bluedev_yu.coecho.adapter.FragmentAdapter
 
-import bluedev_yu.coecho.R
 import bluedev_yu.coecho.data.model.FollowDTO
 import bluedev_yu.coecho.data.model.userDTO
 import bluedev_yu.coecho.fragment.*
-import bluedev_yu.coecho.MyPageBackground
-import bluedev_yu.coecho.onBack
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -45,6 +45,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import kotlinx.android.synthetic.main.fragment_my_page.view.*
+import java.security.MessageDigest
 
 class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListener, onBack {
     private var _binding: FragmentMyPage? = null
@@ -80,7 +81,8 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
                 .openDrawer(GravityCompat.END)
         }
         // 네비게이션 드로워 아이템 클릭 속성 부여
-        var MypageNavigationView = viewProfile!!.findViewById<NavigationView>(R.id.MypageNavigationView)
+        var MypageNavigationView =
+            viewProfile!!.findViewById<NavigationView>(R.id.MypageNavigationView)
         MypageNavigationView.setNavigationItemSelectedListener(this)
 
         auth = FirebaseAuth.getInstance()
@@ -89,52 +91,51 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
 
         val followButton: Button =
             viewProfile!!.findViewById(R.id.FollowButton) //팔로우 버튼 팔로우/언팔로우로 보이기
-        val score : TextView = viewProfile!!.findViewById(R.id.score)
+        val score: TextView = viewProfile!!.findViewById(R.id.score)
 
         if (uid == null || uid == auth?.uid.toString()) //마이페이지
         {
-            firestore?.collection("User")?.document(auth?.uid.toString())?.addSnapshotListener{
-                    documentSnapshot, firebaseFirestoreException ->
-                var document = documentSnapshot?.toObject(userDTO::class.java)
-                val ProfileImage : ImageView = viewProfile!!.findViewById(R.id.MypageProfileImage)
-                val mypageBackground : FrameLayout = viewProfile!!.findViewById(R.id.mypageBackground)
+            firestore?.collection("User")?.document(auth?.uid.toString())
+                ?.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                    var document = documentSnapshot?.toObject(userDTO::class.java)
+                    val ProfileImage: ImageView =
+                        viewProfile!!.findViewById(R.id.MypageProfileImage)
+                    val mypageBackground: FrameLayout =
+                        viewProfile!!.findViewById(R.id.mypageBackground)
 
 
-                //배경화면
-                if(document?.mypageBackground != null)
-                {
-                    activity?.let {
-                        Glide.with(it)
-                            .load(document.mypageBackground)
-                            .into(object : CustomTarget<Drawable>(){
-                                override fun onLoadCleared(placeholder: Drawable?) {
-                                }
+                    //배경화면
+                    if (document?.mypageBackground != null) {
+                        activity?.let {
+                            Glide.with(it)
+                                .load(document.mypageBackground)
+                                .into(object : CustomTarget<Drawable>() {
+                                    override fun onLoadCleared(placeholder: Drawable?) {
+                                    }
 
-                                override fun onResourceReady(
-                                    resource: Drawable,
-                                    transition: com.bumptech.glide.request.transition.Transition<in Drawable>?
-                                ) {
-                                    val layout = mypageBackground
-                                    layout.background = resource
-                                }
+                                    override fun onResourceReady(
+                                        resource: Drawable,
+                                        transition: com.bumptech.glide.request.transition.Transition<in Drawable>?
+                                    ) {
+                                        val layout = mypageBackground
+                                        layout.background = resource
+                                    }
 
-                            })
+                                })
+                        }
                     }
-                }
 
-                //칭호
-                val MypageTitle : TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
-                Log.v("title?",document?.title.toString())
-                if(document?.title!! <20) //칭호
-                {
-                    MypageTitle.setText(R.string.grade1)
-                }
-                else if(document?.title!!  <40) //칭호
-                {
-                    MypageTitle.setText(R.string.grade2)
-                }
-                else
-                    MypageTitle.setText(R.string.grade3)
+                    //칭호
+                    val MypageTitle: TextView = viewProfile!!.findViewById(R.id.MyPageTitle)
+                    Log.v("title?", document?.title.toString())
+                    if (document?.title!! < 20) //칭호
+                    {
+                        MypageTitle.setText(R.string.grade1)
+                    } else if (document?.title!! < 40) //칭호
+                    {
+                        MypageTitle.setText(R.string.grade2)
+                    } else
+                        MypageTitle.setText(R.string.grade3)
 
                     //사람이름
                     val MypageUsername: TextView = viewProfile!!.findViewById(R.id.MyPageUserName)
@@ -152,8 +153,8 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
                         }
                     }
 
-                //점수 표시
-                score.setText("환경 기여도 "+ (document.title.toString()))
+                    //점수 표시
+                    score.setText("환경 기여도 " + (document.title.toString()))
 
                 }
 
@@ -191,7 +192,6 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
             }
 
 
-
             //로그아웃
             val LogoutButton: Button = viewProfile!!.findViewById(R.id.FollowButton)
             LogoutButton.setOnClickListener {
@@ -210,9 +210,7 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
                     MyPageFollowing.text = (followDTO.followingCount - 1).toString() + " 팔로잉"
                 }
 
-        }
-
-        else //남의 페이지
+        } else //남의 페이지
         {
             //각종 버튼 숨기기, 보이기
             val mypageText: TextView = viewProfile!!.findViewById(R.id.MypageText) //MYPAGE TEXT
@@ -224,7 +222,7 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
                 viewProfile!!.findViewById(R.id.MyPageProfileOptionButton) //마이페이지 배경변경 버튼
             MypageProfileOptionButton.visibility = View.INVISIBLE
             followButton.visibility = View.VISIBLE //follow button 보이기
-            score.visibility=View.INVISIBLE //score 가리기
+            score.visibility = View.INVISIBLE //score 가리기
 
             firestore?.collection("Follow")?.document(auth?.uid.toString())
                 ?.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
@@ -408,13 +406,15 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId)
-        {
+        when (item.itemId) {
             R.id.logout -> {
                 logout()
             }
             R.id.DeleteAccount -> {
                 deleteAccount()
+            }
+            R.id.DevMenu -> {
+                devmenu()
             }
         }
         MyPageDrawerLayout.closeDrawers()
@@ -422,15 +422,14 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
     }
 
     override fun onBackPressed() {
-        if (binding.MyPageDrawerLayout.isDrawerOpen(GravityCompat.END)){
+        if (binding.MyPageDrawerLayout.isDrawerOpen(GravityCompat.END)) {
             binding.MyPageDrawerLayout.closeDrawers()
-        }
-        else{
+        } else {
             activity?.finish()
         }
     }
 
-    private fun loadFrag(fragment: Fragment){
+    private fun loadFrag(fragment: Fragment) {
         val tra = childFragmentManager.beginTransaction()
         tra.replace(R.id.MyPageDrawerLayout, fragment)
         tra.disallowAddToBackStack()
@@ -438,47 +437,58 @@ class FragmentMyPage : Fragment(), NavigationView.OnNavigationItemSelectedListen
 
     }
 
-    fun logout()
-    {
+    fun logout() {
         auth!!.signOut()
         Toast.makeText(this.context, "로그아웃 되었습니다.", Toast.LENGTH_LONG).show()
         val intent = Intent(this.context, LoginActivity::class.java)
         startActivity(intent)
     }
 
-    fun deleteAccountfun()
-    {
+    fun deleteAccountfun() {
         firestore?.collection("User")?.document(auth?.uid.toString())?.delete() //User 지우기
         firestore?.collection("Feeds")?.whereIn("uid", listOf(auth?.uid.toString()))
-        auth?.currentUser!!.delete().addOnCompleteListener {
-                task ->
-            if(task.isSuccessful){
+        auth?.currentUser!!.delete().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 Toast.makeText(this.context, "아이디 삭제가 완료되었습니다", Toast.LENGTH_LONG).show()
 
                 //로그아웃처리
                 FirebaseAuth.getInstance().signOut()
-            }else{
+            } else {
                 Toast.makeText(this.context, task.exception.toString(), Toast.LENGTH_LONG).show()
 
             }
         }
     }
 
-    fun deleteAccount()
-    {
+    fun deleteAccount() {
         val intent = Intent(this.context, LoginActivity::class.java)
-        val dlg: AlertDialog.Builder = AlertDialog.Builder(this.requireContext(),  android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth)
+        val dlg: AlertDialog.Builder = AlertDialog.Builder(
+            this.requireContext(),
+            android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth
+        )
         dlg.setTitle("계정탈퇴") //제목
         dlg.setMessage("정말 계정을 삭제하시겠습니까?") // 메시지
         dlg.setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
             //startActivity(intent)
-            Toast.makeText(this.context,"추후 업데이트 예정입니다.",Toast.LENGTH_LONG).show()
+            Toast.makeText(this.context, "추후 업데이트 예정입니다.", Toast.LENGTH_LONG).show()
         })
-        dlg.setNegativeButton("취소",DialogInterface.OnClickListener { dialog, which ->
+        dlg.setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
         })
         var alertDialog = dlg.create()
         val window = alertDialog.window
         window?.setGravity(Gravity.CENTER)
         alertDialog.show()
     }
+
+    fun devmenu() {
+        auth = FirebaseAuth.getInstance()
+        if (auth?.uid.toString() == "beyz8U34oPgqXLkIrUE8PaAAwFD3") {
+            val intent = Intent(this.context, DevMenuActivity::class.java)
+            startActivity(intent)
+        }
+        else{
+            Toast.makeText(this.context,"어플 개발자를 위한 메뉴입니다",Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }
