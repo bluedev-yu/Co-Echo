@@ -50,7 +50,7 @@ class fragmentSubscriber(uid: String?) : Fragment() {
         val nofeed = view.findViewById<TextView>(R.id.nofeed_myplace)
 
         //유저에 있는 placeLike
-        firestore?.collection("User")?.document(auth?.uid.toString())?.get()?.addOnSuccessListener {
+        firestore?.collection("User")?.document(uid!!)?.get()?.addOnSuccessListener {
             doc ->
             if(doc.exists())
             {
